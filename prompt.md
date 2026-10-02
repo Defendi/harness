@@ -93,143 +93,172 @@ Separar claramente quatro conceitos fundamentais:
 
 ---
 
-# 3. FERRAMENTAL DE ENGENHARIA DISPONÍVEL
+# 3. FERRAMENTAL INTERNO DO AGENTE (`scripts/`)
 
-O repositório canônico do Harness (`harness/`) disponibiliza scripts autônomos para que o bootstrap e a governança ocorram em segundos, eliminando dezenas de tool calls manuais e erros de digitação:
+O repositório canônico do Harness (`harness/`) disponibiliza scripts internos de automação para que você, **o Agente**, execute via ferramentas (`run_command`) de forma instantânea e determinística, sem obrigar o usuário a digitar comandos manuais:
 
 1. **`scripts/harness-probe.py` (Sonda de Ambiente):**
-   Descobre automaticamente interpretadores instalados no host (Python 3.12, 3.10, Node, Go), gerenciadores de pacotes (`uv`, `pip`, `poetry`, `pnpm`), status do GitHub CLI (`gh auth status`) e tokens Jira.
+   Executado pelo agente para descobrir interpretadores do host (Python 3.12, Node, Go), gerenciadores de pacotes (`uv`, `pip`, `poetry`, `pnpm`), status do GitHub CLI (`gh auth status`) e tokens Jira.
 2. **`scripts/harness-init.py` (Scaffolding em Lote):**
-   Gera instantaneamente a árvore completa de diretórios, regras, skills, workflows, agents, templates, configs e adapters sob medida.
+   Executado pelo agente para gerar a árvore completa de diretórios, regras, skills, workflows, agents, templates, configs e adapters sob medida em menos de 1 segundo.
 3. **`scripts/jira-setup.py` (Provisionador Jira Cloud):**
-   Cria o projeto no Jira Cloud via REST API v3, configura os 8 status canônicos e associa o Workflow Scheme oficial de forma idempotente.
+   Executado pelo agente para criar o projeto no Jira Cloud via REST API v3, configurar os 8 status canônicos e associar o Workflow Scheme oficial de forma idempotente.
 4. **`scripts/harness-doctor.py` (Auditor de Sanidade):**
-   Executa 28 verificações automatizadas de conformidade com retorno de exit code para CI/CD.
+   Executado pelo agente para auditar 28 verificações automatizadas de conformidade e garantir 0 falhas antes de finalizar.
 
 ---
 
-# 4. BOOTSTRAP INTERATIVO — REGRA OBRIGATÓRIA
+# 4. DIRETIVA DE AUTONOMIA TOTAL DO AGENTE
 
-## NÃO CRIAR ARQUIVOS MANUALMENTE OU ASSUMIR A STACK
-
-Antes de iniciar qualquer scaffolding ou criação de arquivos:
-
-### Passo 1 — Executar a Sonda de Ambiente
-Execute no terminal para obter a visão real das ferramentas do host:
-```bash
-python3 scripts/harness-probe.py
-```
-
-### Passo 2 — Project Bootstrap Interview
-Colete com o usuário as informações essenciais que não puderam ser determinadas pela sonda:
-
-#### Pergunta 1 — Descrição do projeto
-```text
-Qual é a descrição do projeto?
-Explique em poucas frases:
-- o que o sistema fará;
-- quem utilizará;
-- qual problema pretende resolver.
-```
-
-#### Pergunta 2 — Linguagem e Framework
-```text
-Qual linguagem e framework serão utilizados no projeto?
-(Exemplos: Python com FastMCP/FastAPI, TypeScript com Node/Nest, Go, Java com Spring, Rust, etc.)
-```
-*O agente NÃO assume Python nem toma decisões técnicas sem confirmação.*
-
-#### Pergunta 3 — Pasta do Projeto
-```text
-Qual é o caminho da pasta onde ficará o projeto?
-(Exemplos: ./ para diretório atual ou caminho absoluto)
-```
-
-#### Pergunta 4 — Espaço do Jira
-```text
-Qual o Nome do Espaço / Projeto no Jira?
-Qual a Chave do Projeto (Key, ex: MCPS)?
-Qual o seu domínio Atlassian (ex: seu-dominio.atlassian.net)?
-Qual o Usuário de acesso ao Jira?
-Qual o arquivo contendo o Jira API Token (ou confirme se usará variável de ambiente)?
-```
-
-#### Pergunta 5 — Repositório do GitHub
-```text
-Qual o Nome do repositório no GitHub?
-Qual o Perfil de Usuário / Organização no GitHub?
-O repositório deve ser Privado (recomendado) ou Público?
-```
+> [!IMPORTANT]
+> **REGRA DE OURO:** O usuário humano **NÃO DEVE** ser instruído a copiar e colar comandos no terminal.
+> Você é um agente com ferramentas de execução (`run_command`, `write_to_file`, etc.).
+> **VOCÊ deve executar todas as ações necessárias** (probe de ambiente, criação de repositórios via `gh`, provisionamento no Jira Cloud, geração do harness via `harness-init.py`, auditoria via `harness-doctor.py`, criação de virtualenv, testes e git commit/push) diretamente através de chamadas de ferramentas.
+> O usuário apenas responde às perguntas interativas no chat e fornece autorizações quando estritamente necessário.
 
 ---
 
-# 5. EXECUÇÃO DETERMINÍSTICA DO BOOTSTRAP
+# 5. OS DOIS MODOS DE EXECUÇÃO DO AGENTE
 
-Com as respostas coletadas:
+Você deve identificar ou perguntar ao usuário qual dos dois modos deve ser executado:
 
-### 1. GitHub
-Verifique o status do usuário ativo:
-```bash
-gh auth status
-```
-Troque se necessário:
-```bash
-gh auth switch --hostname github.com --user USUARIO_GITHUB
-```
-Verifique se o repositório existe:
-```bash
-gh repo view USUARIO_GITHUB/NOME_REPOSITORIO
-```
-- Se já existir, pare e peça instruções para evitar sobrescritas.
-- Se não existir, crie o repositório remoto:
-```bash
-gh repo create USUARIO_GITHUB/NOME_REPOSITORIO --private
-```
+---
 
-### 2. Jira Cloud Provisioning
-Execute o provisionador idempotente oficial:
-```bash
-python3 scripts/jira-setup.py \
-  --domain DOMINIO_JIRA \
-  --user USUARIO_JIRA \
-  --token-file ARQUIVO_TOKEN \
-  --project-key CHAVE_JIRA \
-  --project-name NOME_PROJETO
-```
-O script garante que o projeto, o Workflow com os 8 status oficiais e o Workflow Scheme estejam prontos.
+## 🟢 MODO 1: PROJETO NOVO (GREENFIELD)
 
-### 3. Harness Scaffolding (Instantâneo)
-Execute o gerador em lote:
-```bash
-python3 scripts/harness-init.py \
-  --target-dir PASTA_PROJETO \
-  --project-name "NOME_PROJETO" \
-  --description "DESCRICAO" \
-  --language LINGUAGEM \
-  --framework "FRAMEWORK" \
-  --jira-key CHAVE_JIRA \
-  --jira-domain "DOMINIO_JIRA" \
-  --jira-user "USUARIO_JIRA" \
-  --github-repo "USUARIO_GITHUB/NOME_REPOSITORIO"
-```
+Utilize quando o usuário desejar criar um novo projeto/repositório a partir do zero.
 
-### 4. Auditoria de Sanidade
-Valide a integridade completa:
-```bash
-python3 scripts/harness-doctor.py PASTA_PROJETO
-```
-O script deve reportar **0 falhas**.
+### Fluxo de Execução Autônoma pelo Agente:
 
-### 5. Setup do Ambiente e Primeiro Commit
-- Configure o ambiente virtual local da linguagem (ex: `python3.12 -m venv .venv`).
-- Instale as dependências locais.
-- Execute os testes e linters iniciais garantindo 100% de sucesso.
-- Faça o primeiro commit semântico e o push para o GitHub:
-```bash
-git add .
-git commit -m "feat(harness): initialize application development harness"
-git push -u origin main
-```
+1. **Executar a Sonda de Ambiente (Autonomamente):**
+   Execute imediatamente através da sua ferramenta de comandos:
+   ```bash
+   python3 scripts/harness-probe.py --json
+   ```
+   Analise a saída para saber quais ferramentas já existem no host.
+
+2. **Entrevista de Bootstrap no Chat (Interativo):**
+   Faça perguntas diretas e concisas ao usuário para alinhar:
+   - **Descrição do projeto:** O que fará, quem usará e qual problema resolve.
+   - **Linguagem e Framework:** Confirme com o usuário (ex: Python com FastMCP/FastAPI, TypeScript com Nest/Node, Go, etc.). *Não assuma a linguagem sem perguntar.*
+   - **Caminho da Pasta:** Onde o projeto será criado (ex: `/caminho/para/Projeto`).
+   - **Jira Cloud:** Chave (Key, ex: `PROJ`), Nome do projeto, Domínio (`seu-dominio.atlassian.net`), Usuário e localização do token (`token_jira.txt` ou env).
+   - **GitHub:** Repositório (`org/nome-repo`), visibilidade (Privado/Público) e usuário `gh`.
+
+3. **Executar o Provisionamento do GitHub (Autonomamente):**
+   - Inspecione a autenticação: `gh auth status`
+   - Se o usuário ativo for diferente, use `gh auth switch`
+   - Verifique se o repo já existe: `gh repo view <repo>`
+   - Crie o repositório remoto:
+     ```bash
+     gh repo create <org/repo> --private
+     ```
+
+4. **Executar o Provisionamento do Jira Cloud (Autonomamente):**
+   Execute o script provisionador do harness:
+   ```bash
+   python3 scripts/jira-setup.py \
+     --domain "<dominio-jira>" \
+     --user "<usuario-jira>" \
+     --token-file "<arquivo-token>" \
+     --project-key "<chave-jira>" \
+     --project-name "<nome-projeto>"
+   ```
+
+5. **Executar o Scaffolding do Harness (Autonomamente):**
+   Gere a árvore completa com um único comando de ferramenta:
+   ```bash
+   python3 scripts/harness-init.py \
+     --target-dir "<caminho-projeto>" \
+     --project-name "<nome-projeto>" \
+     --description "<descricao>" \
+     --language "<linguagem>" \
+     --framework "<framework>" \
+     --jira-key "<chave-jira>" \
+     --jira-domain "<dominio-jira>" \
+     --jira-user "<usuario-jira>" \
+     --github-repo "<org/repo>"
+   ```
+
+6. **Auditar com o Harness Doctor (Autonomamente):**
+   ```bash
+   python3 scripts/harness-doctor.py "<caminho-projeto>"
+   ```
+   Garanta que 28/28 checagens passem sem nenhum erro.
+
+7. **Configurar Ambiente Local, Testes Iniciais e Git (Autonomamente):**
+   - Inicialize o git se necessário: `git init -b main`
+   - Conecte ao remote: `git remote add origin https://github.com/<org/repo>.git`
+   - Crie o virtualenv local da linguagem (ex: `python3.12 -m venv .venv`).
+   - Instale as dependências da stack.
+   - Execute a suíte de testes de fumaça inicial.
+   - Realize o commit e o push:
+     ```bash
+     git add .
+     git commit -m "feat(harness): initialize application development harness"
+     git push -u origin main
+     ```
+
+8. **Entrega ao Usuário:**
+   Apresente o resumo com os links do Jira, repositório GitHub e os comandos para iniciar o ciclo.
+
+---
+
+## 🟡 MODO 2: PROJETO JÁ EXISTENTE (BROWNFIELD / RETROFIT)
+
+Utilize quando o projeto **já possuir código-fonte, testes e repositório Git**, e o usuário quiser injetar o padrão de governança do Harness.
+
+### Fluxo de Execução Autônoma pelo Agente:
+
+1. **Inspecionar o Repositório Existente (Autonomamente):**
+   - Inspecione a raiz do projeto para detectar a linguagem e arquivos existentes (`pyproject.toml`, `package.json`, `go.mod`, pastas `src/`, etc.).
+   - Verifique `git remote -v` para identificar o repositório GitHub associado.
+   - **REGRA DE PRESERVAÇÃO ABSOLUTA:** O agente nunca apaga, renomeia ou desfigura arquivos de código, configurações ou testes existentes do projeto.
+
+2. **Alinhamento Mínimo no Chat:**
+   - Pergunte apenas o que não puder ser inferido do repositório (ex: Chave e dados do Jira, caso ainda não estejam configurados).
+
+3. **Injetar o Harness de Forma Não-Destrutiva (Autonomamente):**
+   Execute o inicializador apontando para a pasta existente:
+   ```bash
+   python3 <caminho-harness>/scripts/harness-init.py \
+     --target-dir "<caminho-projeto-existente>" \
+     --project-name "<nome-projeto>" \
+     --description "<descricao>" \
+     --language "<linguagem-detectada>" \
+     --framework "<framework-detectado>" \
+     --jira-key "<chave-jira>" \
+     --jira-domain "<dominio-jira>" \
+     --jira-user "<usuario-jira>" \
+     --github-repo "<org/repo>"
+   ```
+   *O `harness-init.py` preservará 100% dos arquivos de código existentes e adicionará apenas `.agents/`, `docs/`, `AGENTS.md`, adapters e atualizará o `.gitignore` com segurança.*
+
+4. **Sincronizar o Jira Cloud (Autonomamente):**
+   Provisione ou ajuste os 8 status do projeto no Jira:
+   ```bash
+   python3 <caminho-harness>/scripts/jira-setup.py \
+     --domain "<dominio-jira>" \
+     --user "<usuario-jira>" \
+     --token-file "<arquivo-token>" \
+     --project-key "<chave-jira>" \
+     --project-name "<nome-projeto>"
+   ```
+
+5. **Auditar com o Harness Doctor (Autonomamente):**
+   ```bash
+   python3 <caminho-harness>/scripts/harness-doctor.py "<caminho-projeto-existente>"
+   ```
+
+6. **Commit de Adoção e Push (Autonomamente):**
+   ```bash
+   git add .agents docs AGENTS.md CLAUDE.md GEMINI.md .gitignore
+   git commit -m "chore(harness): adopt application development harness v2.0"
+   git push origin main
+   ```
+
+7. **Entrega ao Usuário:**
+   Confirme que o projeto existente agora está sob governança total do Harness sem nenhuma quebra do código legado.
 
 ---
 

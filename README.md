@@ -110,139 +110,71 @@ O repositório disponibiliza uma suíte completa de artefatos de referência e f
 
 ---
 
-## 🛠️ Ferramental de Engenharia (`scripts/`)
+---
 
-O repositório disponibiliza utilitários autônomos para acelerar o setup e a governança:
+## 🤖 Como Operar: O Modelo de Agente Autônomo
 
-### 1. Sonda de Ambiente (`harness-probe.py`)
-Inspeciona o ambiente local antes do bootstrap para identificar interpretadores, gerenciadores de pacotes e status de autenticação:
-```bash
-python3 scripts/harness-probe.py
-# Ou para consumo programático em JSON:
-python3 scripts/harness-probe.py --json
-```
+O Application Development Harness foi projetado para que o desenvolvedor humano **não precise digitar comandos no terminal**. 
 
-### 2. Inicializador em Lote (`harness-init.py`)
-Gera o esqueleto completo do Application Development Harness em **menos de 1 segundo**, eliminando a necessidade de dezenas de tool calls lentas de LLM:
-```bash
-python3 scripts/harness-init.py \
-  --target-dir /caminho/do/projeto \
-  --project-name "McpSentinel" \
-  --description "Servidor MCP para acesso controlado à infraestrutura" \
-  --language python \
-  --framework FastMCP \
-  --jira-key MCPS \
-  --jira-domain "mygotryx.atlassian.net" \
-  --jira-user "usuario@empresa.com" \
-  --github-repo "org/McpSentinel"
-```
+O **AI Coding Agent** (como o **Antigravity 2.0**, Claude Code ou Cursor) assume o papel de **Harness Engineer** e executa todas as ações operacionais através de suas ferramentas de sistema (`run_command`, `write_to_file`, etc.).
 
-### 3. Provisionador Jira Cloud (`jira-setup.py`)
-Cria o projeto no Jira Cloud via REST API v3, configura os 8 status canônicos e associa o Workflow Scheme oficial de forma idempotente:
-```bash
-python3 scripts/jira-setup.py \
-  --domain "seu-dominio.atlassian.net" \
-  --user "seu-email@dominio.com" \
-  --token-file "token_jira.txt" \
-  --project-key "MCPS" \
-  --project-name "McpSentinel"
-```
+### Como Acionar o Agente:
 
-### 4. Auditor de Sanidade (`harness-doctor.py`)
-Valida a integridade completa de qualquer projeto com 28 checagens estritas:
-```bash
-python3 scripts/harness-doctor.py /caminho/do/projeto
-```
+1. Abra o chat com o seu AI Agent (ex: Antigravity 2.0);
+2. Forneça as instruções do [**`prompt.md`**](./prompt.md) (Master Prompt);
+3. Informe a sua intenção em linguagem natural:
+   - *Exemplo Greenfield:* "Crie um novo projeto chamado McpSentinel para prover acesso seguro a ferramentas de infraestrutura."
+   - *Exemplo Brownfield:* "Injete a governança do harness neste repositório existente sem alterar meu código."
+
+O agente assume a condução completa de ponta a ponta.
 
 ---
 
-## 🚀 Como Executar o Gerador de Harness
-
-O gerador foi projetado para operar tanto na criação de novos sistemas do zero quanto na injeção de governança em bases de código legadas.
+## 🚀 Ciclos de Execução Autônoma pelo Agente
 
 ### 🟢 Cenário 1: Projetos Novos (Greenfield)
-Utilize quando estiver iniciando um novo repositório ou pasta vazia:
 
-```bash
-# 1. Inspecione o ambiente (opcional, para conferir interpretadores e ferramentas)
-python3 scripts/harness-probe.py
+Quando você quer criar um novo projeto a partir de uma ideia ou pasta vazia:
 
-# 2. Provisione o projeto no Jira Cloud com os 8 status canônicos
-python3 scripts/jira-setup.py \
-  --domain "seu-dominio.atlassian.net" \
-  --user "seu-email@dominio.com" \
-  --token-file "token_jira.txt" \
-  --project-key "PROJ" \
-  --project-name "NovoProjeto"
-
-# 3. Gere o esqueleto completo do Harness (< 1 segundo)
-python3 scripts/harness-init.py \
-  --target-dir /caminho/do/novo-projeto \
-  --project-name "NovoProjeto" \
-  --description "Descrição do novo sistema" \
-  --language python \
-  --framework FastMCP \
-  --jira-key PROJ \
-  --jira-domain "seu-dominio.atlassian.net" \
-  --jira-user "seu-email@dominio.com" \
-  --github-repo "org/novo-projeto"
-
-# 4. Audite a conformidade com o Harness Doctor (deve retornar 28/28 OK)
-python3 scripts/harness-doctor.py /caminho/do/novo-projeto
-
-# 5. Inicialize o repositório Git e faça o primeiro push
-cd /caminho/do/novo-projeto
-git init -b main
-git remote add origin https://github.com/org/novo-projeto.git
-git add .
-git commit -m "feat(harness): initialize application development harness"
-git push -u origin main
-```
+* **O papel do Usuário:** Apenas conversa no chat, responde às poucas perguntas de alinhamento (stack desejada, nome do projeto, Jira Key) e aprova decisões de alto nível.
+* **O que o Agente executa autonomamente (via ferramentas):**
+  1. **Sonda de Ambiente:** O agente roda `python3 scripts/harness-probe.py --json` para descobrir interpretadores e ferramentas locais.
+  2. **Provisionamento no GitHub:** O agente verifica a autenticação do `gh` e cria o repositório remoto privado via `gh repo create`.
+  3. **Provisionamento no Jira Cloud:** O agente executa `python3 scripts/jira-setup.py` para criar o projeto e o workflow com os 8 status canônicos.
+  4. **Geração do Harness:** O agente executa `python3 scripts/harness-init.py` e gera a árvore completa (`.agents/`, `docs/`, `AGENTS.md`, adapters, etc.) em menos de 1 segundo.
+  5. **Auditoria com Doctor:** O agente roda `python3 scripts/harness-doctor.py` e valida 28/28 checagens com sucesso.
+  6. **Ambiente e Testes:** O agente cria o virtualenv, instala dependências e executa os testes iniciais.
+  7. **Commit & Push Inicial:** O agente realiza o commit semântico e faz o push para a branch `main` no GitHub.
+  8. **Entrega Pronta:** O agente reporta os links do Jira e GitHub e deixa o projeto pronto para desenvolvimento.
 
 ---
 
 ### 🟡 Cenário 2: Projetos Já Existentes (Brownfield / Retrofit)
-Utilize quando o projeto **já possui código de negócio, testes e histórico no Git**, e você deseja adotar o padrão de engenharia do Harness sem risco de sobrescrita.
 
-> **Garantia de Preservação:** O `harness-init.py` é estritamente **não-destrutivo**. Se arquivos como `pyproject.toml`, `package.json`, `go.mod`, pastas `src/` ou suítes de testes já existirem, eles são **100% preservados**. O gerador apenas adiciona a camada de governança:
-> - Infraestrutura `.agents/` (regras, skills, workflows, agents, templates, adapters e configs).
-> - Taxonomia de documentação persistente `docs/` (`specs/`, `architecture/`, `decisions/`, etc.).
-> - Contratos raiz: `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`.
-> - Proteções de segurança no `.gitignore` (sem apagar suas regras existentes).
+Quando você já possui um repositório com código de negócio, testes e histórico no Git, e deseja adotar o padrão Harness:
 
-```bash
-# 1. Inspecione o ambiente a partir da raiz do repositório
-python3 /caminho/do/harness/scripts/harness-probe.py
+* **O papel do Usuário:** Fornece o caminho do repositório e pede a adoção do harness.
+* **O que o Agente executa autonomamente (via ferramentas):**
+  1. **Inspeção de Código Legado:** O agente examina a estrutura existente para identificar linguagem, framework e dependências.
+  2. **Garantia de Preservação Absoluta:** O agente assegura que nenhum arquivo existente (`src/`, `tests/`, `package.json`, `pyproject.toml`, etc.) seja apagado ou alterado.
+  3. **Injeção do Harness:** O agente roda `harness-init.py --target-dir <projeto>`, que injeta a governança (`.agents/`, `docs/`, `AGENTS.md`, adapters e atualiza o `.gitignore` de forma não-destrutiva).
+  4. **Sincronização com o Jira:** O agente roda `jira-setup.py` para sincronizar os 8 status canônicos no Jira Cloud.
+  5. **Auditoria de Conformidade:** O agente valida a integridade com `harness-doctor.py`.
+  6. **Commit de Adoção & Push:** O agente comita as adições com `chore(harness): adopt application development harness v2.0` e envia ao GitHub.
+  7. **Entrega Pronta:** O repositório passa a operar com o ciclo de vida governado sem nenhuma quebra no código de negócio pré-existente.
 
-# 2. Execute o inicializador apontando para a pasta do projeto existente
-python3 /caminho/do/harness/scripts/harness-init.py \
-  --target-dir /caminho/do/projeto-existente \
-  --project-name "ProjetoExistente" \
-  --description "Sistema de pagamentos em produção" \
-  --language python \
-  --framework Django \
-  --jira-key PAG \
-  --jira-domain "seu-dominio.atlassian.net" \
-  --jira-user "seu-email@dominio.com" \
-  --github-repo "org/projeto-existente"
+---
 
-# 3. Provisione ou sincronize o workflow no Jira Cloud (idempotente)
-python3 /caminho/do/harness/scripts/jira-setup.py \
-  --domain "seu-dominio.atlassian.net" \
-  --user "seu-email@dominio.com" \
-  --token-file "token_jira.txt" \
-  --project-key "PAG" \
-  --project-name "ProjetoExistente"
+## 🛠️ Toolkit Interno do Agente (`scripts/`)
 
-# 4. Audite a conformidade
-python3 /caminho/do/harness/scripts/harness-doctor.py /caminho/do/projeto-existente
+Os scripts sob `scripts/` formam o **motor de execução autônoma** utilizado pelo Agente para realizar o trabalho pesado em frações de segundo. Eles também podem ser invocados manualmente por engenheiros ou pipelines de CI/CD:
 
-# 5. Realize o commit de adoção da governança do Harness
-cd /caminho/do/projeto-existente
-git add .agents docs AGENTS.md CLAUDE.md GEMINI.md .gitignore
-git commit -m "chore(harness): adopt application development harness v2.0"
-git push origin main
-```
+| Utilitário | Finalidade | Como o Agente Executa |
+|:---|:---|:---|
+| **`harness-probe.py`** | Sonda de interpretadores, `gh auth` e Jira tokens. | `python3 scripts/harness-probe.py --json` |
+| **`harness-init.py`** | Scaffolding em lote instantâneo (< 1s, não-destrutivo). | `python3 scripts/harness-init.py --target-dir <dir> ...` |
+| **`jira-setup.py`** | Provisionador idempotente de projetos e workflows Jira. | `python3 scripts/jira-setup.py --domain <dom> --key <key> ...` |
+| **`harness-doctor.py`** | Auditor de conformidade com 28 checagens estritas. | `python3 scripts/harness-doctor.py <dir>` |
 
 ---
 
