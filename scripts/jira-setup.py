@@ -19,10 +19,12 @@ from pathlib import Path
 class JiraClient:
     def __init__(self, domain: str, user: str, token: str):
         self.domain = domain.rstrip("/")
-        if not self.domain.startswith("http"):
-            self.base_url = f"https://{self.domain}.atlassian.net"
-        else:
+        if self.domain.startswith("http"):
             self.base_url = self.domain
+        elif self.domain.endswith(".atlassian.net"):
+            self.base_url = f"https://{self.domain}"
+        else:
+            self.base_url = f"https://{self.domain}.atlassian.net"
         self.auth = base64.b64encode(f"{user}:{token}".encode()).decode()
 
     def request(self, method: str, endpoint: str, data: dict | list | None = None) -> tuple[int, dict | list | str]:
