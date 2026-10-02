@@ -156,6 +156,96 @@ python3 scripts/harness-doctor.py /caminho/do/projeto
 
 ---
 
+## 🚀 Como Executar o Gerador de Harness
+
+O gerador foi projetado para operar tanto na criação de novos sistemas do zero quanto na injeção de governança em bases de código legadas.
+
+### 🟢 Cenário 1: Projetos Novos (Greenfield)
+Utilize quando estiver iniciando um novo repositório ou pasta vazia:
+
+```bash
+# 1. Inspecione o ambiente (opcional, para conferir interpretadores e ferramentas)
+python3 scripts/harness-probe.py
+
+# 2. Provisione o projeto no Jira Cloud com os 8 status canônicos
+python3 scripts/jira-setup.py \
+  --domain "seu-dominio.atlassian.net" \
+  --user "seu-email@dominio.com" \
+  --token-file "token_jira.txt" \
+  --project-key "PROJ" \
+  --project-name "NovoProjeto"
+
+# 3. Gere o esqueleto completo do Harness (< 1 segundo)
+python3 scripts/harness-init.py \
+  --target-dir /caminho/do/novo-projeto \
+  --project-name "NovoProjeto" \
+  --description "Descrição do novo sistema" \
+  --language python \
+  --framework FastMCP \
+  --jira-key PROJ \
+  --jira-domain "seu-dominio.atlassian.net" \
+  --jira-user "seu-email@dominio.com" \
+  --github-repo "org/novo-projeto"
+
+# 4. Audite a conformidade com o Harness Doctor (deve retornar 28/28 OK)
+python3 scripts/harness-doctor.py /caminho/do/novo-projeto
+
+# 5. Inicialize o repositório Git e faça o primeiro push
+cd /caminho/do/novo-projeto
+git init -b main
+git remote add origin https://github.com/org/novo-projeto.git
+git add .
+git commit -m "feat(harness): initialize application development harness"
+git push -u origin main
+```
+
+---
+
+### 🟡 Cenário 2: Projetos Já Existentes (Brownfield / Retrofit)
+Utilize quando o projeto **já possui código de negócio, testes e histórico no Git**, e você deseja adotar o padrão de engenharia do Harness sem risco de sobrescrita.
+
+> **Garantia de Preservação:** O `harness-init.py` é estritamente **não-destrutivo**. Se arquivos como `pyproject.toml`, `package.json`, `go.mod`, pastas `src/` ou suítes de testes já existirem, eles são **100% preservados**. O gerador apenas adiciona a camada de governança:
+> - Infraestrutura `.agents/` (regras, skills, workflows, agents, templates, adapters e configs).
+> - Taxonomia de documentação persistente `docs/` (`specs/`, `architecture/`, `decisions/`, etc.).
+> - Contratos raiz: `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`.
+> - Proteções de segurança no `.gitignore` (sem apagar suas regras existentes).
+
+```bash
+# 1. Inspecione o ambiente a partir da raiz do repositório
+python3 /caminho/do/harness/scripts/harness-probe.py
+
+# 2. Execute o inicializador apontando para a pasta do projeto existente
+python3 /caminho/do/harness/scripts/harness-init.py \
+  --target-dir /caminho/do/projeto-existente \
+  --project-name "ProjetoExistente" \
+  --description "Sistema de pagamentos em produção" \
+  --language python \
+  --framework Django \
+  --jira-key PAG \
+  --jira-domain "seu-dominio.atlassian.net" \
+  --jira-user "seu-email@dominio.com" \
+  --github-repo "org/projeto-existente"
+
+# 3. Provisione ou sincronize o workflow no Jira Cloud (idempotente)
+python3 /caminho/do/harness/scripts/jira-setup.py \
+  --domain "seu-dominio.atlassian.net" \
+  --user "seu-email@dominio.com" \
+  --token-file "token_jira.txt" \
+  --project-key "PAG" \
+  --project-name "ProjetoExistente"
+
+# 4. Audite a conformidade
+python3 /caminho/do/harness/scripts/harness-doctor.py /caminho/do/projeto-existente
+
+# 5. Realize o commit de adoção da governança do Harness
+cd /caminho/do/projeto-existente
+git add .agents docs AGENTS.md CLAUDE.md GEMINI.md .gitignore
+git commit -m "chore(harness): adopt application development harness v2.0"
+git push origin main
+```
+
+---
+
 ## 🏛️ Princípios Arquiteturais Centrais
 
 1. **Separação entre Contrato e Implementação:**
