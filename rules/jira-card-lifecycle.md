@@ -21,16 +21,18 @@ flowchart TD
     Testando -->|Aprovado 100%\n(Sugestões -> Backlog)| Concluido["Concluído\n(Commit e Fechamento)"]
 ```
 
-| Status no Jira         | ID do Status | Transição ID | Responsável            | Condição e Ação                                                            |
-|:---------------------- |:------------ |:------------ |:---------------------- |:-------------------------------------------------------------------------- |
-| **Backlog**            | `10012`      | `20`         | Agente / Humano        | Card criado; mantido aqui durante todo o **ciclo Brainstorming, PRD, TRD e OpenSPEC**. |
-| **A Fazer**            | `10057`      | `30`         | Agente / Humano        | Finalização do planejamento sinalizada. Aguarda início do desenvolvimento. |
-| **Em Andamento**       | `3`          | `40`         | `developer-agent`      | Início do desenvolvimento sinalizado.                                      |
-| **Pronto para Review** | `10099`      | `50`         | `developer-agent`      | Toda a implementação e testes unitários concluídos.                        |
-| **Review**             | `10100`      | `60`         | `reviewer-agent`       | Início da revisão de código sinalizado.                                    |
-| **Pronto Para Testar** | `10101`      | `70`         | `reviewer-agent`       | Review aprovado 100%. Sugestões viram novos cards em Backlog.              |
-| **Testando**           | `10102`      | `80`         | `tester-agent`         | Início das atividades de QA sinalizado.                                    |
-| **Concluído**          | `10011`      | `90`         | QA / Revisor           | Testes herméticos 100% aprovados. Commit semântico realizado.              |
+| Status Canônico no Jira | Responsável            | Condição e Ação                                                                 |
+|:------------------------ |:---------------------- |:------------------------------------------------------------------------------- |
+| **Backlog**              | Agente / Humano        | Card criado; mantido aqui durante todo o **ciclo Brainstorming, PRD, TRD e OpenSPEC**. |
+| **A Fazer**              | Agente / Humano        | Finalização do planejamento sinalizada. Aguarda início do desenvolvimento.      |
+| **Em Andamento**         | `developer-agent`      | Início do desenvolvimento sinalizado.                                           |
+| **Pronto para Review**   | `developer-agent`      | Toda a implementação e testes unitários concluídos.                             |
+| **Review**               | `reviewer-agent`       | Início da revisão de código sinalizado.                                         |
+| **Pronto Para Testar**   | `reviewer-agent`       | Review aprovado 100%. Sugestões viram novos cards em Backlog.                   |
+| **Testando**             | `tester-agent`         | Início das atividades de QA sinalizado.                                         |
+| **Concluído**            | QA / Revisor           | Suíte de testes herméticos 100% aprovada. Commit semântico realizado.           |
+
+> **Nota de Resolução de IDs de Transição:** Cada espaço e projeto no Jira possui IDs numéricos próprios de status e transições. O agente deve inspecionar as transições disponíveis dinamicamente via MCP Atlassian (`getTransitionsForJiraIssue`) ou REST API (`/rest/api/3/issue/{key}/transitions`) para resolver o ID correspondente ao status canônico desejado.
 
 ---
 
@@ -54,7 +56,7 @@ flowchart TD
 ### 2.3 Desenvolvimento e Testes Unitários (`Em Andamento` → `Pronto para Review`)
 
 - Assim que for sinalizado o **início do desenvolvimento**, **deve-se mudar o card para `Em Andamento`**.
-- O desenvolvedor executa toda a implementação técnica, incluindo preparação de ambiente, código, tipagem defensiva e testes unitários.
+- O desenvolvedor executa toda a implementação técnica, incluindo preparação de ambiente, código, tipagem defensiva e testes unitários herméticos.
 - Assim que finalizada toda a implementação, **deve-se mudar o card para `Pronto para Review`**.
 
 ### 2.4 Code Review (`Review` → `A Fazer` ou `Pronto Para Testar`)
@@ -68,7 +70,7 @@ flowchart TD
 ### 2.5 Testes de QA (`Testando` → `A Fazer` ou `Concluído`)
 
 - Assim que for sinalizado pelo testador QA o **início da atividade**, **mova o card para `Testando`**.
-- O testador executa a tríade hermética completa (`ruff check`, `ruff format --check`, `pytest`).
+- O testador executa a suíte hermética completa definida para a linguagem do projeto em `.agents/config/language.yaml` (comandos de `quality_gates.testing` e `quality_gates.implementation`).
 - **Tratamento de Resultados do QA:**
   - **Se houver qualquer tipo de apontamento / falha:** deve-se anotar ponto a ponto em **diversos comentários** separados no card e mover o card para **`A Fazer`** para recomeçar o processo.
   - **Se passar 100% com apenas algumas sugestões:** move-se o card para **`Concluído`** (com commit semântico realizado). As sugestões apontadas no teste **devem ser criadas como novos cards em `Backlog`**.

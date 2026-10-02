@@ -30,13 +30,26 @@ def init_harness(
     jira_domain: str,
     jira_user: str,
     github_repo: str,
+    language_version: str = "",
 ) -> None:
     target_dir.mkdir(parents=True, exist_ok=True)
+
+    if not language_version:
+        lang_defaults = {
+            "python": ">=3.11",
+            "typescript": ">=20",
+            "javascript": ">=20",
+            "go": "1.22",
+            "java": "21",
+            "rust": "1.75+",
+        }
+        language_version = lang_defaults.get(language.lower(), "latest")
 
     variables = {
         "PROJECT_NAME": project_name,
         "PROJECT_DESCRIPTION": description,
         "LANGUAGE": language,
+        "LANGUAGE_VERSION": language_version,
         "FRAMEWORK": framework,
         "JIRA_KEY": jira_key,
         "JIRA_DOMAIN": jira_domain,
@@ -125,7 +138,7 @@ project:
   name: "{project_name}"
   description: "{description}"
   language: "{language}"
-  language_version: ">=3.12"
+  language_version: "{language_version}"
   framework: "{framework}"
 
 jira:
@@ -343,23 +356,39 @@ token_jira.txt
         gitignore_path.write_text(gitignore_content, encoding="utf-8")
         print("  ✔ .gitignore (proteção de segredos e ambientes)")
 
-    # 6. Código e estrutura básica se for Python
+    # 6. Estrutura básica adaptativa para a linguagem selecionada
     if language == "python" and not (target_dir / "pyproject.toml").exists():
+        # Dependências adaptativas com base no framework
+        deps_list = []
+        if framework:
+            fw_clean = framework.lower().strip()
+            if "fastmcp" in fw_clean:
+                deps_list = ['"fastmcp>=0.4.0"', '"pydantic>=2.7.0"']
+            elif "fastapi" in fw_clean:
+                deps_list = ['"fastapi>=0.110.0"', '"uvicorn>=0.29.0"', '"pydantic>=2.7.0"']
+            elif "django" in fw_clean:
+                deps_list = ['"django>=5.0.0"']
+            elif "flask" in fw_clean:
+                deps_list = ['"flask>=3.0.0"']
+            else:
+                deps_list = [f'"{fw_clean}"']
+        
+        deps_str = ",\n    ".join(deps_list)
+        if deps_str:
+            deps_str = f"\n    {deps_str},\n"
+
         pyproject_content = f"""[build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "{project_name.lower()}"
+name = "{project_name.lower().replace(' ', '-').replace('_', '-')}"
 version = "0.1.0"
 description = "{description}"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = "{language_version if language_version != 'latest' else '>=3.11'}"
 license = {{text = "MIT"}}
-dependencies = [
-    "fastmcp>=0.4.0",
-    "pydantic>=2.7.0",
-]
+dependencies = [{deps_str}]
 
 [project.optional-dependencies]
 dev = [
@@ -372,10 +401,8 @@ dev = [
 
 [tool.ruff]
 line-length = 100
-target-version = "py312"
 
 [tool.mypy]
-python_version = "3.12"
 strict = true
 
 [tool.pytest.ini_options]
@@ -383,17 +410,50 @@ asyncio_mode = "auto"
 testpaths = ["tests"]
 """
         (target_dir / "pyproject.toml").write_text(pyproject_content, encoding="utf-8")
-        print("  ✔ pyproject.toml")
+        print("  ✔ pyproject.toml (adaptativo)")
 
         # Pastas de código
-        src_pkg = target_dir / "src" / project_name.lower()
+        pkg_name = project_name.lower().replace("-", "_").replace(" ", "_")
+        src_pkg = target_dir / "src" / pkg_name
         src_pkg.mkdir(parents=True, exist_ok=True)
         (src_pkg / "__init__.py").write_text(f'"""Package {project_name}."""\n\n__version__ = "0.1.0"\n', encoding="utf-8")
 
         tests_dir = target_dir / "tests"
         tests_dir.mkdir(parents=True, exist_ok=True)
         (tests_dir / "__init__.py").write_text('"""Tests package."""\n', encoding="utf-8")
-        print(f"  ✔ src/{project_name.lower()}/ e tests/")
+        print(f"  ✔ src/{pkg_name}/ e tests/")
+
+    elif language in ("typescript", "javascript") and not (target_dir / "package.json").exists():
+        pkg_json = f"""{{
+  "name": "{project_name.lower().replace(' ', '-')}",
+  "version": "0.1.0",
+  "description": "{description}",
+  "main": "dist/index.js",
+  "scripts": {{
+    "build": "tsc",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "test": "vitest run"
+  }},
+  "license": "MIT"
+}}
+"""
+        (target_dir / "package.json").write_text(pkg_json, encoding="utf-8")
+        (target_dir / "src").mkdir(parents=True, exist_ok=True)
+        (target_dir / "src" / "index.ts").write_text(f"// {project_name}\nexport const version = '0.1.0';\n", encoding="utf-8")
+        (target_dir / "tests").mkdir(parents=True, exist_ok=True)
+        print("  ✔ package.json, src/ e tests/")
+
+    elif language == "go" and not (target_dir / "go.mod").exists():
+        go_mod = f"""module {github_repo if github_repo else project_name.lower()}
+
+go {language_version if language_version != 'latest' else '1.22'}
+"""
+        (target_dir / "go.mod").write_text(go_mod, encoding="utf-8")
+        (target_dir / "cmd" / project_name.lower()).mkdir(parents=True, exist_ok=True)
+        (target_dir / "cmd" / project_name.lower() / "main.go").write_text(f"package main\n\nimport \"fmt\"\n\nfunc main() {{\n\tfmt.Println(\"{project_name}\")\n}}\n", encoding="utf-8")
+        (target_dir / "pkg").mkdir(parents=True, exist_ok=True)
+        print("  ✔ go.mod, cmd/ e pkg/")
 
     print(f"\n\033[92m\033[1m✔ Application Development Harness inicializado com sucesso em {target_dir.resolve()}!\033[0m\n")
 
@@ -403,7 +463,8 @@ def main() -> None:
     parser.add_argument("--target-dir", default=".", help="Diretório de destino (padrão: .)")
     parser.add_argument("--project-name", required=True, help="Nome do projeto")
     parser.add_argument("--description", default="", help="Descrição do projeto")
-    parser.add_argument("--language", default="python", help="Linguagem principal (python, go, typescript)")
+    parser.add_argument("--language", default="python", help="Linguagem principal (python, go, typescript, java, rust, etc.)")
+    parser.add_argument("--language-version", default="", help="Versão da linguagem (ex: 3.12, 1.22, 21, etc.)")
     parser.add_argument("--framework", default="", help="Framework principal")
     parser.add_argument("--jira-key", default="", help="Chave do projeto Jira (ex: PROJ)")
     parser.add_argument("--jira-domain", default="", help="Domínio do Jira Cloud")
@@ -422,6 +483,7 @@ def main() -> None:
         jira_domain=args.jira_domain,
         jira_user=args.jira_user,
         github_repo=args.github_repo,
+        language_version=args.language_version,
     )
 
 

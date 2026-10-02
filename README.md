@@ -137,16 +137,17 @@ O agente assume a condução completa de ponta a ponta.
 
 Quando você quer criar um novo projeto a partir de uma ideia ou pasta vazia:
 
-* **O papel do Usuário:** Apenas conversa no chat, responde às poucas perguntas de alinhamento (stack desejada, nome do projeto, Jira Key) e aprova decisões de alto nível.
-* **O que o Agente executa autonomamente (via ferramentas):**
-  1. **Sonda de Ambiente:** O agente roda `python3 scripts/harness-probe.py --json` para descobrir interpretadores e ferramentas locais.
-  2. **Provisionamento no GitHub:** O agente verifica a autenticação do `gh` e cria o repositório remoto privado via `gh repo create`.
-  3. **Provisionamento no Jira Cloud:** O agente executa `python3 scripts/jira-setup.py` para criar o projeto e o workflow com os 8 status canônicos.
-  4. **Geração do Harness:** O agente executa `python3 scripts/harness-init.py` e gera a árvore completa (`.agents/`, `docs/`, `AGENTS.md`, adapters, etc.) em menos de 1 segundo.
-  5. **Auditoria com Doctor:** O agente roda `python3 scripts/harness-doctor.py` e valida 28/28 checagens com sucesso.
-  6. **Ambiente e Testes:** O agente cria o virtualenv, instala dependências e executa os testes iniciais.
-  7. **Commit & Push Inicial:** O agente realiza o commit semântico e faz o push para a branch `main` no GitHub.
-  8. **Entrega Pronta:** O agente reporta os links do Jira e GitHub e deixa o projeto pronto para desenvolvimento.
+* **O papel do Usuário:** Conversa no chat, responde às perguntas essenciais da entrevista e aprova as decisões de arquitetura e stack.
+* **O que o Agente executa:**
+  1. **Project Bootstrap Interview (Obrigatório):** O agente faz as 5 perguntas de alinhamento (descrição e objetivo, linguagem de programação sem assumir nada, pasta de destino, perfil do Jira e perfil do GitHub) e conduz o questionamento adaptativo para a stack escolhida ("Ask only what is necessary").
+  2. **Sonda de Ambiente:** O agente roda `python3 scripts/harness-probe.py --json` para descobrir interpretadores e ferramentas locais disponíveis.
+  3. **Provisionamento no GitHub:** O agente verifica a autenticação do `gh` e cria o repositório remoto privado via `gh repo create`.
+  4. **Provisionamento no Jira Cloud:** O agente executa `python3 scripts/jira-setup.py` para criar o projeto e o workflow com os 8 status canônicos.
+  5. **Geração do Harness:** O agente executa `python3 scripts/harness-init.py` e gera a árvore completa (`.agents/`, `docs/`, `AGENTS.md`, adapters, etc.) adaptada à stack em menos de 1 segundo.
+  6. **Auditoria com Doctor:** O agente roda `python3 scripts/harness-doctor.py` e valida as checagens com sucesso.
+  7. **Ambiente e Testes:** O agente inicializa o ambiente da linguagem, instala dependências e executa os testes iniciais.
+  8. **Commit & Push Inicial:** O agente realiza o commit semântico e faz o push para a branch `main` no GitHub.
+  9. **Entrega Pronta:** O agente reporta os links do Jira e GitHub e deixa o projeto pronto para a esteira de features.
 
 ---
 
