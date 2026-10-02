@@ -13,13 +13,15 @@ O harness é **language-agnostic, agent-agnostic, specification-driven e extens�
 O harness governa o ciclo de engenharia de software de ponta a ponta:
 
 ```text
-DISCOVERY
+BRAINSTORMING (Mandatório antes de qualquer ação pelos agentes)
    ↓
-SPECIFICATION
+PRD (Definição de regras de negócio pelo agente de P.O. via skill escrever-prd)
    ↓
-ARCHITECTURE
+TRD (Sincronização de stack, NFRs e ADRs pelo Architect via skill escrever-trd)
    ↓
-PLANNING
+OPENSPEC (Especificação executável somente após PRD e TRD aprovados)
+   ↓
+ARCHITECTURE & PLANNING
    ↓
 IMPLEMENTATION
    ↓
@@ -29,9 +31,7 @@ REVIEW
    ↓
 DOCUMENTATION
    ↓
-VALIDATION
-   ↓
-RELEASE
+VALIDATION & RELEASE
 ```
 
 O harness não é apenas um conjunto de prompts. Ele fornece:
@@ -282,6 +282,8 @@ Ao iniciar qualquer sessão ou receber qualquer demanda envolvendo cards, altera
 3. **Gate Estrito de Papéis (Orquestrador vs. Subagentes):**
   - O **agente principal atua EXCLUSIVAMENTE como coordenador**, despachante de subagentes e gestor de status e comentários no Jira.
   - O agente principal é **ESTRITAMENTE PROIBIDO de inspecionar código para desenvolver ou implementar alterações diretamente**.
+  - Toda concepção de regras de negócio e escrita de PRD **DEVE ser delegada ao subagente de P.O.** (utilizando as skills `brainstorming` e `escrever-prd`).
+  - Toda sincronização de TRD e elaboração da especificação formal **DEVE ser delegada ao subagente de arquitetura utilizando a metodologia OpenSPEC**.
   - Toda e qualquer implementação e testes unitários **DEVEM ser delegados imediatamente ao subagente desenvolvedor**.
   - Todo Code Review **DEVE ser delegado ao subagente de revisão**.
   - Toda etapa de Qualidade e Testes Herméticos **DEVE ser delegada ao subagente de tester**.

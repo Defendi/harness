@@ -77,6 +77,9 @@ class HarnessDoctor:
         print(f"\n{BOLD}4. Skills Especializadas (.agents/skills/):{RESET}")
         skills_dir = agents_dir / "skills"
         self.check(skills_dir.is_dir() and any(skills_dir.iterdir()), "Diretório .agents/skills/ populado")
+        self.check((skills_dir / "brainstorming").is_dir(), "Skill 'brainstorming' presente para alinhamento inicial", is_warning=True)
+        self.check((skills_dir / "escrever-prd").is_dir(), "Skill 'escrever-prd' presente para definição de PRDs", is_warning=True)
+        self.check((skills_dir / "escrever-trd").is_dir(), "Skill 'escrever-trd' presente para definição de TRDs", is_warning=True)
 
         # 5. Workflows de Processo (.agents/workflows/)
         print(f"\n{BOLD}5. Workflows de Processo (.agents/workflows/):{RESET}")
@@ -88,6 +91,7 @@ class HarnessDoctor:
         print(f"\n{BOLD}6. Agentes Especializados (.agents/agents/):{RESET}")
         subagents_dir = agents_dir / "agents"
         self.check(subagents_dir.is_dir() and any(subagents_dir.iterdir()), "Diretório .agents/agents/ com papéis especializados")
+        self.check((subagents_dir / "po").is_dir(), "Papel de Product Owner (.agents/agents/po/) presente", is_warning=True)
 
         # 7. Language Profile
         print(f"\n{BOLD}7. Language Profile:{RESET}")
@@ -99,7 +103,8 @@ class HarnessDoctor:
         print(f"\n{BOLD}8. Documentação Persistente (docs/):{RESET}")
         docs_dir = self.root / "docs"
         self.check(docs_dir.is_dir(), "Diretório docs/ existe", "Estado e documentação devem ser persistidos em docs/.")
-        self.check((docs_dir / "specs").is_dir(), "Diretório docs/specs/ existe", "Local para especificações de requisitos.")
+        self.check((docs_dir / "prds").is_dir(), "Diretório docs/prds/ existe", "Local para Product Requirements Documents (PRDs).", is_warning=True)
+        self.check((docs_dir / "specs").is_dir(), "Diretório docs/specs/ existe", "Local para especificações de requisitos (OpenSPEC).")
         self.check((docs_dir / "architecture").is_dir(), "Diretório docs/architecture/ existe", "Local para desenhos arquiteturais.")
         self.check((docs_dir / "decisions").is_dir(), "Diretório docs/decisions/ existe", "Local para Architecture Decision Records (ADRs).")
         self.check((docs_dir / "execution").is_dir(), "Diretório docs/execution/ existe", "Local para planos de implementação e handoffs.")

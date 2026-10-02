@@ -50,13 +50,13 @@ def init_harness(
 
     # 1. Estrutura de Documentação (docs/)
     print("1. Criando taxonomia de documentação persistente (docs/)...")
-    for subdir in ["specs", "architecture", "decisions", "execution", "references"]:
+    for subdir in ["prds", "specs", "architecture", "decisions", "execution", "references"]:
         d = target_dir / "docs" / subdir
         d.mkdir(parents=True, exist_ok=True)
         readme = d / "README.md"
         if not readme.exists():
             readme.write_text(f"# Docs: {subdir.capitalize()}\n\nArquivos versionados em docs/{subdir}/.\n", encoding="utf-8")
-    print("  ✔ docs/specs, docs/architecture, docs/decisions, docs/execution, docs/references")
+    print("  ✔ docs/prds, docs/specs, docs/architecture, docs/decisions, docs/execution, docs/references")
 
     # 2. Infraestrutura .agents/
     print("\n2. Instalando infraestrutura modular (.agents/)...")
@@ -174,6 +174,8 @@ Ao iniciar qualquer sessão ou receber qualquer demanda envolvendo cards, altera
 3. **Gate Estrito de Papéis (Orquestrador vs. Subagentes):**
   - O **agente principal atua EXCLUSIVAMENTE como coordenador**, despachante de subagentes e gestor de status e comentários no Jira.
   - O agente principal é **ESTRITAMENTE PROIBIDO de inspecionar código para desenvolver ou implementar alterações diretamente**.
+  - Toda concepção de produto, regras de negócio e escrita de PRD **DEVE ser delegada ao subagente de P.O.** (utilizando as skills `brainstorming` e `escrever-prd`).
+  - Toda sincronização de TRD e elaboração de especificação formal **DEVE ser delegada ao subagente de arquitetura utilizando a metodologia OpenSPEC**.
   - Toda e qualquer implementação e testes unitários **DEVEM ser delegados imediatamente ao subagente desenvolvedor**.
   - Todo Code Review **DEVE ser delegado ao subagente de revisão**.
   - Toda etapa de Qualidade e Testes Herméticos **DEVE ser delegada ao subagente de tester**.

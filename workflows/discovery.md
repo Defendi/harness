@@ -1,26 +1,31 @@
-# Discovery Workflow
+# Discovery & Requirements Workflow
 
 ## Trigger
 New feature request, initiative exploration, or complex problem statement.
 
 ## Preconditions
-- Jira issue in `Backlog` or user initiative identified.
+- Jira issue in `Backlog`.
+- No code or implementation action may be taken prior to this workflow.
 
 ## Steps
-1. Understand the problem domain and user persona.
-2. Investigate external dependencies (e.g. AWS SDK, GitLab API, Azure DevOps API, SSH protocols).
-3. Identify security and credential isolation boundaries.
-4. Assess feasibility, potential technical hurdles, and integration points.
-5. Summarize findings for specification drafting.
+1. **Mandatory Brainstorming (Hard-Gate)**:
+   - Invoke `.agents/skills/brainstorming/` before ANY action by agents.
+   - Conduct collaborative dialogue to discover intent, persona, problem boundaries, and constraints.
+   - Respect Hard-Gates: establish shared understanding and obtain human alignment before proceeding.
+2. **Product Requirements Document (PRD) Authoring**:
+   - The **Product Owner (P.O.) Agent** executes `.agents/skills/escrever-prd/`.
+   - Author `docs/prds/PRD-<number>-<slug>.md` defining business context, user stories (US01, US02...), acceptance criteria, and edge cases.
+   - Keep PRD focused strictly on business intent (*what* and *why*), leaving technical realization to TRD.
+3. **PRD Validation & Approval**:
+   - Verify that all acceptance criteria are clearly stated from a product perspective.
+   - Transition PRD status from `rascunho` to `pronto`.
 
-## Artifacts
-- Discovery notes or research draft in `docs/references/` or Jira description.
+## Artifacts Produced
+- `docs/prds/PRD-<number>-<slug>.md` (authored by P.O. agent)
 
 ## Quality Gates
-- Discovery Gate: problem statement, persona, and technical constraints clearly defined.
+- **Brainstorming Gate**: User intent, constraints, and success criteria mutually agreed upon.
+- **PRD Gate**: Complete business rules, stable US IDs, testable product acceptance criteria.
 
 ## Exit Conditions
-- Ready to author formal specification.
-
-## Failure Handling
-- If requirements are ambiguous or contradictory, conduct interactive clarification interview.
+- Approved PRD in `docs/prds/` ready to be handed off to the Architect for TRD and OpenSPEC authoring.

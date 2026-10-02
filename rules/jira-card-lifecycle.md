@@ -1,6 +1,6 @@
 # Regras de Movimentação e Ciclo de Vida dos Cards no Jira
 
-Este documento define as regras estritas e automáticas de movimentação de status dos cards no Jira do projeto McpSentinel (`MCPS`), orientando todos os agentes, subagentes e desenvolvedores.
+Este documento define as regras estritas e automáticas de movimentação de status dos cards no Jira, orientando todos os agentes, subagentes e desenvolvedores do projeto.
 
 ---
 
@@ -10,7 +10,7 @@ O ciclo de vida de qualquer card obedece rigorosamente à seguinte sequência:
 
 ```mermaid
 flowchart TD
-    Backlog["Backlog\n(Criação / Planejamento)"] -->|Planejamento Finalizado| AFazer["A Fazer\n(Aguardando Dev)"]
+    Backlog["Backlog\n(Brainstorming -> PRD -> TRD -> OpenSPEC)"] -->|Planejamento Finalizado| AFazer["A Fazer\n(Aguardando Dev)"]
     AFazer -->|Início do Dev| EmAndamento["Em Andamento\n(Desenvolvimento e Testes Unitários)"]
     EmAndamento -->|Fim do Dev| ProntoParaReview["Pronto para Review"]
     ProntoParaReview -->|Início do Review| Review["Review\n(Code Reviewer)"]
@@ -23,7 +23,7 @@ flowchart TD
 
 | Status no Jira         | ID do Status | Transição ID | Responsável            | Condição e Ação                                                            |
 |:---------------------- |:------------ |:------------ |:---------------------- |:-------------------------------------------------------------------------- |
-| **Backlog**            | `10012`      | `20`         | Agente / Humano        | Card criado; mantido aqui durante todo o **planejamento/especificação**.   |
+| **Backlog**            | `10012`      | `20`         | Agente / Humano        | Card criado; mantido aqui durante todo o **ciclo Brainstorming, PRD, TRD e OpenSPEC**. |
 | **A Fazer**            | `10057`      | `30`         | Agente / Humano        | Finalização do planejamento sinalizada. Aguarda início do desenvolvimento. |
 | **Em Andamento**       | `3`          | `40`         | `developer-agent`      | Início do desenvolvimento sinalizado.                                      |
 | **Pronto para Review** | `10099`      | `50`         | `developer-agent`      | Toda a implementação e testes unitários concluídos.                        |
@@ -36,11 +36,15 @@ flowchart TD
 
 ## 2. Regras Operacionais de Movimentação
 
-### 2.1 Criação e Planejamento (`Backlog`)
+### 2.1 Criação, Especificação e Planejamento (`Backlog`)
 
-- Enquanto os agentes criarem um card e esse card estiver sendo planejado, **deve-se manter o card em `Backlog`**.
-- Todo o detalhamento de escopo, especificação e critérios de aceite ocorre nesta fase.
-- Nenhum agente pode mudar o estado para "A Fazer" nessa fase sem autorização.
+- Enquanto os agentes criam um card e esse card estiver sendo planejado, **deve-se manter o card em `Backlog`**.
+- **Sequência Obrigatória em `Backlog`:**
+  1. **Brainstorming:** Utilizar a skill `brainstorming` antes de qualquer ação técnica ou implementação, alinhando a intenção e aplicando Hard-Gates com o usuário.
+  2. **PRD (Product Requirements Document):** O **agente de P.O.** elabora o PRD da feature em `docs/prds/PRD-NNN.md` utilizando a skill `escrever-prd`.
+  3. **TRD (Technical Requirements Document):** Após a criação e aprovação do PRD, os agentes técnicos utilizam a skill `escrever-trd` para sincronizar `docs/trd.md` e registrar decisões de arquitetura (ADRs).
+  4. **OpenSPEC:** **Somente após o TRD e o PRD estarem devidamente escritos e aprovados**, os agentes criam o documento de especificação executável em `docs/specs/` utilizando a metodologia **OpenSPEC**.
+- Nenhum agente pode mudar o estado para "A Fazer" nessa fase sem a conclusão e aprovação desta esteira completa.
 
 ### 2.2 Conclusão do Planejamento (`A Fazer`)
 

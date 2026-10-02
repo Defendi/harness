@@ -75,7 +75,8 @@ O repositório disponibiliza uma suíte completa de artefatos de referência e f
 │   └── harness-upgrade.md          # Procedimento seguro de atualização do harness
 │
 ├── agents/                         # Catálogo de subagentes especializados (.agents/agents/)
-│   ├── architect/AGENT.md          # Papel de Arquitetura e ADRs
+│   ├── po/AGENT.md                 # Papel de Product Owner (PRDs e Brainstorming)
+│   ├── architect/AGENT.md          # Papel de Arquitetura, TRD, OpenSPEC e ADRs
 │   ├── developer/AGENT.md          # Papel de Desenvolvimento e Testes Unitários
 │   ├── tester/AGENT.md             # Papel de QA e Testes Herméticos
 │   ├── reviewer/AGENT.md           # Papel de Code Review

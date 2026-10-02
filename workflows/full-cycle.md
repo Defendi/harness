@@ -9,33 +9,40 @@ End-to-end execution of a software work item from initial inception to completed
 
 ## Sequence of Execution
 ```text
-DISCOVERY (Backlog)
+BRAINSTORMING (Backlog - Mandatório antes de qualquer ação pelos agentes via skill brainstorming)
    ↓
-SPECIFICATION (Backlog)
+PRD DEFINITION (Backlog - P.O. Agent via skill escrever-prd em docs/prds/)
    ↓
-ARCHITECTURE (Backlog)
+TRD SYNCHRONIZATION (Backlog - Architect Agent via skill escrever-trd em docs/trd.md)
    ↓
-PLANNING (Backlog → A Fazer)
+OPENSPEC SPECIFICATION (Backlog - Architect Agent via metodologia OpenSPEC em docs/specs/)
    ↓
-IMPLEMENTATION (A Fazer → Em Andamento → Pronto para Review)
+ARCHITECTURE & ADRs (Backlog - Desenho de módulos e registros de decisão)
    ↓
-REVIEW (Review → Pronto Para Testar OU volta para A Fazer)
+PLANNING (Backlog → A Fazer - Plano atômico de execução e handoff)
    ↓
-TESTING (Pronto Para Testar → Testando → Concluído OU volta para A Fazer)
+IMPLEMENTATION (A Fazer → Em Andamento → Pronto para Review - Developer Agent)
    ↓
-DOCUMENTATION (Concluído)
+REVIEW (Review → Pronto Para Testar OU volta para A Fazer com comentários - Reviewer Agent)
    ↓
-RELEASE (Tagged & Delivered)
+TESTING (Pronto Para Testar → Testando → Concluído OU volta para A Fazer com comentários - Tester Agent)
+   ↓
+DOCUMENTATION (Concluído - Sincronização técnica contínua)
+   ↓
+RELEASE (Tagged & Delivered - Release Agent)
 ```
 
 ## Quality Gates Sequence
-1. **Specification Gate**: Acceptance criteria testable, secrets isolated.
-2. **Architecture Gate**: Modularity verified, ADRs recorded, zero-trust secrets.
-3. **Implementation Gate**: Zero syntax errors, unit tests written and passing.
-4. **Review Gate**: 100% peer approval, zero blocking security or code flaws.
-5. **Testing Gate**: Hermetic triad green (`ruff check`, `ruff format`, `pytest`).
-6. **Documentation Gate**: Docs match actual code behavior, zero broken links.
-7. **Release Gate**: Semantic versioning tag pushed to GitHub.
+1. **Brainstorming Gate**: Intenção, limites e restrições alinhados colaborativamente com o humano.
+2. **PRD Gate**: Regras de negócio, personas e User Stories formalizadas pelo agente de P.O.
+3. **TRD Gate**: Restrições técnicas globais, stack e NFRs consolidados em `docs/trd.md`.
+4. **OpenSPEC Gate**: Somente após PRD e TRD aprovados; critérios de aceitação Given-When-Then 100% testáveis.
+5. **Architecture Gate**: Modularidade verificada, ADRs registradas, Zero Trust em segredos.
+6. **Implementation Gate**: Zero erros de sintaxe, tipagem estrita, testes unitários herméticos passando.
+7. **Review Gate**: 100% aprovado pelo revisor; comentários pontuais abertos para ajustes.
+8. **Testing Gate**: Tríade hermética 100% verde (`ruff check`, `ruff format`, `pytest` ou equivalente).
+9. **Documentation Gate**: Documentação técnica sincronizada com o código real entregue.
+10. **Release Gate**: Tag semântica gerada e enviada ao GitHub.
 
 ## Exit Conditions
-- Feature delivered, card closed in `Concluído`, code merged to `main`, documentation synchronized.
+- Feature entregue, card fechado em `Concluído`, branch mesclada na `main`, PRD marcado como `concluido` e documentação sincronizada.

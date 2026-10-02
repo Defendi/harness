@@ -27,8 +27,11 @@ Do not load all rules into context simultaneously. Select rules based on activit
 
 Skills are modular functional capabilities located under `.agents/skills/`.
 Load a skill only when executing its specific procedure:
+- Brainstorming & Ideation: `.agents/skills/brainstorming/SKILL.md` (mandatory before creative work)
+- Product Requirements Document (PRD): `.agents/skills/escrever-prd/SKILL.md`
+- Technical Requirements Document (TRD): `.agents/skills/escrever-trd/SKILL.md`
 - Requirements Analysis: `.agents/skills/requirements-analysis/SKILL.md`
-- Specification Writing: `.agents/skills/specification/SKILL.md`
+- OpenSPEC Specification Writing: `.agents/skills/specification/SKILL.md`
 - Architecture Design: `.agents/skills/architecture-design/SKILL.md`
 - Implementation: `.agents/skills/implementation/SKILL.md`
 - Hermetic Testing: `.agents/skills/testing/SKILL.md`
@@ -41,8 +44,8 @@ Load a skill only when executing its specific procedure:
 
 Execute tasks strictly according to the defined lifecycle workflows in `.agents/workflows/`:
 - Project onboarding: `bootstrap.md`
-- Problem space exploration: `discovery.md`
-- Requirement formalization: `specification.md`
+- Problem space exploration & Brainstorming: `discovery.md`
+- OpenSPEC requirement formalization: `specification.md`
 - System modeling & ADRs: `architecture.md`
 - Task breakdown: `planning.md`
 - Development: `implementation.md`
@@ -56,8 +59,9 @@ Execute tasks strictly according to the defined lifecycle workflows in `.agents/
 
 Tasks must follow the strict gate of roles:
 - **Orchestrator (Main Agent)**: Coordinates, dispatches subagents, manages Jira status and transitions. Prohibited from editing code directly.
-- **Architect**: Produces system architecture, ADRs, interface contracts.
-- **Developer**: Implements code and unit tests based on specifications.
+- **Product Owner (P.O.)**: Leads problem discovery, business rules, User Stories, and authors PRDs in `docs/prds/`.
+- **Architect**: Authors Technical Requirements Document (`docs/trd.md`), ADRs, system architecture, and formal OpenSPEC specifications (`docs/specs/`).
+- **Developer**: Implements code and unit tests based strictly on OpenSPEC specifications.
 - **Tester**: Executes hermetic test suites, regression tests, and coverage validation.
 - **Reviewer**: Performs static code review, adherence checks, and constructive feedback.
 - **Security**: Validates credential isolation, vulnerability scans, and access control.
@@ -84,8 +88,10 @@ When conflicting directives exist, resolve them in this order:
 ## 8. Handoff Protocol
 
 State transitions between agents must produce persistent, traceable artifacts using templates from `.agents/templates/`:
-- Discovery → Specification: `docs/specs/<jira>-<slug>.md`
-- Specification → Architecture: `docs/architecture/<jira>-<slug>.md`
+- Brainstorming → PRD: `docs/prds/PRD-<number>-<slug>.md` (authored by P.O. agent)
+- PRD → TRD: `docs/trd.md` + `docs/decisions/<number>-<title>.md` (authored by Architect agent)
+- TRD & PRD → OpenSPEC: `docs/specs/<jira>-<slug>.md` (metodologia OpenSPEC)
+- OpenSPEC → Architecture: `docs/architecture/<jira>-<slug>.md`
 - Architecture → Planning: `docs/execution/<jira>-plan.md`
 - Implementation → Review: Source code + Tests + Diff summary
 - Review → Testing / Handoff: `docs/execution/<jira>-review.md`
