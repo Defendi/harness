@@ -186,16 +186,24 @@ Os scripts sob `scripts/` formam o **motor de execução autônoma** utilizado p
    - O contrato operacional público reside no arquivo raiz `AGENTS.md`.
    - A infraestrutura interna (regras, skills, workflows, templates, agents) reside sob `.agents/`.
 2. **Language Agnostic (Agnóstico a Linguagem):**
-   - O core do harness não assume tecnologias. Cada projeto conecta seu perfil a partir do catálogo `languages/`.
-3. **Agent & LLM Agnostic:**
+   - O core do harness não assume tecnologias. Cada projeto conecta seu perfil a partir do catálogo `languages/` ou o define adaptativamente.
+3. **Agent & Platform Agnostic:**
    - Neutralidade absoluta de provedores. Adaptadores como `CLAUDE.md` e `GEMINI.md` apenas traduzem a descoberta e apontam para `AGENTS.md`.
+   - Compatível com qualquer perfil e organização do GitHub e qualquer espaço do Jira Cloud.
 4. **Gate Estrito de Papéis:**
    - O agente principal atua **exclusivamente como orquestrador** e despachante. Não inspeciona código para programar diretamente.
-   - Implementação vai para `developer`, revisão para `reviewer`, testes para `tester`.
-5. **Estado Persistente (Persistent State):**
-   - Todo conhecimento, decisão arquitetural (ADR) e plano de teste reside em arquivos versionados em `docs/`.
-6. **Quality Gates Executáveis:**
-   - A transição de status exige o sucesso determinístico (exit code `0`) da tríade hermética (linter, tipagem e testes).
+   - **Product Owner (P.O.):** Conduz brainstorming e formaliza regras de negócio em PRDs (`docs/prds/`).
+   - **Architect:** Mantém o TRD (`docs/trd.md`), registra ADRs e formaliza especificações na metodologia OpenSPEC (`docs/specs/`).
+   - **Developer:** Implementação e testes unitários.
+   - **Reviewer:** Code review estático e auditoria.
+   - **Tester:** QA e tríade de validação hermética.
+5. **Upstream Engineering & Metodologia OpenSPEC:**
+   - Brainstorming obrigatório antes de qualquer ação técnica.
+   - O documento executável OpenSPEC **somente pode ser criado após PRD e TRD estarem escritos e aprovados**.
+6. **Estado Persistente (Persistent State):**
+   - Todo conhecimento, decisão arquitetural (ADR), PRD e plano de teste reside em arquivos versionados em `docs/`.
+7. **Quality Gates Executáveis:**
+   - A transição de status exige o sucesso determinístico (exit code `0`) da suíte de validação hermética (linter, tipagem e testes) mapeada na stack do projeto.
 
 ---
 
@@ -203,14 +211,15 @@ Os scripts sob `scripts/` formam o **motor de execução autônoma** utilizado p
 
 ```mermaid
 flowchart TD
-    Discovery["1. Discovery"] --> Specification["2. Specification"]
-    Specification --> Architecture["3. Architecture"]
-    Architecture --> Planning["4. Planning"]
-    Planning --> Implementation["5. Implementation"]
-    Implementation --> Review["6. Review"]
-    Review --> Testing["7. Testing"]
-    Testing --> Documentation["8. Documentation"]
-    Documentation --> Release["9. Release"]
+    Brainstorming["1. Brainstorming\n(Hard-Gate de Alinhamento)"] --> PRD["2. PRD de Feature\n(Product Owner Agent)"]
+    PRD --> TRD["3. TRD & ADRs\n(Architect Agent)"]
+    TRD --> OpenSPEC["4. OpenSPEC Executável\n(Metodologia OpenSPEC)"]
+    OpenSPEC --> Architecture["5. Architecture & Planning"]
+    Architecture --> Implementation["6. Implementation\n(Developer Agent)"]
+    Implementation --> Review["7. Review\n(Reviewer Agent)"]
+    Review --> Testing["8. Testing & QA\n(Tester Agent)"]
+    Testing --> Documentation["9. Documentation"]
+    Documentation --> Release["10. Release"]
 ```
 
 ---
@@ -218,8 +227,9 @@ flowchart TD
 ## 📋 Regras de Movimentação dos Cards no Jira
 
 ```text
-Backlog (10012) ➔ A Fazer (10057) ➔ Em Andamento (3) ➔ Pronto para Review (10099) ➔ Review (10100) ➔ Pronto Para Testar (10101) ➔ Testando (10102) ➔ Concluído (10011)
+Backlog ➔ A Fazer ➔ Em Andamento ➔ Pronto para Review ➔ Review ➔ Pronto Para Testar ➔ Testando ➔ Concluído
 ```
+- **Resolução Dinâmica:** Os IDs de transição e status são descobertos em tempo de execução via API do Jira do projeto.
 - **Rejeição no Review:** comentários individuais pontuais no card e retorno imediato para `A Fazer`.
 - **Rejeição no QA:** comentários individuais pontuais no card e retorno imediato para `A Fazer`.
 - **Aprovação com Sugestões:** avança para o próximo estágio e sugestões viram novos cards em `Backlog`.

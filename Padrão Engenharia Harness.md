@@ -15,10 +15,11 @@ O **Application Development Harness** é uma infraestrutura de engenharia de sof
 O harness deve permitir que diferentes coding agents conduzam atividades de:
 
 ```text
-Discovery
-→ Specification
-→ Architecture
-→ Planning
+Brainstorming (Hard-Gate de Alinhamento)
+→ PRD (Product Requirements Document - Agente P.O.)
+→ TRD (Technical Requirements Document & ADRs - Agente Architect)
+→ OpenSPEC (Especificação Formal Executável)
+→ Architecture & Planning
 → Implementation
 → Testing
 → Review
@@ -38,7 +39,7 @@ O harness deve ser:
 * extensível;
 * compatível com múltiplos ambientes de desenvolvimento.
 
-A primeira implementação não deve assumir nenhuma linguagem. A linguagem do projeto será definida durante o bootstrap.
+A primeira implementação não deve assumir nenhuma linguagem. A linguagem do projeto será definida durante o bootstrap através do Project Bootstrap Interview.
 
 ---
 
@@ -77,9 +78,11 @@ O harness deverá controlar:
 
 ### 3.2 Processo de engenharia
 
-* discovery;
-* especificação;
-* arquitetura;
+* brainstorming;
+* prd (product requirements document);
+* trd (technical requirements document);
+* openspec (especificação formal executável);
+* arquitetura e adrs;
 * planejamento;
 * implementação;
 * testes;
@@ -90,6 +93,7 @@ O harness deverá controlar:
 
 ### 3.3 Agentes
 
+* product owner (po);
 * architect;
 * developer;
 * tester;
@@ -100,7 +104,9 @@ O harness deverá controlar:
 
 ### 3.4 Artefatos
 
-* specifications;
+* prds (product requirements documents);
+* trds (technical requirements documents);
+* openspec specifications;
 * architecture documents;
 * ADRs;
 * implementation plans;
@@ -279,6 +285,7 @@ A estrutura mínima deve ser:
 │   ├── AGENTS.md
 │   │
 │   ├── agents/
+│   │   ├── po/
 │   │   ├── architect/
 │   │   ├── developer/
 │   │   ├── tester/
@@ -288,6 +295,7 @@ A estrutura mínima deve ser:
 │   │   └── release/
 │   │
 │   ├── rules/
+│   │   ├── jira-card-lifecycle.md
 │   │   ├── architecture.md
 │   │   ├── coding-standards.md
 │   │   ├── testing.md
@@ -297,6 +305,9 @@ A estrutura mínima deve ser:
 │   │   └── git.md
 │   │
 │   ├── skills/
+│   │   ├── brainstorming/
+│   │   ├── escrever-prd/
+│   │   ├── escrever-trd/
 │   │   ├── requirements-analysis/
 │   │   ├── specification/
 │   │   ├── architecture-design/
@@ -321,13 +332,15 @@ A estrutura mínima deve ser:
 │   │   └── full-cycle.md
 │   │
 │   ├── templates/
+│   │   ├── AGENTS.operational.md
 │   │   ├── specification.md
 │   │   ├── architecture.md
 │   │   ├── adr.md
 │   │   ├── implementation-plan.md
 │   │   ├── test-plan.md
 │   │   ├── review.md
-│   │   └── release-notes.md
+│   │   ├── release-notes.md
+│   │   └── handoff.yaml
 │   │
 │   ├── languages/
 │   │   └── <language>/
@@ -342,6 +355,8 @@ A estrutura mínima deve ser:
 │       └── language.yaml
 │
 └── docs/
+    ├── prds/
+    ├── trd.md
     ├── specs/
     ├── architecture/
     ├── decisions/
@@ -359,82 +374,67 @@ A estrutura específica do código do aplicativo deve ser determinada pela lingu
 
 O bootstrap é a primeira etapa executada pelo harness.
 
-Seu objetivo é compreender o projeto antes de criar o skeleton.
+Seu objetivo é compreender o projeto antes de criar o skeleton. **Não criar nenhum arquivo ou diretório antes de concluir o alinhamento com o usuário.**
 
 ---
 
-## 8.2 Entrevista obrigatória
+## 8.2 Entrevista Obrigatória (Project Bootstrap Interview)
 
-Antes de criar qualquer estrutura, o agente deve perguntar:
+Antes de criar qualquer estrutura, o agente deve formular obrigatoriamente as 5 perguntas fundamentais:
 
-### Projeto
-
+### 1. Descrição e Propósito do Projeto
 ```text
 Qual é a descrição do projeto?
-
 Explique:
 - o que o sistema fará;
 - quem utilizará;
-- qual problema pretende resolver.
+- qual problema pretende resolver;
+- quais as expectativas para a governança do harness.
 ```
 
-### Linguagem
-
+### 2. Linguagem e Ecossistema
 ```text
 Qual linguagem será utilizada?
+Exemplos: Python, Go, TypeScript/JavaScript, Java, Rust, C#, PHP, C, C++, Ruby, etc.
+(A linguagem não tem status especial; o agente nunca deve assumir nenhuma stack por padrão).
 ```
 
-Exemplos:
-
-```text
-Python
-Go
-Java
-PHP
-C
-C++
-Rust
-TypeScript
-etc.
-```
-
-O agente nunca deve assumir Python.
-
-### Pasta do Projeto
-
+### 3. Pasta do Projeto
 ```text
 Qual é o caminho da pasta onde ficará o projeto?
+Exemplos:
+- /caminho/absoluto/do/projeto (novo ou existente)
+- ./ (diretório atual)
 ```
 
-Exemplos:
-
+### 4. Perfil e Integração do Jira
 ```text
-/caminho/absoluto/do/projeto
-./ (diretório atual)
+Qual o Nome e a Chave do Espaço no Jira (ex: PROJ)?
+Qual o seu domínio Atlassian (ex: seu-dominio.atlassian.net)?
+Qual o e-mail/usuário do Jira?
+Onde está o token de API (arquivo local seguro ou variável de ambiente)?
+```
+
+### 5. Perfil e Repositório do GitHub
+```text
+Qual o Nome do repositório no GitHub?
+Qual o Nome do perfil de usuário ou organização no GitHub (suporte a qualquer conta)?
+O repositório será Privado ou Público?
 ```
 
 ---
 
-## 8.3 Coleta adicional
+## 8.3 Bootstrap Adaptativo ("Ask Only What Is Necessary")
 
-Após receber descrição e linguagem, o harness deve inspecionar o projeto.
-
-Deve identificar:
+Após receber as 5 respostas fundamentais, o harness avalia a stack selecionada e pergunta **apenas o estritamente necessário**, evitando perguntas desnecessárias ou engessamento prévio:
 
 * versão da linguagem;
-* framework;
-* package manager;
-* build system;
-* estrutura de diretórios;
-* testes;
-* lint;
-* formatter;
-* type checker;
-* CI/CD;
-* documentação;
-* configuração existente.
+* framework desejado;
+* package manager / build system;
+* existência de banco de dados, frontend ou integrações externas;
+* existência de código ou estrutura pré-existente (cenário Greenfield vs Brownfield).
 
-O agente deve perguntar somente informações que não possam ser determinadas de maneira confiável por inspeção.
+O agente deve perguntar somente informações que não possam ser determinadas de maneira confiável por inspeção ou alinhamento prévio.
 
 ---
 
@@ -547,6 +547,9 @@ Skills representam capacidades específicas.
 Exemplos:
 
 ```text
+brainstorming
+escrever-prd
+escrever-trd
 requirements-analysis
 specification
 architecture-design
@@ -574,74 +577,77 @@ Failure Conditions
 
 # 14. Agents
 
-O harness deverá possuir agentes especializados.
+O harness deverá possuir agentes especializados com gate estrito de papéis.
+
+## Product Owner (PO)
+
+Responsável por:
+
+* discovery do espaço do problema com o humano;
+* condução de brainstorming com Hard-Gates;
+* elaboração e ciclo de vida de PRDs em `docs/prds/`;
+* definição de regras de negócio, personas e User Stories;
+* critérios de aceitação de negócio (sem detalhar stack ou implementação técnica).
 
 ## Architect
 
 Responsável por:
 
-* análise de requisitos;
-* arquitetura;
-* componentes;
-* dependências;
-* riscos;
-* ADRs.
+* sincronização do Technical Requirements Document (`docs/trd.md`);
+* autoria de especificações executáveis na metodologia OpenSPEC (`docs/specs/`);
+* arquitetura, modelagem de componentes e schemas;
+* dependências e isolamento de segredos (Zero Trust);
+* riscos e registros de decisões de arquitetura (ADRs).
 
 ## Developer
 
 Responsável por:
 
-* implementação;
-* testes unitários;
-* aderência à specification.
+* implementação de código;
+* testes unitários herméticos;
+* aderência estrita à especificação OpenSPEC.
 
 ## Tester
 
 Responsável por:
 
-* estratégia de testes;
-* testes;
-* execução;
-* análise de falhas.
+* estratégia de testes herméticos;
+* execução da suíte de testes e cobertura mínima;
+* análise de regressões e falhas.
 
 ## Reviewer
 
 Responsável por:
 
-* revisão;
-* bugs;
-* regressões;
-* aderência à specification;
-* problemas arquiteturais.
+* revisão estática rigorosa;
+* detecção de bugs e vulnerabilidades;
+* conformidade com padrões de código;
+* apontamentos pontuais no Jira em caso de desvios.
 
 ## Security
 
 Responsável por:
 
-* vulnerabilidades;
-* autenticação;
-* autorização;
-* secrets;
-* exposição de dados;
-* dependências.
+* auditoria de vulnerabilidades;
+* autenticação e autorização;
+* isolamento de secrets e credenciais;
+* auditoria de dependências.
 
 ## Documentation
 
 Responsável por:
 
-* documentação;
-* specifications;
-* ADRs;
-* release notes.
+* sincronização técnica contínua;
+* consistência entre código real e docs;
+* guias de API e manuais.
 
 ## Release
 
 Responsável por:
 
-* validação final;
-* release;
-* versionamento;
-* documentação de release.
+* validação final e testes de fumaça;
+* versionamento semântico e tags Git;
+* release notes e changelog.
 
 ---
 
@@ -681,16 +687,18 @@ full-cycle
 
 # 16. Full Cycle
 
-O workflow completo deverá seguir:
+O workflow completo deverá seguir rigorosamente o encadeamento:
 
 ```text
-Discovery
+Brainstorming (Hard-Gate de Alinhamento)
 ↓
-Specification
+PRD (Product Requirements Document - Agente P.O.)
 ↓
-Architecture
+TRD (Technical Requirements Document & ADRs - Agente Architect)
 ↓
-Planning
+OpenSPEC (Especificação Formal Executável)
+↓
+Architecture & Planning
 ↓
 Implementation
 ↓
@@ -814,58 +822,65 @@ Organização:
 
 ```text
 docs/
-├── specs/
-├── architecture/
-├── decisions/
-├── execution/
-└── references/
+├── prds/          # Product Requirements Documents (escritos pelo P.O.)
+├── trd.md         # Technical Requirements Document global (mantido pelo Architect)
+├── specs/         # Especificações executáveis OpenSPEC
+├── architecture/  # Desenhos de módulos, fluxos e topologias
+├── decisions/     # Architecture Decision Records (ADRs)
+├── execution/     # Planos de implementação e handoffs entre agentes
+└── references/    # Documentações técnicas e discovery drafts
 ```
 
 ---
 
-# 21. Specification
+# 21. Specification (Metodologia OpenSPEC)
 
-Uma specification deve possuir:
+Uma especificação no padrão **OpenSPEC** é um documento executável que traduz as intenções de negócio do PRD e as diretrizes do TRD em contratos de implementação testáveis.
+
+> **Hard-Gate:** Os agentes estão **estritamente proibidos** de criar uma OpenSPEC antes que o PRD correspondente (`docs/prds/`) e o TRD global (`docs/trd.md`) estejam aprovados e sincronizados.
+
+Estrutura canônica de uma OpenSPEC:
 
 ```markdown
-# Specification
+---
+type: openspec
+version: 1.0.0
+id: SPEC-{{JIRA_KEY}}-001
+jira: "{{JIRA_KEY}}"
+prd_ref: "docs/prds/PRD-NNN.md"
+trd_ref: "docs/trd.md"
+status: draft # draft | in_review | approved
+author: "Architect Agent"
+---
 
-## Metadata
+# OpenSPEC: [{{JIRA_KEY}}] — [Título da Funcionalidade]
 
-## Objective
+## 1. Rastreabilidade & Fontes de Verdade
+- Jira Issue
+- PRD de Origem (Regras de Negócio)
+- TRD Global (Diretrizes e Stack)
+- ADRs Vinculadas
 
-## Context
+## 2. Visão Geral & Escopo
+- Problema de Negócio (PRD)
+- Solução Técnica (TRD)
+- Limites de Escopo (In/Out)
 
-## Functional Requirements
+## 3. Requisitos Funcionais (RF - Derivados do PRD)
+- RF-001 (US01): Comportamento esperado e regras de negócio
 
-## Non-Functional Requirements
+## 4. Contratos Técnicos & Schemas (Derivados do TRD)
+- Endpoints, interfaces, DTOs e eventos
+- Payload schemas e modelos de persistência
 
-## Business Rules
+## 5. Casos de Borda e Tratamento de Exceções
+- Tabela de erros, fallbacks e códigos de resposta
 
-## User Flows
+## 6. Critérios de Aceitação & Cenários de Teste (Given-When-Then)
+- Cenários formais de caminho feliz e tratamento de falhas
 
-## Edge Cases
-
-## Acceptance Criteria
-
-## Technical Constraints
-
-## Dependencies
-
-## Risks
-
-## Open Questions
-
-## References
-```
-
-Metadata mínima:
-
-```yaml
-jira: PROJ-123
-type: specification
-status: draft
-version: 1
+## 7. Matriz de Verificação (Quality Gate OpenSPEC)
+- Checklist formal de conformidade antes da transição de status
 ```
 
 ---
