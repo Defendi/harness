@@ -1,0 +1,60 @@
+harness:
+  version: "1.1.0"
+  schema: "https://defendi.eng/schemas/harness-v1.json"
+
+project:
+  name: "nome-do-projeto"
+  description: "Descrição detalhada do projeto coletada durante o bootstrap"
+  language: "python" # python | typescript | go | etc.
+  language_version: ">=3.12"
+  framework: "fastapi"
+
+jira:
+  enabled: true
+  project_key: "PROJ"
+  base_url: "https://seu-dominio.atlassian.net"
+  enforce_traceability: true
+
+github:
+  owner: "organizacao-ou-usuario"
+  repo: "nome-do-repositorio"
+  default_branch: "main"
+
+documentation:
+  root: "docs"
+  specs_dir: "docs/specs"
+  architecture_dir: "docs/architecture"
+  decisions_dir: "docs/decisions"
+  execution_dir: "docs/execution"
+
+quality_gates:
+  enforce_strict: true
+  gates:
+    specification_gate:
+      required_artifacts:
+        - "docs/specs/{JIRA_ISSUE}.md"
+      approval_required: true
+
+    architecture_gate:
+      required_artifacts:
+        - "docs/architecture/{JIRA_ISSUE}.md"
+      require_adr_on_architectural_changes: true
+
+    implementation_gate:
+      commands_source: "language.yaml:quality_gates.implementation"
+      fail_fast: true
+
+    testing_gate:
+      commands_source: "language.yaml:quality_gates.testing"
+      min_coverage_percent: 80
+      block_on_unstable_tests: true
+
+    review_gate:
+      required_artifacts:
+        - "docs/execution/{JIRA_ISSUE}-review.md"
+      prohibit_self_review: true
+
+    release_gate:
+      commands_source: "language.yaml:commands.build"
+      require_clean_git_tree: true
+      require_signed_tags: false

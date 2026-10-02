@@ -1,0 +1,54 @@
+# Schema e Manifesto Canônico de Transição de Estado e Handoff entre Agentes
+# Localização esperada no projeto: docs/execution/handoff-[PROJ-XXX].yaml
+
+schema_version: "1.0"
+jira_issue: "PROJ-XXX"
+project: "nome-do-projeto"
+timestamp: "2026-10-02T18:00:00Z"
+
+lifecycle:
+  phase: "TESTING" # DISCOVERY | SPECIFICATION | ARCHITECTURE | PLANNING | IMPLEMENTATION | TESTING | REVIEW | DOCUMENTATION | RELEASE | DONE
+  previous_agent: "developer"
+  next_agent: "tester"
+
+context:
+  summary: "Implementação das entidades e serviços de autenticação concluída com testes unitários."
+  branch: "feat/PROJ-XXX-auth-service"
+  last_commit: "abc1234"
+
+artifacts:
+  specification: "docs/specs/PROJ-XXX.md"
+  architecture: "docs/architecture/PROJ-XXX.md"
+  implementation_plan: "docs/execution/PROJ-XXX-plan.md"
+  test_plan: "docs/execution/PROJ-XXX-test-plan.md"
+  modified_files:
+    - "src/domain/auth.py"
+    - "src/services/auth_service.py"
+    - "tests/unit/test_auth_service.py"
+
+quality_gates:
+  specification_gate:
+    status: "PASSED"
+    evidence: "Aprovado em docs/specs/PROJ-XXX.md"
+  architecture_gate:
+    status: "PASSED"
+    evidence: "Aprovado com ADR-0004"
+  implementation_gate:
+    status: "PASSED"
+    commands_executed:
+      - command: "uv run ruff check ."
+        exit_code: 0
+      - command: "uv run mypy src/"
+        exit_code: 0
+  testing_gate:
+    status: "PENDING"
+    assigned_to: "tester"
+  review_gate:
+    status: "PENDING"
+
+open_blockers: []
+
+instructions_for_next_agent:
+  - "Executar suíte completa de testes com cobertura."
+  - "Validar casos de borda de token expirado e chave pública corrompida."
+  - "Atualizar o status no Jira com comentário estruturado de handoff."

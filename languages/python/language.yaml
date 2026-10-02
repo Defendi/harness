@@ -1,0 +1,43 @@
+language:
+  id: python
+  name: Python
+  version: ">=3.11"
+  default_version: "3.12"
+
+tooling:
+  package_manager: uv
+  runtime: cpython
+  test_runner: pytest
+  linter: ruff
+  formatter: ruff
+  type_checker: mypy
+  security_audit: pip-audit
+
+commands:
+  install: "uv sync --all-extras --dev"
+  test: "uv run pytest -v"
+  test_coverage: "uv run pytest --cov=src --cov-report=term-missing --cov-fail-under=80"
+  lint: "uv run ruff check ."
+  lint_fix: "uv run ruff check --fix ."
+  format: "uv run ruff format ."
+  format_check: "uv run ruff format --check ."
+  typecheck: "uv run mypy src/"
+  security: "uv run pip-audit"
+  build: "uv build"
+
+structure:
+  source_dir: "src"
+  tests_dir: "tests"
+  unit_tests_dir: "tests/unit"
+  integration_tests_dir: "tests/integration"
+  config_file: "pyproject.toml"
+
+quality_gates:
+  implementation:
+    - "uv run ruff check ."
+    - "uv run ruff format --check ."
+    - "uv run mypy src/"
+  testing:
+    - "uv run pytest -v --cov=src --cov-fail-under=80"
+  security:
+    - "uv run pip-audit"

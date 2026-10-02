@@ -1,8 +1,8 @@
 ---
 type: specification
 id: SPEC-HARNESS-001
-status: draft
-version: 1.0
+status: approved
+version: 1.1
 domain: software-engineering
 -------------------------
 ---
@@ -401,6 +401,19 @@ etc.
 
 O agente nunca deve assumir Python.
 
+### Pasta do Projeto
+
+```text
+Qual é o caminho da pasta onde ficará o projeto?
+```
+
+Exemplos:
+
+```text
+/caminho/absoluto/do/projeto
+./ (diretório atual)
+```
+
 ---
 
 ## 8.3 Coleta adicional
@@ -729,7 +742,7 @@ A conclusão do código não implica conclusão do trabalho.
 
 # 18. Quality Gates
 
-Deverão existir gates independentes:
+Deverão existir gates independentes e executáveis:
 
 ```text
 Specification Gate
@@ -740,19 +753,26 @@ Review Gate
 Release Gate
 ```
 
-Cada gate deve possuir critérios verificáveis.
+Cada gate deve possuir critérios verificáveis e vinculados a comandos determinísticos da stack tecnológica do projeto.
 
-Exemplo:
+Exemplo de mapeamento executável:
 
 ```yaml
-gate:
-  name: testing
-  required:
-    - tests_pass
-    - no_blocking_failures
+quality_gates:
+  implementation_gate:
+    commands:
+      - "uv run ruff check ."
+      - "uv run mypy src/"
+  testing_gate:
+    min_coverage_percent: 80
+    commands:
+      - "uv run pytest -v --cov=src --cov-fail-under=80"
+  security_gate:
+    commands:
+      - "uv run pip-audit"
 ```
 
-Os critérios devem ser configuráveis por projeto.
+A transição de status no Jira é estritamente condicionada ao exit code `0` de todos os comandos obrigatórios do gate correspondente.
 
 ---
 
@@ -945,33 +965,36 @@ Nenhuma etapa deve depender exclusivamente da memória do agente.
 
 # 25. Agent Handoff
 
-O handoff entre agentes deverá ser explícito.
-
-Cada agente deverá informar:
+O handoff entre agentes deverá ser explícito e estruturado via manifesto persistente em arquivo:
 
 ```text
-Input
-Actions
-Artifacts Produced
-Validation
-Next Agent
+docs/execution/handoff-[PROJ-XXX].yaml
 ```
 
-Exemplo:
+Esse manifesto garante que a troca de agentes ou de sessões não dependa da memória volátil da conversa.
 
-```text
-Input:
-PROJ-123
+Estrutura canônica do manifesto de handoff:
 
-Artifacts:
-docs/architecture/PROJ-123.md
-
-Validation:
-Architecture approved
-
-Next Agent:
-Developer
+```yaml
+schema_version: "1.0"
+jira_issue: "PROJ-123"
+lifecycle:
+  phase: "TESTING"
+  previous_agent: "developer"
+  next_agent: "tester"
+artifacts:
+  specification: "docs/specs/PROJ-123.md"
+  architecture: "docs/architecture/PROJ-123.md"
+  implementation_plan: "docs/execution/PROJ-123-plan.md"
+quality_gates:
+  implementation_gate: "PASSED"
+  testing_gate: "PENDING"
+instructions_for_next_agent:
+  - "Executar suíte de testes com cobertura."
+  - "Validar casos de erro e edge cases."
 ```
+
+O agente receptor lê primordialmente o arquivo de handoff e os artefatos apontados, preservando a janela de contexto.
 
 ---
 
@@ -1356,4 +1379,29 @@ Development Lifecycle
 
 O harness não deve assumir Python como linguagem padrão.
 
-Python é apenas o primeiro Language Profile a ser implementado.
+Python é apenas um dos Language Profiles canônicos disponíveis (junto a TypeScript, Go e outros).
+
+---
+
+# 41. Harness Doctor (Auditoria de Sanidade)
+
+O harness deve disponibilizar um mecanismo automatizado de verificação de sanidade (`scripts/harness-doctor.py`), capaz de auditar:
+
+* presença e integridade de `AGENTS.md` e adaptadores de fornecedor;
+* presença e validade de `.agents/config/harness.yaml`;
+* existência e consistência do Language Profile selecionado;
+* estrutura obrigatória de persistência em `docs/`;
+* integridade dos diretórios de rules e workflows;
+* retorno determinístico de códigos de saída (`0` para sucesso, `1` para falha) para integração com CI/CD.
+
+---
+
+# 42. Harness Upgrade Path
+
+Quando o padrão de engenharia corporativo evoluir, projetos existentes devem ser atualizados através do workflow formal de upgrade:
+
+* preservação integral do código de negócio da aplicação (`src/`, `cmd/`, etc.);
+* reconciliação (merge) sem sobrescrita destrutiva de configurações customizadas em `harness.yaml`;
+* atualização das regras universais (`.agents/rules/`), workflows e templates;
+* revalidação obrigatória de sanidade via `harness-doctor`.
+

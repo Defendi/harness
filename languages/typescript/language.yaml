@@ -1,0 +1,42 @@
+language:
+  id: typescript
+  name: TypeScript / Node.js
+  version: ">=20.0.0"
+  default_version: "22.x"
+
+tooling:
+  package_manager: pnpm
+  runtime: nodejs
+  test_runner: vitest
+  linter: biome
+  formatter: biome
+  type_checker: tsc
+  security_audit: pnpm audit
+
+commands:
+  install: "pnpm install --frozen-lockfile"
+  test: "pnpm test"
+  test_coverage: "pnpm test:coverage"
+  lint: "pnpm biome check src/ tests/"
+  lint_fix: "pnpm biome check --apply src/ tests/"
+  format: "pnpm biome format --write src/ tests/"
+  format_check: "pnpm biome format src/ tests/"
+  typecheck: "pnpm tsc --noEmit"
+  security: "pnpm audit --audit-level=high"
+  build: "pnpm build"
+
+structure:
+  source_dir: "src"
+  tests_dir: "tests"
+  unit_tests_dir: "tests/unit"
+  integration_tests_dir: "tests/integration"
+  config_file: "package.json"
+
+quality_gates:
+  implementation:
+    - "pnpm biome check src/ tests/"
+    - "pnpm tsc --noEmit"
+  testing:
+    - "pnpm test:coverage"
+  security:
+    - "pnpm audit --audit-level=high"

@@ -146,7 +146,22 @@ O agente não vai:
 A linguagem não possui status especial no harness.
 
 
-### Pergunta 3 — Espaço do Jira
+### Pergunta 3 — Pasta do Projeto
+
+Solicitar:
+
+```text
+Qual é o caminho da pasta onde ficará o projeto?
+
+Exemplos:
+- /caminho/absoluto/do/projeto
+- ./ (diretório atual)
+```
+
+PASTA_PROJETO = Preencha com o caminho absoluto ou relativo resolvido da pasta do projeto
+
+
+### Pergunta 4 — Espaço do Jira
 
 Solicitar:
 
@@ -161,7 +176,7 @@ API_TOKEN_JIRA = Preecha com o token encontrado no arquivo passado pelo usuário
 DOMINIO_JIRA = Preencha com a resposta do domínio atlassian
 ESPAÇO_JIRA = Preencha com o Nome do Espaço no jira
 
-### Pergunta 4 — Repositório do Github
+### Pergunta 5 — Repositório do Github
 
 Solicitar:
 
@@ -612,7 +627,8 @@ Estrutura:
 │   ├── implementation-plan.md
 │   ├── test-plan.md
 │   ├── review.md
-│   └── release-notes.md
+│   ├── release-notes.md
+│   └── handoff.yaml
 │
 ├── languages/
 │   └── <selected-language>/
@@ -1416,6 +1432,12 @@ Pergunte ao usuário:
 1. Qual é a descrição do projeto?
 
 2. Qual linguagem será utilizada?
+
+3. Qual é o caminho da pasta onde ficará o projeto?
+
+4. Qual o espaço, domínio, usuário e arquivo de token do Jira?
+
+5. Qual o repositório e perfil de usuário do GitHub?
 ```
 
 Aguarde as respostas.

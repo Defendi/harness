@@ -1,0 +1,41 @@
+language:
+  id: go
+  name: Go
+  version: ">=1.22"
+  default_version: "1.23"
+
+tooling:
+  package_manager: go-modules
+  runtime: go
+  test_runner: "go test"
+  linter: golangci-lint
+  formatter: gofmt
+  security_audit: govulncheck
+
+commands:
+  install: "go mod download && go mod tidy"
+  test: "go test -v -race ./..."
+  test_coverage: "go test -v -race -coverprofile=coverage.out -covermode=atomic ./... && go tool cover -func=coverage.out"
+  lint: "golangci-lint run ./..."
+  lint_fix: "golangci-lint run --fix ./..."
+  format: "gofmt -s -w ."
+  format_check: "test -z $(gofmt -l .)"
+  typecheck: "go vet ./..."
+  security: "govulncheck ./..."
+  build: "CGO_ENABLED=0 go build -ldflags=\"-s -w\" -o bin/app ./cmd/app"
+
+structure:
+  source_dir: "internal"
+  entrypoint_dir: "cmd"
+  tests_dir: "tests"
+  config_file: "go.mod"
+
+quality_gates:
+  implementation:
+    - "golangci-lint run ./..."
+    - "test -z $(gofmt -l .)"
+    - "go vet ./..."
+  testing:
+    - "go test -v -race ./..."
+  security:
+    - "govulncheck ./..."
