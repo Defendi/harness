@@ -2,9 +2,8 @@
 type: specification
 id: SPEC-HARNESS-001
 status: approved
-version: 1.1
+version: 2.0
 domain: software-engineering
--------------------------
 ---
 
 # Application Development Harness
@@ -1404,4 +1403,16 @@ Quando o padrão de engenharia corporativo evoluir, projetos existentes devem se
 * reconciliação (merge) sem sobrescrita destrutiva de configurações customizadas em `harness.yaml`;
 * atualização das regras universais (`.agents/rules/`), workflows e templates;
 * revalidação obrigatória de sanidade via `harness-doctor`.
+
+---
+
+# 43. Automação de Scaffolding e Ferramental de Engenharia
+
+Para eliminar latência e riscos de falhas manuais durante o bootstrap em ambientes assistidos por IA, o harness deve incorporar utilitários executáveis em `scripts/`:
+
+* **`scripts/harness-probe.py` (Sonda de Ambiente):** Autodescoberta de interpretadores instalados (Python, Node, Go), gerenciadores de pacotes (`uv`, `pip`, `pnpm`), e estados de autenticação (`gh`, `jira`), evitando suposições ou perguntas redundantes.
+* **`scripts/harness-init.py` (Scaffolding em Lote):** Gerador determinístico que popula a árvore completa (`.agents/`, `docs/`, contratos, templates e perfis) em menos de 1 segundo.
+* **`scripts/jira-setup.py` (Provisionador Jira):** Provisionamento idempotente de projetos, workflows canônicos e status de ciclo de vida via Jira Cloud REST API v3.
+* **`scripts/harness-doctor.py` (Auditor de Sanidade):** Auditoria estrita com 28 checagens para garantir conformidade antes de qualquer commit inicial.
+
 

@@ -1,6 +1,6 @@
 # Application Development Harness — Padrão de Engenharia Defendi
 
-Repositório de especificação canônica, catálogo de perfis, templates reutilizáveis e ferramentas de governança para criação do **Application Development Harness** nos projetos do ecossistema **Defendi**.
+Repositório de especificação canônica, catálogo completo de perfis, templates reutilizáveis e ferramentas de governança para criação e manutenção do **Application Development Harness** nos projetos do ecossistema **Defendi**.
 
 ---
 
@@ -16,18 +16,19 @@ Este repositório atua como a **fonte da verdade (Single Source of Truth)** para
 
 ## 📂 Estrutura e Catálogo do Repositório
 
-O repositório disponibiliza uma suíte completa de artefatos de referência prontos para uso:
+O repositório disponibiliza uma suíte completa de artefatos de referência e ferramental de automação:
 
 ```text
 .
-├── Padrão Engenharia Harness.md    # Especificação formal de engenharia (SPEC-HARNESS-001 v1.1)
-├── prompt.md                       # Master Prompt executável do Harness Engineer
+├── Padrão Engenharia Harness.md    # Especificação formal de engenharia (SPEC-HARNESS-001 v2.0)
+├── prompt.md                       # Master Prompt otimizado do Harness Engineer
 ├── README.md                       # Este guia de apresentação e governança
 │
 ├── config/                         # Modelos canônicos de configuração
 │   └── harness.yaml                # Template padrão com quality gates e integrações
 │
 ├── templates/                      # Templates padronizados de artefatos de engenharia
+│   ├── AGENTS.operational.md       # Template de .agents/AGENTS.md operacional
 │   ├── specification.md            # Modelo de especificação técnica e funcional
 │   ├── architecture.md             # Modelo de documento de arquitetura
 │   ├── adr.md                      # Modelo de Architecture Decision Record
@@ -37,10 +38,62 @@ O repositório disponibiliza uma suíte completa de artefatos de referência pro
 │   ├── release-notes.md            # Modelo de changelog e notas de versão
 │   └── handoff.yaml                # Manifesto estruturado de transição entre agentes
 │
+├── rules/                          # Catálogo oficial de regras modulares (.agents/rules/)
+│   ├── jira-card-lifecycle.md      # Ciclo de vida estrito e movimentação automática de cards Jira
+│   ├── architecture.md             # Princípios arquiteturais e isolamento de segredos
+│   ├── coding-standards.md         # Padrões de código, tipagem defensiva e linting
+│   ├── testing.md                  # Tríade hermética de testes e isolamento de mocks
+│   ├── security.md                 # Zero Trust, sanitização e isolamento de credenciais
+│   ├── documentation.md            # Sincronização contínua de documentação técnica
+│   ├── jira.md                     # Governança, rastreabilidade e taxonomia Jira
+│   └── git.md                      # Padrões de branches, Conventional Commits e segurança
+│
+├── skills/                         # Catálogo oficial de habilidades modulares (.agents/skills/)
+│   ├── requirements-analysis/      # Extração e validação de requisitos
+│   ├── specification/              # Formalização de especificações funcionais
+│   ├── architecture-design/        # Modelagem de sistemas e redação de ADRs
+│   ├── implementation/             # Implementação orientada a testes (TDD)
+│   ├── testing/                    # Execução da tríade hermética de testes
+│   ├── code-review/                # Inspeção estática de código e apontamentos
+│   ├── security-review/            # Auditoria de injeção e isolamento de credenciais
+│   ├── jira-management/            # Transições e comentários pontuais no Jira
+│   └── documentation/              # Manutenção de documentação sincronizada
+│
+├── workflows/                      # Workflows de ciclo de vida (.agents/workflows/)
+│   ├── bootstrap.md                # Inicialização e setup do harness
+│   ├── discovery.md                # Exploração do espaço do problema
+│   ├── specification.md            # Formalização de requisitos
+│   ├── architecture.md             # Desenho de módulos e ADRs
+│   ├── planning.md                 # Planejamento atômico e transição para "A Fazer"
+│   ├── implementation.md           # Desenvolvimento em feature branch
+│   ├── review.md                   # Code Review estático e auditoria
+│   ├── testing.md                  # Testes herméticos e validação QA
+│   ├── documentation.md            # Sincronização de documentação
+│   ├── release.md                  # Empacotamento, versionamento e tags
+│   ├── full-cycle.md               # Ciclo contínuo de ponta a ponta
+│   ├── quality-gates.md            # Execução de gates vinculados a comandos
+│   └── harness-upgrade.md          # Procedimento seguro de atualização do harness
+│
+├── agents/                         # Catálogo de subagentes especializados (.agents/agents/)
+│   ├── architect/AGENT.md          # Papel de Arquitetura e ADRs
+│   ├── developer/AGENT.md          # Papel de Desenvolvimento e Testes Unitários
+│   ├── tester/AGENT.md             # Papel de QA e Testes Herméticos
+│   ├── reviewer/AGENT.md           # Papel de Code Review
+│   ├── security/AGENT.md           # Papel de Segurança e Isolamento
+│   ├── documentation/AGENT.md      # Papel de Integridade Documental
+│   └── release/AGENT.md            # Papel de Versionamento e Entrega
+│
+├── adapters/                       # Adaptadores de Coding Agents (.agents/adapters/)
+│   ├── claude/ADAPTER.md           # Adapter Claude Code
+│   ├── gemini/ADAPTER.md           # Adapter Gemini / Antigravity
+│   └── opencode/ADAPTER.md         # Adapter OpenCode
+│
 ├── languages/                      # Catálogo oficial de Language Profiles
-│   ├── python/                     # uv, pytest, ruff, mypy, pip-audit
-│   │   ├── language.yaml
-│   │   └── rules.md
+│   ├── python/                     # Python 3.12+, FastMCP, pip/uv, ruff, mypy, pytest
+│   │   ├── PROFILE.md
+│   │   ├── rules.md
+│   │   ├── toolchain.md
+│   │   └── language.yaml
 │   ├── typescript/                 # pnpm, vitest, biome, tsc
 │   │   ├── language.yaml
 │   │   └── rules.md
@@ -48,16 +101,57 @@ O repositório disponibiliza uma suíte completa de artefatos de referência pro
 │       ├── language.yaml
 │       └── rules.md
 │
-├── rules/                          # Regras universais corporativas
-│   ├── git.md                      # Conventional Commits, nomenclatura de branch e safe changes
-│   └── jira.md                     # Ciclo de vida do card, comentários estruturados e MCP
-│
-├── workflows/                      # Workflows de processo e governança
-│   ├── quality-gates.md            # Execução de gates vinculados a comandos
-│   └── harness-upgrade.md          # Procedimento seguro de atualização do harness
-│
-└── scripts/                        # Ferramental e utilitários
-    └── harness-doctor.py           # Verificador autônomo de sanidade e conformidade
+└── scripts/                        # Ferramental de automação e engenharia
+    ├── harness-probe.py            # [NOVO] Sonda autônoma de ambiente e ferramentas
+    ├── harness-init.py             # [NOVO] Motor de scaffolding em lote instantâneo
+    ├── jira-setup.py               # [NOVO] Provisionador idempotente de projetos/workflows Jira
+    └── harness-doctor.py           # [ATUALIZADO] Auditor de conformidade com 28 checagens
+```
+
+---
+
+## 🛠️ Ferramental de Engenharia (`scripts/`)
+
+O repositório disponibiliza utilitários autônomos para acelerar o setup e a governança:
+
+### 1. Sonda de Ambiente (`harness-probe.py`)
+Inspeciona o ambiente local antes do bootstrap para identificar interpretadores, gerenciadores de pacotes e status de autenticação:
+```bash
+python3 scripts/harness-probe.py
+# Ou para consumo programático em JSON:
+python3 scripts/harness-probe.py --json
+```
+
+### 2. Inicializador em Lote (`harness-init.py`)
+Gera o esqueleto completo do Application Development Harness em **menos de 1 segundo**, eliminando a necessidade de dezenas de tool calls lentas de LLM:
+```bash
+python3 scripts/harness-init.py \
+  --target-dir /caminho/do/projeto \
+  --project-name "McpSentinel" \
+  --description "Servidor MCP para acesso controlado à infraestrutura" \
+  --language python \
+  --framework FastMCP \
+  --jira-key MCPS \
+  --jira-domain "mygotryx.atlassian.net" \
+  --jira-user "usuario@empresa.com" \
+  --github-repo "org/McpSentinel"
+```
+
+### 3. Provisionador Jira Cloud (`jira-setup.py`)
+Cria o projeto no Jira Cloud via REST API v3, configura os 8 status canônicos e associa o Workflow Scheme oficial de forma idempotente:
+```bash
+python3 scripts/jira-setup.py \
+  --domain "seu-dominio.atlassian.net" \
+  --user "seu-email@dominio.com" \
+  --token-file "token_jira.txt" \
+  --project-key "MCPS" \
+  --project-name "McpSentinel"
+```
+
+### 4. Auditor de Sanidade (`harness-doctor.py`)
+Valida a integridade completa de qualquer projeto com 28 checagens estritas:
+```bash
+python3 scripts/harness-doctor.py /caminho/do/projeto
 ```
 
 ---
@@ -65,20 +159,19 @@ O repositório disponibiliza uma suíte completa de artefatos de referência pro
 ## 🏛️ Princípios Arquiteturais Centrais
 
 1. **Separação entre Contrato e Implementação:**
-   - O contrato operacional público do projeto reside no arquivo raiz `AGENTS.md`.
-   - A infraestrutura interna (regras, skills, workflows, templates) reside sob `.agents/`.
+   - O contrato operacional público reside no arquivo raiz `AGENTS.md`.
+   - A infraestrutura interna (regras, skills, workflows, templates, agents) reside sob `.agents/`.
 2. **Language Agnostic (Agnóstico a Linguagem):**
-   - O core do harness não assume tecnologias. Cada projeto conecta seu perfil tecnológico a partir do catálogo `languages/`.
+   - O core do harness não assume tecnologias. Cada projeto conecta seu perfil a partir do catálogo `languages/`.
 3. **Agent & LLM Agnostic:**
-   - O core opera com neutralidade. Adaptadores como `CLAUDE.md` e `GEMINI.md` apenas traduzem a descoberta e apontam para `AGENTS.md`.
-4. **Specification Driven (Orientado a Especificações):**
-   - Toda alteração técnica relevante parte de um card no Jira e de uma especificação formal documentada em `docs/specs/`.
+   - Neutralidade absoluta de provedores. Adaptadores como `CLAUDE.md` e `GEMINI.md` apenas traduzem a descoberta e apontam para `AGENTS.md`.
+4. **Gate Estrito de Papéis:**
+   - O agente principal atua **exclusivamente como orquestrador** e despachante. Não inspeciona código para programar diretamente.
+   - Implementação vai para `developer`, revisão para `reviewer`, testes para `tester`.
 5. **Estado Persistente (Persistent State):**
-   - Todas as decisões, planos de execução e evidências de testes residem em arquivos versionados em `docs/`, imunes ao esquecimento ou limite de contexto de sessões de chat.
-6. **Handoff Estruturado:**
-   - Transições de fase utilizam o manifesto `docs/execution/handoff-[PROJ-XXX].yaml`, permitindo troca contínua entre subagentes sem perda de contexto.
-7. **Quality Gates Executáveis:**
-   - Transições de status exigem a execução e o sucesso (exit code `0`) dos comandos de linter, testes e segurança mapeados no profile da linguagem.
+   - Todo conhecimento, decisão arquitetural (ADR) e plano de teste reside em arquivos versionados em `docs/`.
+6. **Quality Gates Executáveis:**
+   - A transição de status exige o sucesso determinístico (exit code `0`) da tríade hermética (linter, tipagem e testes).
 
 ---
 
@@ -90,144 +183,19 @@ flowchart TD
     Specification --> Architecture["3. Architecture"]
     Architecture --> Planning["4. Planning"]
     Planning --> Implementation["5. Implementation"]
-    Implementation --> Testing["6. Testing"]
-    Testing --> Review["7. Review"]
-    Review --> Documentation["8. Documentation"]
-    Documentation --> Validation["9. Validation"]
-    Validation --> Release["10. Release"]
+    Implementation --> Review["6. Review"]
+    Review --> Testing["7. Testing"]
+    Testing --> Documentation["8. Documentation"]
+    Documentation --> Release["9. Release"]
 ```
 
-### Rastreabilidade Ponta a Ponta com Jira
-
-$$\text{Jira Issue} \longrightarrow \text{Specification} \longrightarrow \text{Architecture / ADR} \longrightarrow \text{Plan} \longrightarrow \text{Code} \longrightarrow \text{Tests} \longrightarrow \text{Review} \longrightarrow \text{Release}$$
-
 ---
 
-## 👥 Especialização de Papéis (Subagentes)
-
-* **Orquestrador (Agente Principal):** Coordena a sessão, atualiza status e comentários no Jira e despacha subagentes. **Não inspeciona código para programar diretamente**.
-* **Architect:** Conduz análise de requisitos, desenho de módulos, diagramas e elaboração de ADRs.
-* **Developer:** Implementação orientada a testes unitários (TDD) e aderente à especificação.
-* **Tester:** Estratégia de testes herméticos, testes de integração, cobertura mínima e validação de regressões.
-* **Reviewer:** Code review rigoroso, detecção de bugs residuais e conformidade com padrões de qualidade.
-* **Security:** Auditoria de vulnerabilidades de dependências, sanitização e prevenção de vazamento de secrets.
-* **Documentation:** Atualização contínua de documentações, manuais e guias de API.
-* **Release:** Geração de release notes, versionamento semântico e tags Git.
-
----
-
-## 🩺 Harness Doctor (Auditoria de Sanidade)
-
-O repositório fornece a ferramenta de auditoria [`scripts/harness-doctor.py`](./scripts/harness-doctor.py) para validar a integridade de qualquer projeto que utilize o harness:
-
-```bash
-# Executar a auditoria na raiz de um projeto:
-python3 scripts/harness-doctor.py /caminho/do/projeto
-```
-
-O script verifica:
-- [x] Contratos e adaptadores raiz (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `README.md`).
-- [x] Diretório `.agents/` e arquivo operacional `.agents/AGENTS.md`.
-- [x] Presença e integridade de `.agents/config/harness.yaml`.
-- [x] Presença de Language Profile ativo em `.agents/languages/`.
-- [x] Estrutura obrigatória de documentação persistente em `docs/` (`specs/`, `architecture/`, `decisions/`, `execution/`).
-- [x] Regras de versionamento Git e integração com Jira.
-- [x] Retorno de códigos de saída compatíveis com CI/CD (`exit code 0` ou `1`).
-
----
-
-## 💡 Guia Prático: Como Utilizar o Master Prompt (`prompt.md`)
-
-O arquivo [`prompt.md`](./prompt.md) é o motor de inicialização do harness. Ele instrui qualquer coding agent a atuar como um **Harness Engineer** especializado, conduzindo o bootstrap estruturado sem pular etapas ou tomar decisões precipitadas sobre a stack.
-
----
-
-### 1. Pré-Requisitos
-Antes de executar o prompt, certifique-se de ter em mãos:
-- [ ] O caminho (diretório) do projeto (novo ou existente).
-- [ ] Acesso ao Jira: domínio Atlassian (`exemplo.atlassian.net`), nome do espaço/projeto, e-mail do usuário e token de API salvo em arquivo local seguro.
-- [ ] Acesso ao GitHub: nome do repositório e nome de usuário ou organização.
-- [ ] Um coding agent instalado ou ativo (Claude Code, Gemini CLI / Antigravity, Cursor, OpenCode, etc.).
-
----
-
-### 2. Formas de Invocação do Prompt
-
-#### Opção A: Via Claude Code / Gemini CLI / Terminal
-Se você utiliza ferramentas CLI no terminal, pode passar o prompt diretamente como contexto inicial:
-
-```bash
-# Exemplo com Claude Code apontando para o prompt:
-claude "Leia as instruções de prompt.md e inicie o bootstrap do harness"
-
-# Ou alimentando o conteúdo:
-cat prompt.md | claude
-```
-
-#### Opção B: Via Chat / IDE (Antigravity, Cursor, Copilot Workspace)
-1. Abra a pasta do projeto (ou o repositório deste padrão) no seu editor.
-2. Abra uma nova sessão de chat com o agente.
-3. Copie o conteúdo integral de [`prompt.md`](./prompt.md) e envie como a primeira mensagem:
-   > *"Você é o Harness Engineer. Siga rigorosamente as instruções abaixo e inicie o Project Bootstrap Interview:"*  
-   > *(colar o conteúdo do prompt.md)*
-
----
-
-### 3. Respondendo à Entrevista do Bootstrap (Exemplo Prático)
-
-O agente **não criará nenhum arquivo de imediato**. Ele fará obrigatoriamente as 5 perguntas iniciais. Você pode responder todas de uma só vez para agilizar o processo.
-
-**Exemplo de resposta que você pode fornecer ao agente:**
+## 📋 Regras de Movimentação dos Cards no Jira
 
 ```text
-1. Descrição do projeto:
-API REST para gestão de faturas e reconciliação bancária de pagamentos via PIX e cartão, consumida pelo time financeiro do Defendi.
-
-2. Linguagem:
-Python
-
-3. Pasta onde ficará o projeto:
-/mnt/home/alexandre/Projetos/faturamento-api
-
-4. Dados do Jira:
-- Espaço: FAT
-- Domínio: defendi.atlassian.net
-- Usuário: alexandre@defendi.com.br
-- Arquivo com token: ~/.secrets/atlassian_token.txt
-
-5. Dados do GitHub:
-- Repositório: faturamento-api
-- Perfil/Organização: Defendi
+Backlog (10012) ➔ A Fazer (10057) ➔ Em Andamento (3) ➔ Pronto para Review (10099) ➔ Review (10100) ➔ Pronto Para Testar (10101) ➔ Testando (10102) ➔ Concluído (10011)
 ```
-
----
-
-### 4. O Que o Agente Fará em Seguida (Execução Automática)
-
-Após receber suas respostas, o agente executará o seguinte fluxo determinístico:
-
-1. **Inspeção do Diretório:** Acessará o caminho informado (`PASTA_PROJETO`) para detectar se já existem arquivos, frameworks (`FastAPI`, `Django`, `Express`, etc.) ou gerenciadores de pacotes (`uv`, `pnpm`, `go mod`).
-2. **Seleção de Profile:** Carregará o Language Profile correspondente em [`languages/`](./languages) (ex.: Python com `uv` e `ruff`).
-3. **Criação da Infraestrutura do Harness:**
-   - Criação de `AGENTS.md` (contrato canônico na raiz do projeto).
-   - Criação dos adaptadores `CLAUDE.md` e `GEMINI.md`.
-   - Criação da pasta `.agents/` com regras, workflows, templates e configuração (`harness.yaml`).
-   - Criação da pasta `docs/` estruturada (`specs/`, `architecture/`, `decisions/`, `execution/`).
-4. **Verificação de Sanidade:** O agente copiará e executará [`scripts/harness-doctor.py`](./scripts/harness-doctor.py) na pasta do projeto para validar que 100% dos critérios e arquivos obrigatórios estão presentes.
-
----
-
-### 5. Iniciando a Primeira Demanda após o Bootstrap
-Com o harness criado, o agente orquestrador opera orientado a cards do Jira:
-1. Você informa o card: `"Vamos trabalhar no card FAT-101: Adicionar endpoint de estorno"`.
-2. O agente valida o MCP Atlassian, delega a especificação ao subagente **Architect** em `docs/specs/FAT-101.md`, e conduz a tarefa através dos Quality Gates até o `Release`.
-
----
-
-## 🔄 Como Atualizar um Projeto Existente (Upgrade Path)
-
-Para projetos que já utilizam uma versão anterior do harness:
-1. Consulte o guia [`workflows/harness-upgrade.md`](./workflows/harness-upgrade.md).
-2. Crie um branch de manutenção (`chore/harness-upgrade-v1.1.0`).
-3. Sincronize as novas regras, workflows e templates a partir deste repositório sem modificar o código de negócio (`src/`, `cmd/`, etc.).
-4. Execute o `scripts/harness-doctor.py` e rode a suíte de testes da aplicação antes de abrir o Pull Request.
+- **Rejeição no Review:** comentários individuais pontuais no card e retorno imediato para `A Fazer`.
+- **Rejeição no QA:** comentários individuais pontuais no card e retorno imediato para `A Fazer`.
+- **Aprovação com Sugestões:** avança para o próximo estágio e sugestões viram novos cards em `Backlog`.

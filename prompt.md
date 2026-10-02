@@ -1459,9 +1459,23 @@ Identifique:
 * Jira;
 * ferramentas existentes.
 
+## Etapa 2 — Sonda e Contexto Complementar
+
+Antes de prosseguir, execute a sonda autônoma para inspecionar interpretadores e ferramentas:
+
+```bash
+python3 scripts/harness-probe.py
+```
+
+Identifique no ambiente:
+* interpretadores e versões instaladas no host;
+* gerenciadores de pacotes disponíveis (`uv`, `pip`, `pnpm`, `go`);
+* autenticação no GitHub (`gh auth status`) e Jira;
+* estrutura existente do diretório de destino.
+
 Pergunte somente informações que não possam ser determinadas de forma confiável pela inspeção.
 
-## Etapa 3 — Definição do profile
+## Etapa 3 — Definição do Profile
 
 Determine:
 
@@ -1473,19 +1487,50 @@ Toolchain
 Project Structure
 ```
 
-## Etapa 4 — Criação do harness
+## Etapa 4 — Criação do Harness (Scaffolding em Lote)
 
-Somente então criar:
+Em vez de criar dezenas de arquivos manualmente por tool calls consecutivas, execute o motor de inicialização do harness:
 
-```text
-AGENTS.md
-CLAUDE.md
-GEMINI.md
-.agents/
-docs/
+```bash
+python3 scripts/harness-init.py \
+  --target-dir <PASTA_PROJETO> \
+  --project-name "<NOME_PROJETO>" \
+  --description "<DESCRICAO>" \
+  --language "<LINGUAGEM>" \
+  --framework "<FRAMEWORK>" \
+  --jira-key "<ESPACO_JIRA>" \
+  --jira-domain "<DOMINIO_JIRA>" \
+  --jira-user "<USUARIO_JIRA>" \
+  --github-repo "<USUARIO_GITHUB>/<REPOSITORIO_GITHUB>"
 ```
 
-e os elementos correspondentes ao profile escolhido.
+O comando gera em menos de 1 segundo toda a infraestrutura:
+* `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `README.md`;
+* `.agents/` (rules, skills, workflows, agents, templates, adapters, config);
+* `docs/` (specs, architecture, decisions, execution, references);
+* `.gitignore` com proteção estrita de segredos e ambientes virtuais.
+
+Se o projeto no Jira ainda não tiver sido provisionado, utilize o provisionador idempotente:
+
+```bash
+python3 scripts/jira-setup.py \
+  --domain "<DOMINIO_JIRA>" \
+  --user "<USUARIO_JIRA>" \
+  --token-file "<ARQUIVO_TOKEN>" \
+  --project-key "<ESPACO_JIRA>" \
+  --project-name "<NOME_PROJETO>"
+```
+
+## Etapa 5 — Validação de Conformidade
+
+Execute obrigatoriamente a auditoria do Harness Doctor:
+
+```bash
+python3 scripts/harness-doctor.py <PASTA_PROJETO>
+```
+
+Garanta que todas as checagens passem sem falhas antes de prosseguir.
+
 
 ---
 

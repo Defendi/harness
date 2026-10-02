@@ -5,7 +5,6 @@ Projeto: Padrão de Engenharia Defendi
 """
 
 import sys
-import os
 from pathlib import Path
 
 # Cores para terminal
@@ -24,7 +23,7 @@ class HarnessDoctor:
         self.warnings = 0
         self.failures = 0
 
-    def check(self, condition: bool, title: str, details: str = "", is_warning: bool = False):
+    def check(self, condition: bool, title: str, details: str = "", is_warning: bool = False) -> None:
         if condition:
             print(f"  {GREEN}✔ [OK]{RESET} {title}")
             self.passed += 1
@@ -43,14 +42,15 @@ class HarnessDoctor:
         print(f"\n{BOLD}{BLUE}=== Verificando Sanidade do Application Development Harness ==={RESET}")
         print(f"Diretório Raiz: {self.root.resolve()}\n")
 
-        # 1. Contratos Raiz
+        # 1. Contratos e Adaptadores Raiz
         print(f"{BOLD}1. Contratos e Adaptadores Raiz:{RESET}")
         self.check((self.root / "AGENTS.md").is_file(), "Contrato canônico AGENTS.md presente na raiz", "AGENTS.md é mandatório como contrato principal.")
         self.check((self.root / "README.md").is_file(), "README.md do projeto presente na raiz", "README.md deve apresentar o projeto e instruções básicas.")
         self.check((self.root / "CLAUDE.md").is_file(), "Adaptador CLAUDE.md presente", "Necessário para integração com Claude Code.", is_warning=True)
         self.check((self.root / "GEMINI.md").is_file(), "Adaptador GEMINI.md presente", "Necessário para integração com Gemini/Antigravity.", is_warning=True)
+        self.check((self.root / ".gitignore").is_file(), "Arquivo .gitignore presente", "Proteção essencial para isolamento de credenciais e venv.")
 
-        # 2. Estrutura Interna .agents/
+        # 2. Infraestrutura do Harness (.agents/)
         print(f"\n{BOLD}2. Infraestrutura do Harness (.agents/):{RESET}")
         agents_dir = self.root / ".agents"
         self.check(agents_dir.is_dir(), "Diretório .agents/ existe", "Toda a infraestrutura do harness deve residir sob .agents/.")
@@ -59,31 +59,51 @@ class HarnessDoctor:
         config_dir = agents_dir / "config"
         harness_yaml = config_dir / "harness.yaml"
         self.check(harness_yaml.is_file(), ".agents/config/harness.yaml presente", "Configuração central do projeto e dos quality gates.")
+        self.check((config_dir / "language.yaml").is_file(), ".agents/config/language.yaml presente", "Configuração do ecossistema e comandos da linguagem.")
 
-        # 3. Language Profile
-        print(f"\n{BOLD}3. Language Profile:{RESET}")
+        # 3. Regras Modulares (.agents/rules/)
+        print(f"\n{BOLD}3. Regras Modulares (.agents/rules/):{RESET}")
+        rules_dir = agents_dir / "rules"
+        self.check(rules_dir.is_dir(), "Diretório .agents/rules/ presente")
+        self.check((rules_dir / "jira-card-lifecycle.md").is_file(), "Regra obrigatória de ciclo de vida (.agents/rules/jira-card-lifecycle.md)")
+        self.check((rules_dir / "architecture.md").is_file(), "Regras de arquitetura presentes", is_warning=True)
+        self.check((rules_dir / "coding-standards.md").is_file(), "Regras de coding standards presentes", is_warning=True)
+        self.check((rules_dir / "security.md").is_file(), "Regras de segurança presentes", is_warning=True)
+        self.check((rules_dir / "testing.md").is_file(), "Regras de testes herméticos presentes", is_warning=True)
+        self.check((rules_dir / "git.md").is_file(), "Regras de Git presentes", is_warning=True)
+        self.check((rules_dir / "jira.md").is_file(), "Regras de Jira presentes", is_warning=True)
+
+        # 4. Habilidades Especializadas (.agents/skills/)
+        print(f"\n{BOLD}4. Skills Especializadas (.agents/skills/):{RESET}")
+        skills_dir = agents_dir / "skills"
+        self.check(skills_dir.is_dir() and any(skills_dir.iterdir()), "Diretório .agents/skills/ populado")
+
+        # 5. Workflows de Processo (.agents/workflows/)
+        print(f"\n{BOLD}5. Workflows de Processo (.agents/workflows/):{RESET}")
+        workflows_dir = agents_dir / "workflows"
+        self.check(workflows_dir.is_dir() and any(workflows_dir.iterdir()), "Diretório .agents/workflows/ populado")
+        self.check((workflows_dir / "full-cycle.md").is_file(), "Workflow full-cycle.md presente", is_warning=True)
+
+        # 6. Agentes Especializados (.agents/agents/)
+        print(f"\n{BOLD}6. Agentes Especializados (.agents/agents/):{RESET}")
+        subagents_dir = agents_dir / "agents"
+        self.check(subagents_dir.is_dir() and any(subagents_dir.iterdir()), "Diretório .agents/agents/ com papéis especializados")
+
+        # 7. Language Profile
+        print(f"\n{BOLD}7. Language Profile:{RESET}")
         lang_dir = agents_dir / "languages"
         has_languages = lang_dir.is_dir() and any(lang_dir.iterdir())
         self.check(has_languages, "Perfil de linguagem configurado em .agents/languages/", "O projeto deve possuir ao menos um language profile definido.")
 
-        # 4. Estrutura de Documentação Persistente
-        print(f"\n{BOLD}4. Documentação Persistente (docs/):{RESET}")
+        # 8. Estrutura de Documentação Persistente (docs/)
+        print(f"\n{BOLD}8. Documentação Persistente (docs/):{RESET}")
         docs_dir = self.root / "docs"
         self.check(docs_dir.is_dir(), "Diretório docs/ existe", "Estado e documentação devem ser persistidos em docs/.")
         self.check((docs_dir / "specs").is_dir(), "Diretório docs/specs/ existe", "Local para especificações de requisitos.")
         self.check((docs_dir / "architecture").is_dir(), "Diretório docs/architecture/ existe", "Local para desenhos arquiteturais.")
         self.check((docs_dir / "decisions").is_dir(), "Diretório docs/decisions/ existe", "Local para Architecture Decision Records (ADRs).")
         self.check((docs_dir / "execution").is_dir(), "Diretório docs/execution/ existe", "Local para planos de implementação e handoffs.")
-
-        # 5. Regras e Workflows
-        print(f"\n{BOLD}5. Regras e Workflows:{RESET}")
-        rules_dir = agents_dir / "rules"
-        self.check(rules_dir.is_dir(), "Diretório .agents/rules/ presente")
-        self.check((rules_dir / "git.md").is_file(), "Regras de Git (.agents/rules/git.md) presentes", is_warning=True)
-        self.check((rules_dir / "jira.md").is_file(), "Regras de Jira (.agents/rules/jira.md) presentes", is_warning=True)
-
-        workflows_dir = agents_dir / "workflows"
-        self.check(workflows_dir.is_dir(), "Diretório .agents/workflows/ presente")
+        self.check((docs_dir / "references").is_dir(), "Diretório docs/references/ existe", "Local para documentações técnicas de referência.")
 
         # Resumo Final
         print(f"\n{BOLD}=== Resumo da Auditoria ==={RESET}")
@@ -100,7 +120,7 @@ class HarnessDoctor:
             return 0
 
 
-def main():
+def main() -> None:
     root = Path.cwd()
     if len(sys.argv) > 1:
         root = Path(sys.argv[1])
