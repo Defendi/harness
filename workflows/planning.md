@@ -1,27 +1,27 @@
-# Planning Workflow
+# Workflow de Planejamento
 
-## Trigger
-Approval of OpenSPEC and Architecture design for a Jira card in `Backlog`.
+## Gatilho
+Aprovação do OpenSPEC e do design de arquitetura para um card do Jira no `Backlog`.
 
-## Preconditions
-- OpenSPEC Gate and Architecture Gate satisfied.
-- PRD, TRD, and OpenSPEC approved and committed.
-- Card ready to leave `Backlog`.
+## Pré-condições
+- OpenSPEC Gate e Architecture Gate satisfeitos.
+- PRD, TRD e OpenSPEC aprovados e commitados.
+- Card pronto para sair do `Backlog`.
 
-## Steps
-1. Break down technical implementation into small, atomic, verifiable tasks derived directly from the OpenSPEC acceptance criteria.
-2. Formulate `docs/execution/<jira>-plan.md` using `.agents/templates/implementation-plan.md`.
-3. Create test plan outlining hermetic unit tests, mock configurations, and edge cases.
-4. Transition Jira card from `Backlog` to `A Fazer` (sinalizando a finalização do planejamento).
-5. Add planning summary comment to the Jira card referencing the PRD, TRD, and OpenSPEC.
+## Etapas
+1. Decompor a implementação técnica em tarefas pequenas, atômicas e verificáveis, derivadas diretamente dos critérios de aceite do OpenSPEC.
+2. Formular `docs/execution/<jira>-plan.md` utilizando `.agents/templates/implementation-plan.md`.
+3. Criar plano de testes delineando testes unitários herméticos, configurações de mock e edge cases.
+4. Transicionar o card do Jira de `Backlog` para `A Fazer` (sinalizando a finalização do planejamento).
+5. Adicionar comentário com resumo do planejamento no card do Jira referenciando o PRD, TRD e OpenSPEC.
 
-## Artifacts Produced
+## Artefatos Produzidos
 - `docs/execution/<jira>-plan.md`
 - `docs/execution/<jira>-test-plan.md`
-- Jira card transitioned to `A Fazer`
+- Card do Jira transicionado para `A Fazer`
 
 ## Quality Gates
-- **Planning Gate**: tasks are atomic, dependencies mapped, OpenSPEC test scenarios covered.
+- **Planning Gate**: tarefas são atômicas, dependências mapeadas, cenários de teste do OpenSPEC cobertos.
 
-## Exit Conditions
-- Card in `A Fazer`, ready for immediate pickup by developer agent.
+## Condições de Saída
+- Card em `A Fazer`, pronto para ser assumido imediatamente pelo developer agent.

@@ -1,49 +1,49 @@
-# Spec Document Reviewer Prompt Template
+# Template de Prompt para Revisor de Documento de Especificação
 
-Use this template when dispatching a spec document reviewer subagent.
+Use este template ao disparar um subagent revisor de documento de especificação.
 
-**Purpose:** Verify the spec is complete, consistent, and ready for implementation planning.
+**Objetivo:** Verificar se a spec está completa, consistente e pronta para o planejamento da implementação.
 
-**Dispatch after:** Spec document is written to docs/superpowers/specs/
+**Disparar após:** O documento de especificação for gravado em docs/superpowers/specs/
 
 ```
 Subagent (general-purpose):
-  description: "Review spec document"
+  description: "Revisar documento de especificação"
   prompt: |
-    You are a spec document reviewer. Verify this spec is complete and ready for planning.
+    Você é um revisor de documento de especificação. Verifique se esta spec está completa e pronta para o planejamento.
 
-    **Spec to review:** [SPEC_FILE_PATH]
+    **Spec a revisar:** [SPEC_FILE_PATH]
 
-    ## What to Check
+    ## O que Verificar
 
-    | Category | What to Look For |
-    |----------|------------------|
-    | Completeness | TODOs, placeholders, "TBD", incomplete sections |
-    | Consistency | Internal contradictions, conflicting requirements |
-    | Clarity | Requirements ambiguous enough to cause someone to build the wrong thing |
-    | Scope | Focused enough for a single plan — not covering multiple independent subsystems |
-    | YAGNI | Unrequested features, over-engineering |
+    | Categoria | O que Procurar |
+    |-----------|----------------|
+    | Completude | TODOs, placeholders, "TBD", seções incompletas |
+    | Consistência | Contradições internas, requisitos conflitantes |
+    | Clareza | Requisitos ambíguos o suficiente para fazer alguém construir a coisa errada |
+    | Escopo | Focado o suficiente para um único plano — sem cobrir múltiplos subsistemas independentes |
+    | YAGNI | Recursos não solicitados, over-engineering |
 
-    ## Calibration
+    ## Calibração
 
-    **Only flag issues that would cause real problems during implementation planning.**
-    A missing section, a contradiction, or a requirement so ambiguous it could be
-    interpreted two different ways — those are issues. Minor wording improvements,
-    stylistic preferences, and "sections less detailed than others" are not.
+    **Aponte apenas problemas que causariam problemas reais durante o planejamento da implementação.**
+    Uma seção ausente, uma contradição ou um requisito tão ambíguo que possa ser
+    interpretado de duas maneiras diferentes — esses são problemas. Pequenas melhorias de redação,
+    preferências estilísticas e "seções menos detalhadas que outras" não são.
 
-    Approve unless there are serious gaps that would lead to a flawed plan.
+    Aprove, a menos que haja lacunas graves que levariam a um plano falho.
 
-    ## Output Format
+    ## Formato de Saída
 
-    ## Spec Review
+    ## Revisão da Spec
 
-    **Status:** Approved | Issues Found
+    **Status:** Aprovado | Problemas Encontrados
 
-    **Issues (if any):**
-    - [Section X]: [specific issue] - [why it matters for planning]
+    **Problemas (se houver):**
+    - [Seção X]: [problema específico] - [por que isso importa para o planejamento]
 
-    **Recommendations (advisory, do not block approval):**
-    - [suggestions for improvement]
+    **Recomendações (consultivas, não bloqueiam a aprovação):**
+    - [sugestões de melhoria]
 ```
 
-**Reviewer returns:** Status, Issues (if any), Recommendations
+**O revisor retorna:** Status, Problemas (se houver), Recomendações

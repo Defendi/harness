@@ -4,7 +4,7 @@
 - **Gerenciador de Pacotes:** `pnpm` (rápido, determinístico e econômico em disco).
 - **Compilador & Type Checker:** `tsc` com `tsconfig.json` rigoroso (`"strict": true`, `"noImplicitAny": true`).
 - **Linter & Formatter:** `biome` para linting e formatação unificada e instantânea.
-- **Test Runner:** `vitest` com suporte nativo a ESM e TypeScript sem transpile overhead.
+- **Test Runner:** `vitest` com suporte nativo a ESM e TypeScript sem overhead de transpilação.
 
 ## 2. Padrões de Código
 - **Proibição de `any`:** O uso de `any` é estritamente proibido. Em casos de incerteza, utilizar `unknown` com type guards explícitos.
@@ -22,4 +22,3 @@ src/
 tests/
 ├── unit/               # Testes unitários com mocks
 └── integration/        # Testes de integração end-to-end com supertest/testcontainers
-```

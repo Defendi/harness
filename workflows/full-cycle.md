@@ -1,38 +1,38 @@
-# Full-Cycle Workflow
+# Workflow Full-Cycle
 
-## Trigger
-End-to-end execution of a software work item from initial inception to completed release.
+## Gatilho
+Execução end-to-end de um item de trabalho de software desde a concepção inicial até o release concluído.
 
-## Preconditions
-- Jira card created in `Backlog`.
-- Atlassian MCP connection verified.
+## Pré-condições
+- Card do Jira criado em `Backlog`.
+- Conexão do Atlassian MCP verificada.
 
-## Sequence of Execution
+## Sequência de Execução
 ```text
 BRAINSTORMING (Backlog - Mandatório antes de qualquer ação pelos agentes via skill brainstorming)
    ↓
-PRD DEFINITION (Backlog - P.O. Agent via skill escrever-prd em docs/prds/)
+DEFINIÇÃO DE PRD (Backlog - Agente de P.O. via skill escrever-prd em docs/prds/)
    ↓
-TRD SYNCHRONIZATION (Backlog - Architect Agent via skill escrever-trd em docs/trd.md)
+SINCRONIZAÇÃO DE TRD (Backlog - Agente de Arquitetura via skill escrever-trd em docs/trd.md)
    ↓
-OPENSPEC SPECIFICATION (Backlog - Architect Agent via metodologia OpenSPEC em docs/specs/)
+ESPECIFICAÇÃO OPENSPEC (Backlog - Agente de Arquitetura via metodologia OpenSPEC em docs/specs/)
    ↓
-ARCHITECTURE & ADRs (Backlog - Desenho de módulos e registros de decisão)
+ARQUITETURA & ADRs (Backlog - Desenho de módulos e registros de decisão)
    ↓
-PLANNING (Backlog → A Fazer - Plano atômico de execução e handoff)
+PLANEJAMENTO (Backlog → A Fazer - Plano atômico de execução e handoff)
    ↓
-IMPLEMENTATION (A Fazer → Em Andamento → Pronto para Review - Developer Agent)
+IMPLEMENTAÇÃO (A Fazer → Em Andamento → Pronto para Review - Agente Desenvolvedor)
    ↓
-REVIEW (Review → Pronto Para Testar OU volta para A Fazer com comentários - Reviewer Agent)
+REVISÃO (Review → Pronto Para Testar OU volta para A Fazer com comentários - Agente Revisor)
    ↓
-TESTING (Pronto Para Testar → Testando → Concluído OU volta para A Fazer com comentários - Tester Agent)
+TESTES (Pronto Para Testar → Testando → Concluído OU volta para A Fazer com comentários - Agente de Testes)
    ↓
-DOCUMENTATION (Concluído - Sincronização técnica contínua)
+DOCUMENTAÇÃO (Concluído - Sincronização técnica contínua)
    ↓
-RELEASE (Tagged & Delivered - Release Agent)
+RELEASE (Tagged & Entregue - Agente de Release)
 ```
 
-## Quality Gates Sequence
+## Sequência de Quality Gates
 1. **Brainstorming Gate**: Intenção, limites e restrições alinhados colaborativamente com o humano.
 2. **PRD Gate**: Regras de negócio, personas e User Stories formalizadas pelo agente de P.O.
 3. **TRD Gate**: Restrições técnicas globais, stack e NFRs consolidados em `docs/trd.md`.
@@ -44,5 +44,5 @@ RELEASE (Tagged & Delivered - Release Agent)
 9. **Documentation Gate**: Documentação técnica sincronizada com o código real entregue.
 10. **Release Gate**: Tag semântica gerada e enviada ao GitHub.
 
-## Exit Conditions
+## Condições de Saída
 - Feature entregue, card fechado em `Concluído`, branch mesclada na `main`, PRD marcado como `concluido` e documentação sincronizada.

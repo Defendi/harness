@@ -172,9 +172,9 @@ quality_gates:
     # 5. Contratos e Adaptadores Raiz
     print("\n4. Criando contratos raiz e adapters...")
 
-    root_agents_content = f"""# Project Agent Contract
+    root_agents_content = f"""# Contrato de Agentes do Projeto
 
-## Project
+## Projeto
 
 {project_name}: {description}
 
@@ -199,27 +199,27 @@ Ao iniciar qualquer sessão ou receber qualquer demanda envolvendo cards, altera
 
 ## Harness
 
-This project uses the Application Development Harness.
+Este projeto utiliza o Application Development Harness.
 
-`AGENTS.md` is the canonical project agent contract.
+`AGENTS.md` é o contrato canônico de agentes do projeto.
 
-The harness implementation lives under:
+A implementação do harness reside em:
 
 `.agents/`
 
-## Core Principles
+## Princípios Centrais
 
-- Understand before modifying.
-- Follow specifications.
-- Preserve existing architecture unless explicitly changed.
-- Prefer small, traceable changes.
-- Tests are part of implementation.
-- Documentation must remain synchronized with behavior.
-- Relevant work must be traceable to Jira.
-- Do not invent requirements.
-- Do not perform destructive operations without authorization.
+- Entender antes de modificar.
+- Seguir especificações.
+- Preservar a arquitetura existente a menos que alterada explicitamente.
+- Preferir mudanças pequenas e rastreáveis.
+- Os testes são parte da implementação.
+- A documentação deve permanecer sincronizada com o comportamento.
+- O trabalho relevante deve ser rastreável até o Jira.
+- Não inventar requisitos.
+- Não executar operações destrutivas sem autorização.
 
-## Harness Structure
+## Estrutura do Harness
 
 - `.agents/rules/`
 - `.agents/skills/`
@@ -229,42 +229,42 @@ The harness implementation lives under:
 - `.agents/languages/`
 - `.agents/config/`
 
-## Documentation
+## Documentação
 
-Project documentation lives under:
+A documentação do projeto reside em:
 
 `docs/`
 
 ## Jira
 
-Jira is the work management and traceability system. Project key: `{jira_key}`.
+O Jira é o sistema de gestão de trabalho e rastreabilidade. Chave do projeto: `{jira_key}`.
 
-## Execution
+## Execução
 
-Follow the applicable workflow from `.agents/workflows/`.
+Siga o workflow aplicável em `.agents/workflows/`.
 
-## Language
+## Linguagem
 
-Load the project language profile from:
+Carregue o perfil da linguagem do projeto em:
 
 `.agents/languages/{language}/`
 
-## Agent Rule
+## Regra do Agente
 
-Read this contract first.
+Leia este contrato primeiro.
 
-Then load only the rules, skills, workflow and language profile relevant to the current task.
+Em seguida, carregue apenas as regras, skills, workflows e o perfil de linguagem relevantes para a tarefa atual.
 """
     (target_dir / "AGENTS.md").write_text(root_agents_content, encoding="utf-8")
     print("  ✔ AGENTS.md (contrato canônico raiz)")
 
-    claude_content = """# Claude Code Adapter
+    claude_content = """# Adaptador do Claude Code
 
-The canonical project instructions are defined in:
+As instruções canônicas do projeto estão definidas em:
 
 `AGENTS.md`
 
-Harness implementation:
+Implementação do Harness:
 
 `.agents/`
 
@@ -273,17 +273,17 @@ Harness implementation:
     (target_dir / "CLAUDE.md").write_text(claude_content, encoding="utf-8")
     print("  ✔ CLAUDE.md")
 
-    gemini_content = """# Gemini / Antigravity Adapter
+    gemini_content = """# Adaptador Gemini / Antigravity
 
-The canonical project instructions are:
+As instruções canônicas do projeto são:
 
 `AGENTS.md`
 
-Harness implementation:
+Implementação do Harness:
 
 `.agents/`
 
-Follow the applicable workflow, skills, rules and language profile.
+Siga o fluxo de trabalho, habilidades (skills), regras e perfil de linguagem aplicáveis.
 
 - **Governança Canônica**: Toda diretriz de escopo, fluxo de execução contínuo, convenções técnicas e hermeticidade reside em [`AGENTS.md`](./AGENTS.md).
 """

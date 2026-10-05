@@ -1,18 +1,18 @@
-# Documentation Rules
+# Regras de Documentação
 
-## 1. Documentation as Code
-- All project documentation lives under `docs/` and is versioned in Git alongside source code.
-- Keep documentation continuously synchronized with software behavior.
-- Outdated documentation must be updated or flagged before completing a card.
+## 1. Documentação como Código
+- Toda a documentação do projeto reside sob `docs/` e é versionada no Git junto ao código-fonte.
+- Mantenha a documentação continuamente sincronizada com o comportamento do software.
+- Documentação desatualizada deve ser atualizada ou sinalizada antes de concluir um card.
 
-## 2. Directory Taxonomy
-- `docs/specs/`: Detailed functional and non-functional specifications tied to Jira issues.
-- `docs/architecture/`: System diagrams, component boundaries, interface models.
+## 2. Taxonomia de Diretórios
+- `docs/specs/`: Especificações funcionais e não funcionais detalhadas vinculadas a issues do Jira.
+- `docs/architecture/`: Diagramas de sistema, limites de componentes, modelos de interface.
 - `docs/decisions/`: Architectural Decision Records (ADRs).
-- `docs/execution/`: Execution plans, review summaries, test reports.
-- `docs/references/`: External API documentation notes, cheat sheets, guides.
+- `docs/execution/`: Planos de execução, resumos de revisão, relatórios de testes.
+- `docs/references/`: Notas de documentação de APIs externas, cheat sheets, guias.
 
-## 3. Formatting & Links
-- Use standard GitHub Flavored Markdown.
-- Link code symbols and relative paths cleanly using Markdown links.
-- Maintain a clear table of contents for documents longer than 100 lines.
+## 3. Formatação e Links
+- Use o padrão GitHub Flavored Markdown.
+- Vincule símbolos de código e caminhos relativos de forma limpa usando links em Markdown.
+- Mantenha um sumário claro para documentos com mais de 100 linhas.

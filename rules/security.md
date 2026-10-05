@@ -1,15 +1,15 @@
-# Security Rules
+# Regras de Segurança
 
-## 1. Zero Trust Secret Management
-- **Never commit secrets to Git**: API keys, SSH private keys, cloud tokens, or personal access tokens must never appear in repository files.
-- Ensure all credential files, local overrides, and `.env*` files are strictly covered by `.gitignore`.
-- Sanitize all strings before outputting to MCP clients or logging.
+## 1. Gerenciamento de Segredos Zero Trust
+- **Nunca faça commit de segredos no Git**: chaves de API, chaves privadas SSH, tokens de nuvem ou tokens de acesso pessoal nunca devem aparecer em arquivos do repositório.
+- Garanta que todos os arquivos de credenciais, overrides locais e arquivos `.env*` estejam estritamente cobertos pelo `.gitignore`.
+- Sanitize todas as strings antes de enviá-las para clientes MCP ou registrar em logs.
 
-## 2. Principle of Least Privilege
-- MCP tools must grant AI clients the minimum capability required for the task.
-- Read operations should be separated from write/execute operations.
-- Destructive operations (deleting resources, pushing forced updates) require explicit confirmation.
+## 2. Princípio do Menor Privilégio
+- Ferramentas MCP devem conceder aos clientes de IA a capacidade mínima necessária para a tarefa.
+- Operações de leitura devem ser separadas de operações de escrita/execução.
+- Operações destrutivas (excluir recursos, fazer push de atualizações forçadas) exigem confirmação explícita.
 
-## 3. Input Sanitization
-- Validate all incoming tool parameters against injection attacks (command injection, path traversal, SQL injection).
-- When invoking SSH commands or local processes, avoid shell interpolation (`shell=True`); always use parsed argument lists.
+## 3. Sanitização de Entrada
+- Valide todos os parâmetros de entrada das ferramentas contra ataques de injeção (command injection, path traversal, SQL injection).
+- Ao invocar comandos SSH ou processos locais, evite interpolação de shell (`shell=True`); utilize sempre listas de argumentos parseadas.

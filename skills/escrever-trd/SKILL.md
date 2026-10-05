@@ -1,7 +1,7 @@
 ---
 name: escrever-trd
 description: |
-  Escrever TRD (Technical Requirements Document) a partir de um PRD aprovado. Use quando o usuario pedir TRD, documento tecnico de requisitos ou especificacao tecnica.
+  Escrever TRD (Technical Requirements Document) a partir de um PRD aprovado. Use quando o usuário pedir TRD, documento técnico de requisitos ou especificação técnica.
 ---
 
 # Escrever TRD
@@ -85,7 +85,7 @@ está funcionando bem.
 - `.env.example` / `.env.sample` → variáveis que referenciam URLs ou chaves de APIs externas
   (ex.: `STRIPE_SECRET_KEY`, `REDIS_URL`, `AUTH0_DOMAIN`) revelam dependências não óbvias
 - `docker-compose.yml` / `docker-compose.yaml` → serviços declarados (ex.: Redis, Postgres,
-  RabbitMQ) que o projeto depende em desenvolvimento
+  RabbitMQ) dos quais o projeto depende em desenvolvimento
 - `terraform/`, `infra/`, `k8s/` → recursos de infraestrutura que revelam dependências de cloud
 
 **Requisitos Não-Funcionais (inferência limitada):**
@@ -137,7 +137,7 @@ específicos (ex.: `context7` para libs), ou qualquer outro disponível na sess�
 #### Passo 3 — Mini-entrevista para lacunas
 
 Entreviste apenas o que não foi possível inferir nem enriquecer pela busca externa. O limite
-é **≤5 perguntas** (target do PRD; máximo aceitável: 8). Por quê esse limite? Se precisar
+é **≤5 perguntas** (target do PRD; máximo aceitável: 8). Por que esse limite? Se precisar
 de mais perguntas, o problema está na análise e no enriquecimento, não no usuário — a
 entrevista deve ser o complemento, não o caminho principal.
 
@@ -258,7 +258,7 @@ Registrar como ADR só decisão **durável, de blast radius amplo e cara de reve
 de banco, estratégia de auth, padrão arquitetural, biblioteca estruturante, convenção de API.
 Decisão **local a uma feature** não é ADR: se for difícil de reverter (nova dependência, modelo de
 dados, interface entre fatias), mora no PLAN da fatia, gerado pelo `sdd-especificar`; se for
-reversível (qual util reusar, como fiar um endpoint), nem precisa de registro. Se o pedido for de
+reversível (qual util reusar, como criar um endpoint), nem precisa de registro. Se o pedido for de
 decisão local, avisar e sugerir o caminho certo em vez de criar ADR.
 
 #### Passo 1 — Numeração
@@ -293,7 +293,7 @@ Se a decisão substitui uma anterior, identificar o ADR antigo:
 
 ADR `aceito` é imutável, exceto o `status` quando outro ADR o supersede. Revisar uma decisão
 nunca é editar o ADR — é criar um novo com `supersedes` apontando para o antigo. Mesma
-disciplina da imutabilidade do PRD `concluido`.
+disciplina da imutabilidade do PRD `concluído`.
 
 ## Templates de referência
 

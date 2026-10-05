@@ -1,31 +1,31 @@
-# Requirements Analysis Skill
+# Skill de Análise de Requisitos
 
-## Purpose
-Analyze incoming problem statements, user requests, or high-level goals and extract clear, unambiguous functional and non-functional requirements.
+## Propósito
+Analisar declarações de problemas recebidas, solicitações de usuários ou metas de alto nível e extrair requisitos funcionais e não funcionais claros e inequívocos.
 
-## Inputs
-- Jira card summary and description
-- User prompts or stakeholder feedback
-- Existing system context
+## Entradas
+- Resumo e descrição do card do Jira
+- Prompts do usuário ou feedback de stakeholders
+- Contexto do sistema existente
 
-## Preconditions
-- Active Jira connection or access to the problem statement.
-- Clean working directory.
+## Pré-condições
+- Conexão ativa com o Jira ou acesso à declaração do problema.
+- Working directory limpo.
 
-## Procedure
-1. Parse the request to extract user roles, primary objectives, and constraints.
-2. Identify dependencies on external systems (AWS, GitLab, Azure, SSH).
-3. Map potential security, credential, and compliance risks.
-4. Formulate explicit questions for any ambiguous items.
-5. Produce a structured requirement draft.
+## Procedimento
+1. Fazer o parse da solicitação para extrair papéis de usuário, objetivos principais e restrições.
+2. Identificar dependências em sistemas externos (AWS, GitLab, Azure, SSH).
+3. Mapear potenciais riscos de segurança, credenciais e compliance.
+4. Formular perguntas explícitas para quaisquer itens ambíguos.
+5. Produzir um draft estruturado de requisitos.
 
-## Outputs
-- Structured requirements inventory formatted according to the specification template.
+## Saídas
+- Inventário estruturado de requisitos formatado de acordo com o template de especificação.
 
-## Validation
-- Every requirement has a verifiable acceptance criterion.
-- Security constraints for credentials are explicitly declared.
+## Validação
+- Cada requisito possui um critério de aceitação verificável.
+- Restrições de segurança para credenciais são declaradas explicitamente.
 
-## Failure Conditions
-- Ambiguous or conflicting requirements left unresolved.
-- Unverifiable acceptance criteria.
+## Condições de Falha
+- Requisitos ambíguos ou conflitantes deixados sem resolução.
+- Critérios de aceitação não verificáveis.

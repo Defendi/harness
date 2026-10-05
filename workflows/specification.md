@@ -1,40 +1,40 @@
-# Specification Workflow (OpenSPEC)
+# Workflow de Especificação (OpenSPEC)
 
-## Trigger
-Completion of PRD and initiation of technical specifications for a Jira card in `Backlog`.
+## Gatilho
+Conclusão do PRD e início das especificações técnicas para um card do Jira em `Backlog`.
 
-## Preconditions (Mandatory)
-- **Approved PRD**: Corresponding `docs/prds/PRD-NNN.md` approved by the Product Owner (P.O.) agent.
-- **Synchronized TRD**: `docs/trd.md` created or updated by the Architect agent using `.agents/skills/escrever-trd/`.
-- **HARD-GATE**: Agents are **STRICTLY FORBIDDEN** from authoring SPEC documents before both PRD and TRD are written and approved.
+## Pré-condições (Obrigatórias)
+- **PRD Aprovado**: `docs/prds/PRD-NNN.md` correspondente aprovado pelo agente Product Owner (P.O.).
+- **TRD Sincronizado**: `docs/trd.md` criado ou atualizado pelo agente Arquiteto usando `.agents/skills/escrever-trd/`.
+- **HARD-GATE**: Os agentes são **ESTRITAMENTE PROIBIDOS** de criar documentos de SPEC antes que tanto o PRD quanto o TRD estejam escritos e aprovados.
 
-## Steps
-1. **Technical Requirements Document (TRD) Synchronization**:
-   - The **Architect Agent** executes `.agents/skills/escrever-trd/`.
-   - Update `docs/trd.md` with global architecture, stack constraints, NFRs, external dependencies, and new ADRs in `docs/decisions/`.
-2. **OpenSPEC Creation**:
-   - The Architect Agent creates the formal OpenSPEC document: `docs/specs/<jira>-<slug>.md` using `.agents/templates/specification.md`.
-   - Implement the OpenSPEC methodology:
-     - Canonical YAML frontmatter (`type: openspec`, `prd_ref`, `trd_ref`, `jira`).
-     - Map Functional Requirements (RFs) directly to the PRD User Stories.
-     - Define technical schemas, contracts, endpoints, and data models adhering to the TRD.
-     - Detail edge cases, error codes, and failure modes.
-     - Specify concrete acceptance criteria and test scenarios using Given-When-Then syntax.
-3. **Security & Zero Trust Validation**:
-   - Validate that credentials, API tokens, and secrets are completely isolated from LLM output.
+## Etapas
+1. **Sincronização do Documento de Requisitos Técnicos (TRD)**:
+   - O **Agente Arquiteto** executa `.agents/skills/escrever-trd/`.
+   - Atualizar `docs/trd.md` com arquitetura global, restrições de stack, NFRs, dependências externas e novas ADRs em `docs/decisions/`.
+2. **Criação do OpenSPEC**:
+   - O Agente Arquiteto cria o documento formal OpenSPEC: `docs/specs/<jira>-<slug>.md` usando `.agents/templates/specification.md`.
+   - Implementar a metodologia OpenSPEC:
+     - YAML frontmatter canônico (`type: openspec`, `prd_ref`, `trd_ref`, `jira`).
+     - Mapear Requisitos Funcionais (RFs) diretamente para as User Stories do PRD.
+     - Definir schemas técnicos, contratos, endpoints e modelos de dados aderentes ao TRD.
+     - Detalhar edge cases, códigos de erro e modos de falha.
+     - Especificar critérios de aceitação concretos e cenários de teste usando a sintaxe Given-When-Then.
+3. **Validação de Segurança & Zero Trust**:
+   - Validar que credenciais, tokens de API e secrets estejam completamente isolados do output do LLM.
 4. **Peer Review**:
-   - Architect and P.O. validate that the OpenSPEC satisfies the PRD intent without violating TRD constraints.
+   - Arquiteto e P.O. validam se o OpenSPEC atende à intenção do PRD sem violar as restrições do TRD.
 
-## Artifacts Produced
-- `docs/trd.md` (updated via `escrever-trd`)
-- `docs/decisions/<number>-<slug>.md` (ADRs if applicable)
-- `docs/specs/<jira>-<slug>.md` (OpenSPEC document)
+## Artefatos Produzidos
+- `docs/trd.md` (atualizado via `escrever-trd`)
+- `docs/decisions/<number>-<slug>.md` (ADRs, se aplicável)
+- `docs/specs/<jira>-<slug>.md` (documento OpenSPEC)
 
 ## Quality Gates
 - **OpenSPEC Gate**:
-  - PRD and TRD confirmed present and approved.
-  - 100% of Acceptance Criteria testable and formatted in Given-When-Then.
-  - Zero credential exposure risks.
+  - PRD e TRD confirmados como presentes e aprovados.
+  - 100% dos Critérios de Aceitação testáveis e formatados em Given-When-Then.
+  - Zero risco de exposição de credenciais.
 
-## Exit Conditions
-- OpenSPEC approved and committed; card ready for Planning and Architecture design.
+## Condições de Saída
+- OpenSPEC aprovado e commitado; card pronto para Planejamento e design de Arquitetura.

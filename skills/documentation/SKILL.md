@@ -1,29 +1,29 @@
-# Documentation Skill
+# Skill de Documentação
 
-## Purpose
-Maintain, organize, and synchronize all technical documentation under `docs/` with ongoing code changes and architectural evolutions.
+## Propósito
+Manter, organizar e sincronizar toda a documentação técnica sob `docs/` com as alterações contínuas de código e evoluções arquiteturais.
 
-## Inputs
-- Implemented code, test results, and ADRs
-- Existing documentation in `docs/`
+## Entradas
+- Código implementado, resultados de testes e ADRs
+- Documentação existente em `docs/`
 
-## Preconditions
-- Implementation and testing steps completed.
+## Pré-condições
+- Etapas de implementação e testes concluídas.
 
-## Procedure
-1. Identify all documentation impacted by the change (README, specs, architecture, API guides).
-2. Update interface definitions, usage instructions, and configuration parameters.
-3. Validate all internal file links and code references.
-4. Record execution summary in `docs/execution/` if required.
-5. Ensure Markdown documents adhere to formatting standards.
+## Procedimento
+1. Identificar toda a documentação impactada pela alteração (README, specs, arquitetura, guias de API).
+2. Atualizar definições de interface, instruções de uso e parâmetros de configuração.
+3. Validar todos os links internos de arquivos e referências de código.
+4. Registrar o resumo da execução em `docs/execution/`, se necessário.
+5. Garantir que os documentos Markdown sigam os padrões de formatação.
 
-## Outputs
-- Synchronized documentation in `docs/` and `README.md`.
+## Saídas
+- Documentação sincronizada em `docs/` e `README.md`.
 
-## Validation
-- No broken links.
-- Code examples and schemas match actual behavior.
+## Validação
+- Nenhum link quebrado.
+- Exemplos de código e schemas correspondem ao comportamento real.
 
-## Failure Conditions
-- Inconsistencies between documented behavior and real implementation.
-- Broken markdown links or incomplete sections.
+## Condições de Falha
+- Inconsistências entre o comportamento documentado e a implementação real.
+- Links markdown quebrados ou seções incompletas.

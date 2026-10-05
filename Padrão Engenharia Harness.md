@@ -15,11 +15,12 @@ O **Application Development Harness** é uma infraestrutura de engenharia de sof
 O harness deve permitir que diferentes coding agents conduzam atividades de:
 
 ```text
-Brainstorming (Hard-Gate de Alinhamento)
+Planner (Descoberta, Quebra em Épicos e Tarefas)
+→ Brainstorming (Hard-Gate de Alinhamento)
 → PRD (Product Requirements Document - Agente P.O.)
 → TRD (Technical Requirements Document & ADRs - Agente Architect)
 → OpenSPEC (Especificação Formal Executável)
-→ Architecture & Planning
+→ Architecture & Planning (Organização das Tarefas de Implementação)
 → Implementation
 → Testing
 → Review
@@ -690,6 +691,8 @@ full-cycle
 O workflow completo deverá seguir rigorosamente o encadeamento:
 
 ```text
+Planner (Descoberta, Quebra em Épicos e Tarefas)
+↓
 Brainstorming (Hard-Gate de Alinhamento)
 ↓
 PRD (Product Requirements Document - Agente P.O.)
@@ -698,7 +701,7 @@ TRD (Technical Requirements Document & ADRs - Agente Architect)
 ↓
 OpenSPEC (Especificação Formal Executável)
 ↓
-Architecture & Planning
+Architecture & Planning (Organização das Tarefas de Implementação)
 ↓
 Implementation
 ↓

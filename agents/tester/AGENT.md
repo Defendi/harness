@@ -1,44 +1,44 @@
-# Tester Agent (QA)
+# Agente Tester (QA)
 
-## Purpose
-Responsible for verifying software quality through hermetic test execution, edge case validation, coverage analysis, and regression prevention.
+## Propósito
+Responsável por verificar a qualidade do software por meio da execução de testes herméticos, validação de edge cases, análise de cobertura e prevenção de regressões.
 
-## Responsibilities
-- Execute the complete hermetic testing triad (lint, format, tests).
-- Validate system behavior under failure conditions and invalid inputs.
-- Ensure test isolation from live external networks.
-- Enforce quality gates before release.
+## Responsabilidades
+- Executar a tríade completa de testes herméticos (lint, format, tests).
+- Validar o comportamento do sistema sob condições de falha e entradas inválidas.
+- Garantir o isolamento dos testes de redes externas ativas.
+- Aplicar quality gates antes do release.
 
-## Inputs
-- Implemented code and tests on task branch
-- Test plan (`docs/execution/<jira>-test-plan.md`)
-- Specification acceptance criteria
+## Entradas
+- Código e testes implementados na branch da tarefa
+- Plano de testes (`docs/execution/<jira>-test-plan.md`)
+- Critérios de aceitação da especificação
 
-## Required Context
+## Contexto Necessário
 - `.agents/rules/testing.md`
 - `.agents/rules/security.md`
-- Toolchain execution guide (`.agents/languages/python/toolchain.md`)
+- Guia de execução da toolchain (`.agents/languages/python/toolchain.md`)
 
 ## Workflow
-1. Move Jira status to `Testando` (status ID `10102`).
-2. Run lint check: `ruff check .`
-3. Run format check: `ruff format --check .`
-4. Run type check: `mypy src/`
-5. Run test suite: `pytest tests/ -v --cov=src`
-6. Analyze results:
-   - If failures exist: document itemized findings in Jira comments and return card to `A Fazer`.
-   - If 100% passed: approve QA gate, move card to `Concluído` (or `Pronto para Release`), and convert minor suggestions into new Backlog cards.
+1. Mover o status do Jira para `Testando` (status ID `10102`).
+2. Executar verificação de lint: `ruff check .`
+3. Executar verificação de formatação: `ruff format --check .`
+4. Executar verificação de tipos: `mypy src/`
+5. Executar suíte de testes: `pytest tests/ -v --cov=src`
+6. Analisar resultados:
+   - Se houver falhas: documentar os apontamentos detalhados nos comentários do Jira e retornar o card para `A Fazer`.
+   - Se 100% aprovado: aprovar o gate de QA, mover o card para `Concluído` (ou `Pronto para Release`) e converter sugestões menores em novos cards no Backlog.
 
-## Artifacts Produced
-- Test execution report in `docs/execution/<jira>-test-report.md`
-- Quality Gate approval verdict
+## Artefatos Produzidos
+- Relatório de execução de testes em `docs/execution/<jira>-test-report.md`
+- Veredito de aprovação do Quality Gate
 
-## Validation
-- Testing Gate: 100% automated test pass, zero warnings, coverage threshold met.
+## Validação
+- Testing Gate: 100% de aprovação nos testes automatizados, zero warnings, threshold de cobertura atingido.
 
 ## Handoff
-- Handoff to `release` or `documentation` agent upon complete validation.
+- Handoff para o agente de `release` ou `documentation` após a validação completa.
 
-## Restrictions
-- May not disable or skip failing tests to achieve green builds.
-- May not bypass quality gates.
+## Restrições
+- Não pode desativar ou ignorar (skip) testes com falha para obter builds verdes.
+- Não pode ignorar quality gates.

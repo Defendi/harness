@@ -3,9 +3,9 @@
 ## Informações do Release
 - **Versão:** vX.Y.Z
 - **Data de Publicação:** AAAA-MM-DD
-- **Responsável:** Release Agent
+- **Responsável:** Agente de Release
 - **Changelog / Tag Git:** `refs/tags/vX.Y.Z`
-- **Ambiente Alvo:** Staging / Production
+- **Ambiente Alvo:** Staging / Produção
 
 ---
 

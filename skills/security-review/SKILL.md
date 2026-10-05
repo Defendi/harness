@@ -1,30 +1,30 @@
 # Security Review Skill
 
-## Purpose
-Examine codebase, configurations, and dependencies for security vulnerabilities, credential exposure risks, and injection attack vectors.
+## Objetivo
+Examinar codebase, configurações e dependências em busca de vulnerabilidades de segurança, riscos de exposição de credenciais e vetores de ataque de injeção.
 
-## Inputs
-- Full codebase and configuration files
-- Dependency tree (`pyproject.toml`, virtualenv packages)
-- Git history and diffs
+## Entradas
+- Codebase completa e arquivos de configuração
+- Árvore de dependências (`pyproject.toml`, pacotes do virtualenv)
+- Histórico do Git e diffs
 
-## Preconditions
-- Clean git status; access to codebase and dependency tree.
+## Pré-condições
+- Git status limpo; acesso à codebase e à árvore de dependências.
 
-## Procedure
-1. Scan for hardcoded credentials, API keys, private tokens, or SSH keys.
-2. Verify `.gitignore` coverage of local configs and tokens.
-3. Audit external command invocations and MCP tool inputs against injection vulnerabilities.
-4. Verify credential isolation: confirm tokens are loaded securely in memory and never exposed in tool responses.
-5. Review dependencies for known vulnerabilities (e.g. `pip audit` or `safety` if configured).
+## Procedimento
+1. Fazer varredura em busca de credenciais hardcoded, API keys, tokens privados ou chaves SSH.
+2. Verificar a cobertura do `.gitignore` para configurações locais e tokens.
+3. Auditar invocações de comandos externos e inputs de ferramentas MCP contra vulnerabilidades de injeção.
+4. Verificar o isolamento de credenciais: confirmar que os tokens são carregados com segurança na memória e nunca expostos em respostas de ferramentas.
+5. Revisar dependências em busca de vulnerabilidades conhecidas (ex.: `pip audit` ou `safety`, se configurado).
 
-## Outputs
-- Security evaluation summary recorded in review or architecture documentation.
+## Saídas
+- Resumo da avaliação de segurança registrado na documentação de revisão ou arquitetura.
 
-## Validation
-- Zero secrets in Git repository history or working tree.
-- Input validation present on all external boundaries.
+## Validação
+- Zero segredos no histórico do repositório Git ou working tree.
+- Validação de entrada presente em todas as fronteiras externas.
 
-## Failure Conditions
-- Presence of any secret in code or configuration.
-- Unsanitized inputs executed in subshells or system calls.
+## Condições de Falha
+- Presença de qualquer segredo no código ou na configuração.
+- Inputs não sanitizados executados em subshells ou chamadas de sistema.

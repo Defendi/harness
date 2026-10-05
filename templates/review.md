@@ -2,9 +2,9 @@
 
 ## 1. Metadados
 - **Jira Issue:** [PROJ-XXX](https://seu-dominio.atlassian.net/browse/PROJ-XXX)
-- **Status:** APPROVED | REQUEST_CHANGES | BLOCKED
-- **Revisor:** Reviewer
-- **Autor / Desenvolvedor:** Developer
+- **Status:** APROVADO | REQUER_MUDANÇAS | BLOQUEADO
+- **Revisor:** Revisor
+- **Autor / Desenvolvedor:** Desenvolvedor
 - **Data:** AAAA-MM-DD
 - **Pull Request / Branch:** PR #[000] / `feat/PROJ-XXX-descricao-curta`
 
@@ -47,4 +47,4 @@
 ## 4. Parecer Final (Review Gate)
 - **Resultado:** [ ] APROVADO | [ ] REQUER MUDANÇAS | [ ] REJEITADO
 - **Justificativa:** O código atende plenamente aos critérios de aceitação e aos padrões de qualidade da organização.
-- **Próximo Agente Recomendado:** Documentation / Release.
+- **Próximo Agente Recomendado:** Documentação / Release.

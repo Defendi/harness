@@ -1,31 +1,31 @@
-# Discovery & Requirements Workflow
+# Workflow de Discovery & Requisitos
 
-## Trigger
-New feature request, initiative exploration, or complex problem statement.
+## Gatilho
+Nova solicitação de funcionalidade (feature), exploração de iniciativa ou definição de problema complexo.
 
-## Preconditions
-- Jira issue in `Backlog`.
-- No code or implementation action may be taken prior to this workflow.
+## Pré-condições
+- Issue do Jira em `Backlog`.
+- Nenhuma ação de código ou implementação pode ser realizada antes deste workflow.
 
-## Steps
-1. **Mandatory Brainstorming (Hard-Gate)**:
-   - Invoke `.agents/skills/brainstorming/` before ANY action by agents.
-   - Conduct collaborative dialogue to discover intent, persona, problem boundaries, and constraints.
-   - Respect Hard-Gates: establish shared understanding and obtain human alignment before proceeding.
-2. **Product Requirements Document (PRD) Authoring**:
-   - The **Product Owner (P.O.) Agent** executes `.agents/skills/escrever-prd/`.
-   - Author `docs/prds/PRD-<number>-<slug>.md` defining business context, user stories (US01, US02...), acceptance criteria, and edge cases.
-   - Keep PRD focused strictly on business intent (*what* and *why*), leaving technical realization to TRD.
-3. **PRD Validation & Approval**:
-   - Verify that all acceptance criteria are clearly stated from a product perspective.
-   - Transition PRD status from `rascunho` to `pronto`.
+## Etapas
+1. **Brainstorming Obrigatório (Hard-Gate)**:
+   - Invocar `.agents/skills/brainstorming/` antes de QUALQUER ação dos agentes.
+   - Conduzir diálogo colaborativo para descobrir intenção, persona, limites do problema e restrições.
+   - Respeitar os Hard-Gates: estabelecer entendimento compartilhado e obter alinhamento humano antes de prosseguir.
+2. **Elaboração do Product Requirements Document (PRD)**:
+   - O **Agente Product Owner (P.O.)** executa `.agents/skills/escrever-prd/`.
+   - Elaborar `docs/prds/PRD-<number>-<slug>.md` definindo contexto de negócio, user stories (US01, US02...), critérios de aceitação e edge cases.
+   - Manter o PRD focado estritamente na intenção de negócio (*o que* e *por que*), deixando a viabilização técnica para o TRD.
+3. **Validação e Aprovação do PRD**:
+   - Verificar se todos os critérios de aceitação estão claramente declarados sob a perspectiva de produto.
+   - Transicionar o status do PRD de `rascunho` para `pronto`.
 
-## Artifacts Produced
-- `docs/prds/PRD-<number>-<slug>.md` (authored by P.O. agent)
+## Artefatos Produzidos
+- `docs/prds/PRD-<number>-<slug>.md` (elaborado pelo agente P.O.)
 
 ## Quality Gates
-- **Brainstorming Gate**: User intent, constraints, and success criteria mutually agreed upon.
-- **PRD Gate**: Complete business rules, stable US IDs, testable product acceptance criteria.
+- **Brainstorming Gate**: Intenção do usuário, restrições e critérios de sucesso acordados mutuamente.
+- **PRD Gate**: Regras de negócio completas, IDs de US estáveis, critérios de aceitação de produto testáveis.
 
-## Exit Conditions
-- Approved PRD in `docs/prds/` ready to be handed off to the Architect for TRD and OpenSPEC authoring.
+## Condições de Saída
+- PRD aprovado em `docs/prds/` pronto para ser repassado ao Arquiteto para a elaboração do TRD e do OpenSPEC.

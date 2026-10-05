@@ -1,45 +1,44 @@
-# Python Toolchain & Execution Commands
+# Toolchain Python e Comandos de Execução
 
-All commands must be executed using the local virtual environment `.venv/`.
+Todos os comandos devem ser executados usando o ambiente virtual local `.venv/`.
 
-## 1. Environment Setup & Dependency Installation
+## 1. Configuração do Ambiente e Instalação de Dependências
 ```bash
-# Create virtual environment if missing
+# Criar ambiente virtual se não existir
 python3.12 -m venv .venv
 
-# Upgrade pip
+# Atualizar o pip
 .venv/bin/pip install --upgrade pip
 
-# Install project and development dependencies in editable mode
+# Instalar dependências do projeto e de desenvolvimento em modo editável
 .venv/bin/pip install -e ".[dev]"
 ```
 
-## 2. Formatting & Linting
+## 2. Formatação e Linting
 ```bash
-# Format code
+# Formatar código
 .venv/bin/ruff format .
 
-# Check formatting without modifying
+# Verificar formatação sem modificar
 .venv/bin/ruff format --check .
 
-# Lint and auto-fix safe rules
+# Executar lint e corrigir automaticamente regras seguras
 .venv/bin/ruff check --fix .
 
-# Static type checking
+# Checagem estática de tipos
 .venv/bin/mypy src/
 ```
 
-## 3. Test Execution
+## 3. Execução de Testes
 ```bash
-# Run full unit test suite
+# Executar suíte completa de testes unitários
 .venv/bin/pytest tests/ -v
 
-# Run with test coverage report
+# Executar com relatório de cobertura de testes
 .venv/bin/pytest tests/ -v --cov=src --cov-report=term-missing
 ```
 
-## 4. Server Execution
+## 4. Execução do Servidor
 ```bash
-# Run FastMCP server locally
+# Executar servidor FastMCP localmente
 .venv/bin/python -m mcpsentinel.server
-```

@@ -75,6 +75,7 @@ O repositório disponibiliza uma suíte completa de artefatos de referência e f
 │   └── harness-upgrade.md          # Procedimento seguro de atualização do harness
 │
 ├── agents/                         # Catálogo de subagentes especializados (.agents/agents/)
+│   ├── planner/AGENT.md            # Papel de Planejador (Descoberta, Quebra de Épicos e Tarefas)
 │   ├── po/AGENT.md                 # Papel de Product Owner (PRDs e Brainstorming)
 │   ├── architect/AGENT.md          # Papel de Arquitetura, TRD, OpenSPEC e ADRs
 │   ├── developer/AGENT.md          # Papel de Desenvolvimento e Testes Unitários
@@ -192,6 +193,7 @@ Os scripts sob `scripts/` formam o **motor de execução autônoma** utilizado p
    - Compatível com qualquer perfil e organização do GitHub e qualquer espaço do Jira Cloud.
 4. **Gate Estrito de Papéis:**
    - O agente principal atua **exclusivamente como orquestrador** e despachante. Não inspeciona código para programar diretamente.
+   - **Planner:** Responsável por descobrir o problema central, realizar o planejamento e quebrar a solução em épicos e tarefas com critérios de aceite detalhados.
    - **Product Owner (P.O.):** Conduz brainstorming e formaliza regras de negócio em PRDs (`docs/prds/`).
    - **Architect:** Mantém o TRD (`docs/trd.md`), registra ADRs e formaliza especificações na metodologia OpenSPEC (`docs/specs/`).
    - **Developer:** Implementação e testes unitários.

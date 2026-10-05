@@ -2,9 +2,9 @@
 
 ## 1. Metadados
 - **Jira Issue:** [PROJ-XXX](https://seu-dominio.atlassian.net/browse/PROJ-XXX)
-- **Status:** DRAFT | APPROVED | SUPERSEDED
+- **Status:** RASCUNHO | APROVADO | SUBSTITUÍDO
 - **Versão:** 1.0.0
-- **Responsável:** Architect
+- **Responsável:** Arquiteto
 - **Data:** AAAA-MM-DD
 
 ---
@@ -17,11 +17,11 @@ Descrição resumida da solução técnica, modelo estrutural adotado e limites 
 ## 3. Diagrama Estrutural / Componentes
 ```mermaid
 flowchart TD
-    Client["Client / Consumer"] --> API["API Gateway / Controller"]
-    API --> Service["Domain Service / Use Case"]
-    Service --> Repository["Repository / Data Access"]
-    Repository --> Database[("Database / Storage")]
-    Service --> External["External Services / Queues"]
+    Client["Cliente / Consumidor"] --> API["API Gateway / Controller"]
+    API --> Service["Domain Service / Caso de Uso"]
+    Service --> Repository["Repository / Acesso a Dados"]
+    Repository --> Database[("Banco de Dados / Armazenamento")]
+    Service --> External["Serviços Externos / Filas"]
 ```
 
 ---
@@ -29,7 +29,7 @@ flowchart TD
 ## 4. Módulos e Componentes Envolvidos
 | Módulo / Camada | Responsabilidade | Tecnologias / Bibliotecas |
 | :--- | :--- | :--- |
-| `controllers/` ou `handlers/` | Recepção HTTP/RPC, validação de payload, formatação de saída | Framework web do language profile |
+| `controllers/` ou `handlers/` | Recepção HTTP/RPC, validação de payload, formatação de saída | Framework web do perfil de linguagem |
 | `services/` ou `usecases/` | Lógica de negócio pura, isolada de frameworks | Domínio da aplicação |
 | `repositories/` | Abstração de persistência e persistência de dados | ORM ou driver nativo |
 | `models/` ou `entities/` | Estruturas de dados tipadas e invariantes de domínio | Tipos nativos da linguagem |

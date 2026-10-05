@@ -1,33 +1,33 @@
-# Review Workflow
+# Workflow de Review
 
-## Trigger
-Card transitioned to `Pronto para Review` by developer agent.
+## Gatilho
+Card transicionado para `Pronto para Review` pelo agente desenvolvedor.
 
-## Preconditions
-- Card in `Pronto para Review`.
-- Implementation complete, feature branch pushed or local diff ready.
+## Pré-condições
+- Card em `Pronto para Review`.
+- Implementação concluída, feature branch com push realizado ou diff local pronto.
 
-## Steps
-1. Transition Jira card from `Pronto para Review` to `Review` (status ID `10100`, transition `60`).
-2. Add Jira comment signaling start of Code Review by Reviewer agent.
-3. Perform static inspection of code diff:
-   - Check compliance with `.agents/rules/coding-standards.md`.
-   - Check compliance with `.agents/rules/security.md` (no secrets, zero leakage).
-   - Check test coverage and defensive typing.
-4. Prepare review verdict:
-   - **If any findings exist:** add individual, itemized comments to the card detailing file, line, cause, and recommendation. Transition card back to `A Fazer` (status ID `10057`, transition `30`) to restart development.
-   - **If 100% approved with minor non-blocking suggestions:** transition card to `Pronto Para Testar` (status ID `10101`, transition `70`). Record review approval comment, and convert suggestions into new `Backlog` cards.
+## Etapas
+1. Transicionar o card do Jira de `Pronto para Review` para `Review` (ID de status `10100`, transição `60`).
+2. Adicionar comentário no Jira sinalizando o início do Code Review pelo agente Reviewer.
+3. Realizar inspeção estática do diff de código:
+   - Verificar conformidade com `.agents/rules/coding-standards.md`.
+   - Verificar conformidade com `.agents/rules/security.md` (sem secrets, vazamento zero).
+   - Verificar cobertura de testes e tipagem defensiva.
+4. Preparar veredito do review:
+   - **Se houver algum apontamento:** adicionar comentários individuais e itemizados ao card detalhando arquivo, linha, causa e recomendação. Transicionar o card de volta para `A Fazer` (ID de status `10057`, transição `30`) para reiniciar o desenvolvimento.
+   - **Se estiver 100% aprovado com sugestões menores não bloqueantes:** transicionar o card para `Pronto Para Testar` (ID de status `10101`, transição `70`). Registrar comentário de aprovação do review e converter sugestões em novos cards de `Backlog`.
 
-## Artifacts
-- Review summary in `docs/execution/<jira>-review.md`
-- Itemized comments on Jira card
-- New Backlog cards for non-blocking suggestions (if any)
+## Artefatos
+- Resumo do review em `docs/execution/<jira>-review.md`
+- Comentários itemizados no card do Jira
+- Novos cards de Backlog para sugestões não bloqueantes (se houver)
 
 ## Quality Gates
-- Review Gate: 100% approval from reviewer agent; zero blocking issues.
+- Review Gate: 100% de aprovação do agente reviewer; zero problemas bloqueantes.
 
-## Exit Conditions
-- Card moved to `Pronto Para Testar` (or returned to `A Fazer`).
+## Condições de Saída
+- Card movido para `Pronto Para Testar` (ou retornado para `A Fazer`).
 
-## Failure Handling
-- On rejection: detailed itemized comments ensure developer agent has immediate actionable guidance.
+## Tratamento de Falhas
+- Em caso de rejeição: comentários detalhados e itemizados garantem que o agente desenvolvedor tenha orientações acionáveis imediatas.

@@ -13,6 +13,8 @@ O harness é **language-agnostic, agent-agnostic, specification-driven e extens�
 O harness governa o ciclo de engenharia de software de ponta a ponta:
 
 ```text
+PLANNER (Planejamento de Projeto, Descoberta do Problema e Quebra de Tarefas)
+   ↓
 BRAINSTORMING (Mandatório antes de qualquer ação pelos agentes)
    ↓
 PRD (Definição de regras de negócio pelo agente de P.O. via skill escrever-prd)
@@ -21,7 +23,7 @@ TRD (Sincronização de stack, NFRs e ADRs pelo Architect via skill escrever-trd
    ↓
 OPENSPEC (Especificação executável somente após PRD e TRD aprovados)
    ↓
-ARCHITECTURE & PLANNING
+ARCHITECTURE & PLANNING (Quebra em Épicos e Tarefas pelo Planner)
    ↓
 IMPLEMENTATION
    ↓

@@ -1,33 +1,33 @@
-# Testing Workflow (QA)
+# Workflow de Testes (QA)
 
-## Trigger
-Card transitioned to `Pronto Para Testar` by reviewer agent.
+## Gatilho
+Card transicionado para `Pronto Para Testar` pelo agente revisor.
 
-## Preconditions
-- Card in `Pronto Para Testar`.
-- Code review fully approved.
+## Pré-condições
+- Card em `Pronto Para Testar`.
+- Code review totalmente aprovado.
 
-## Steps
-1. Transition Jira card from `Pronto Para Testar` to `Testando` (status ID `10102`, transition `80`).
-2. Add Jira comment signaling start of QA activities by tester agent.
-3. Execute the complete hermetic triad:
+## Passos
+1. Transicionar o card do Jira de `Pronto Para Testar` para `Testando` (status ID `10102`, transição `80`).
+2. Adicionar comentário no Jira sinalizando o início das atividades de QA pelo agente testador.
+3. Executar a tríade hermética completa:
    - `ruff check .`
    - `ruff format --check .`
    - `pytest tests/ -v --cov=src`
-4. Evaluate QA outcome:
-   - **If any failure or defect is found:** add individual itemized comments on the card detailing exact step, failure, and stack trace. Transition card back to `A Fazer` (status ID `10057`, transition `30`) to restart development.
-   - **If 100% approved with minor non-blocking suggestions:** execute semantic commit/merge, transition card to `Concluído` (status ID `10011`, transition `90`), record approval comment, and convert suggestions into new `Backlog` cards.
+4. Avaliar o resultado do QA:
+   - **Se qualquer falha ou defeito for encontrado:** adicionar comentários individuais e detalhados no card especificando o passo exato, a falha e o stack trace. Transicionar o card de volta para `A Fazer` (status ID `10057`, transição `30`) para reiniciar o desenvolvimento.
+   - **Se 100% aprovado com sugestões menores não bloqueantes:** executar commit semântico/merge, transicionar o card para `Concluído` (status ID `10011`, transição `90`), registrar comentário de aprovação e converter as sugestões em novos cards no `Backlog`.
 
-## Artifacts
-- Test execution report in `docs/execution/<jira>-test-report.md`
-- Semantic commit on `main` branch
-- Jira comments and status transition to `Concluído`
+## Artefatos
+- Relatório de execução de testes em `docs/execution/<jira>-test-report.md`
+- Commit semântico na branch `main`
+- Comentários no Jira e transição de status para `Concluído`
 
 ## Quality Gates
-- Testing Gate: hermetic triad passes 100%, zero regression, code merged cleanly.
+- Testing Gate: tríade hermética passa 100%, zero regressão, código mergeado de forma limpa.
 
-## Exit Conditions
-- Card moved to `Concluído` (or returned to `A Fazer`).
+## Condições de Saída
+- Card movido para `Concluído` (ou retornado para `A Fazer`).
 
-## Failure Handling
-- On test failure: precise test logs attached to Jira comments for rapid debugging.
+## Tratamento de Falhas
+- Em caso de falha nos testes: logs de teste precisos anexados aos comentários do Jira para rápido debugging.

@@ -1,22 +1,22 @@
-# Git & Version Control Rules
+# Regras de Git & Controle de Versão
 
-## 1. Branch Strategy
-- Main branch: `main` (production-ready, verified code).
-- Working branches: `feature/<issue-key>-<short-description>`, `fix/<issue-key>-<short-description>`, `chore/<issue-key>-<short-description>`.
-- Branches must branch from up-to-date `main`.
+## 1. Estratégia de Branches
+- Branch principal: `main` (código verificado e pronto para produção).
+- Branches de trabalho: `feature/<issue-key>-<short-description>`, `fix/<issue-key>-<short-description>`, `chore/<issue-key>-<short-description>`.
+- Branches devem ser criadas a partir da `main` atualizada.
 
-## 2. Commit Standards
-- Follow Conventional Commits:
-  - `feat(scope): add new capability`
-  - `fix(scope): fix bug or defect`
-  - `test(scope): add or modify test suites`
-  - `docs(scope): update documentation`
-  - `refactor(scope): refactor without behavior change`
-  - `chore(scope): build, tooling, dependencies`
-- Always reference the Jira issue in the message or body.
+## 2. Padrões de Commit
+- Siga o Conventional Commits:
+  - `feat(scope): adiciona nova funcionalidade`
+  - `fix(scope): corrige bug ou defeito`
+  - `test(scope): adiciona ou modifica suítes de teste`
+  - `docs(scope): atualiza a documentação`
+  - `refactor(scope): refatora sem alteração de comportamento`
+  - `chore(scope): build, tooling, dependências`
+- Sempre referencie a issue do Jira na mensagem ou no corpo.
 
-## 3. Safety Guardrails
-- **NEVER execute destructive Git operations automatically**:
-  - `git reset --hard` is forbidden without explicit authorization.
-  - `git push --force` or `--force-with-lease` is forbidden on protected branches.
-- Always check `git status` and `git diff` before committing.
+## 3. Guardrails de Segurança
+- **NUNCA execute operações destrutivas do Git automaticamente**:
+  - `git reset --hard` é proibido sem autorização explícita.
+  - `git push --force` ou `--force-with-lease` é proibido em branches protegidas.
+- Sempre verifique `git status` e `git diff` antes de fazer o commit.

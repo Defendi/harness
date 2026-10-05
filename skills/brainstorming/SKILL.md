@@ -1,285 +1,223 @@
 ---
 name: brainstorming
-description: "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."
+description: "Você DEVE usar isso antes de qualquer trabalho criativo - criação de features, construção de componentes, adição de funcionalidades ou modificação de comportamento. Explora a intenção do usuário, requisitos e design antes da implementação."
 ---
 
-# Brainstorming Ideas Into Designs
+# Transformando Ideias em Designs com Brainstorming
 
-Help turn ideas into fully formed designs and specs through natural collaborative dialogue.
+Ajude a transformar ideias em designs e especificações totalmente formulados por meio de um diálogo colaborativo natural.
 
-Start by classifying how much process the request needs, then work
-through your path: understand the context, refine the idea, present a
-design, and get your human partner's approval.
+Comece classificando quanto processo a solicitação exige e, em seguida, percorra o seu caminho: entenda o contexto, refine a ideia, apresente um design e obtenha a aprovação do seu parceiro humano.
 
-## Establish Shared Understanding
+## Estabeleça um Entendimento Compartilhado
 
-The outcome of brainstorming is an understanding your human partner can
-recognize and correct, grounded in what they want to accomplish.
+O resultado do brainstorming é um entendimento que seu parceiro humano possa reconhecer e corrigir, fundamentado no que ele deseja realizar.
 
-1. **Discover intent.** Use the request and available context to identify
-   the intended outcome, who it is for, and what success looks like. When
-   that information is missing, ask one focused question about purpose or
-   intended use before proposing features or an approach. Knowing the app
-   genre does not tell you why your partner wants it. Gathering missing
-   requirements does not ask them to authorize the task again.
-2. **Write back your understanding.** Summarize the intended outcome,
-   relevant constraints, and success criteria in a short note your partner
-   can assess. Separate what they said from assumptions. Invite correction
-   and incorporate their answer before treating this as the design brief.
-3. **Carry intent into the design.** Preserve the agreed understanding in
-   the selected path's design artifact: the written spec for architectural
-   work, or the in-chat design/probe for bounded work and spikes. Check
-   proposed features and technical choices against that understanding.
+1. **Descubra a intenção.** Use a solicitação e o contexto disponível para identificar o resultado pretendido, para quem se destina e como é o sucesso. Quando essas informações estiverem faltando, faça uma pergunta focada sobre o propósito ou o uso pretendido antes de propor features ou uma abordagem. Conhecer o gênero do aplicativo não diz por que seu parceiro o deseja. Reunir requisitos ausentes não significa pedir para autorizarem a tarefa novamente.
+2. **Registre seu entendimento.** Resuma o resultado pretendido, restrições relevantes e critérios de sucesso em uma nota curta que seu parceiro possa avaliar. Separe o que ele disse das suposições. Peça correções e incorpore a resposta dele antes de tratar isso como o brief de design.
+3. **Leve a intenção para o design.** Preserve o entendimento acordado no artefato de design do caminho selecionado: a spec escrita para trabalho arquitetural, ou o design/probe no chat para trabalho bounded e spikes. Verifique as features propostas e as escolhas técnicas em relação a esse entendimento.
 
-When the request already supplies the purpose and constraints, reflect
-that understanding instead of asking the same questions again. Keep the
-note concise; its accuracy and the opportunity to correct it matter.
+Quando a solicitação já fornecer o propósito e as restrições, reflita esse entendimento em vez de fazer as mesmas perguntas novamente. Mantenha a nota concisa; a precisão dela e a oportunidade de corrigi-la são o que importa.
 
 <HARD-GATE>
-Before taking any implementation action, including invoking an
-implementation skill, writing product code, scaffolding, installing
-product dependencies, or creating an external project, complete the
-selected path's prerequisites:
+Antes de tomar qualquer ação de implementação, incluindo invocar uma skill de implementação, escrever código de produto, scaffolding, instalar dependências de produto ou criar um projeto externo, conclua os pré-requisitos do caminho selecionado:
 
-- Spike: the human partner approves the question and probe.
-- Bounded: the human partner approves the short in-chat design.
-- Architectural: the human partner reviews and approves the written spec,
-  then reviews the written implementation plan and selects its execution
-  method. Conversational design approval only permits writing the spec;
-  written-spec approval only permits invoking writing-plans.
+- Spike: o parceiro humano aprova a pergunta e o probe.
+- Bounded: o parceiro humano aprova o design curto no chat.
+- Architectural: o parceiro humano revisa e aprova a spec escrita, depois revisa o plano de implementação escrito e seleciona seu método de execução. A aprovação conversacional do design apenas permite escrever a spec; a aprovação da spec escrita apenas permite invocar writing-plans.
 
-A reply approves the stage actually presented. Approval of an idea or
-feature scope does not approve artifacts that do not exist yet. Resume
-at the earliest incomplete stage; do not turn one approval into permission
-to skip the rest of the selected path. Read-only project exploration is
-allowed while those prerequisites remain incomplete.
+Uma resposta aprova o estágio efetivamente apresentado. A aprovação de uma ideia ou do escopo de uma feature não aprova artefatos que ainda não existem. Retome no estágio incompleto mais anterior; não transforme uma aprovação em permissão para pular o restante do caminho selecionado. A exploração do projeto em modo somente leitura (read-only) é permitida enquanto esses pré-requisitos permanecerem incompletos.
 </HARD-GATE>
 
-## Three Paths
+## Três Caminhos
 
-Before your first question, classify the request and say the
-classification out loud — "this looks bounded, so I'll present a short
-design here rather than write a spec" — so your human partner can
-override it:
+Antes da sua primeira pergunta, classifique a solicitação e diga a classificação em voz alta — "isso parece bounded, então vou apresentar um design curto aqui em vez de escrever uma spec" — para que seu parceiro humano possa sobrescrevê-la:
 
-- **Spike** — a feasibility question ("can we...", "is it possible...",
-  "quick and dirty is fine") whose output is an answer, not code you
-  keep. Present the question and what you'll try in 2-3 sentences, get
-  a nod, then find out as cheaply as correctness allows. No design
-  doc, no spec file. Report findings as a recommendation; anything you
-  built stays labeled throwaway.
-- **Bounded** — a well-scoped change to code that already exists in
-  this repo: a new flag, a small endpoint, a one-file fix.
-  Understanding the kind of app is not enough — bounded means the flow
-  you are changing is already here to read. If there is no existing
-  flow to change, the task is not bounded. Ask the clarifying
-  questions that matter, present a short design IN CHAT (a few
-  sentences to a few short paragraphs), and STOP. Implementation
-  starts only after your human partner says yes to that design — a
-  bounded task's approval is as hard a gate as an architectural
-  one. No spec file, no implementation plan document.
-- **Architectural** — new projects, new subsystems, changes that
-  restructure how components fit together or alter interfaces others
-  depend on. Follow the full process: questions, approaches, sectioned
-  design, written spec, then the writing-plans skill.
+- **Spike** — uma questão de viabilidade ("podemos...", "é possível...", "rápido e improvisado está ótimo") cujo resultado é uma resposta, não um código que você mantém. Apresente a pergunta e o que você vai testar em 2-3 frases, obtenha uma confirmação e, em seguida, descubra com o menor custo que a correção permitir. Sem documento de design, sem arquivo de spec. Relate as descobertas como uma recomendação; qualquer coisa construída permanece rotulada como descartável (throwaway).
+- **Bounded** — uma alteração de escopo bem definido em código que já existe neste repo: uma nova flag, um endpoint pequeno, uma correção em arquivo único. Entender o tipo de aplicativo não é suficiente — bounded significa que o fluxo que você está alterando já está aqui para ser lido. Se não houver um fluxo existente para alterar, a tarefa não é bounded. Faça as perguntas de esclarecimento que importam, apresente um design curto NO CHAT (de algumas frases a poucos parágrafos curtos) e PARE. A implementação só começa depois que seu parceiro humano disser "sim" para esse design — a aprovação de uma tarefa bounded é um hard-gate tão rigoroso quanto o de uma arquitetural. Sem arquivo de spec, sem documento de plano de implementação.
+- **Architectural** — novos projetos, novos subsistemas, alterações que reestruturam como os componentes se encaixam ou alteram interfaces das quais outros dependem. Siga o processo completo: perguntas, abordagens, design em seções, spec escrita e, em seguida, a skill writing-plans.
 
-When in doubt between two paths, take the heavier one. The ratchet is
-one-way: hidden complexity discovered mid-task upgrades the path —
-stop, say so, and step up. Nothing downgrades mid-task.
+Em caso de dúvida entre dois caminhos, escolha o mais pesado. A catraca é de mão única: a complexidade oculta descoberta no meio da tarefa eleva o caminho — pare, avise e suba de nível. Nada é rebaixado no meio da tarefa.
 
-## Anti-Pattern: "Too Simple To Need Approval"
+## Anti-Pattern: "Simples Demais Para Precisar de Aprovação"
 
-Every path ends with your human partner approving the required design
-before implementation. A bounded change may need only two sentences in
-chat. A new todo-list project is architectural and requires the written
-spec and planning handoffs. Scale the artifact to the selected path;
-complete that path's reviews before implementation.
+Todo caminho termina com seu parceiro humano aprovando o design exigido antes da implementação. Uma alteração bounded pode precisar de apenas duas frases no chat. Um novo projeto de lista de tarefas (todo-list) é arquitetural e exige a spec escrita e os handoffs de planejamento. Dimensione o artefato de acordo com o caminho selecionado; conclua as revisões desse caminho antes da implementação.
 
 ## Red Flags
 
-| Thought | Reality |
+| Pensamento | Realidade |
 |---------|---------|
-| "This is too simple to need a design" | Follow the selected path: a bounded change gets a short chat design; an architectural change gets the written spec and planning handoffs. |
-| "I'll call it bounded and skip the spec" | Reaching for a label to skip work IS the doubt — take the heavier path. |
-| "It's bounded and the design is obvious — I'll start while they read it" | The gate is the approval, not the design's length. Present, then stop until you hear yes. |
-| "I understand this kind of app, so it's bounded" | Bounded measures the repo, not your familiarity. A new project has no existing flow — it is architectural. |
-| "The spike works, so I'll keep the code" | A spike's output is an answer. Keeping the code is a new request — classify it. |
-| "It grew, but I'm almost done — no need to re-classify" | Hidden complexity upgrades the path mid-task. Stop and say so. |
-| "They approved the spike, so the follow-up change is approved too" | Each task gets its own classification and its own approval. |
+| "Isso é simples demais para precisar de um design" | Siga o caminho selecionado: uma alteração bounded recebe um design curto no chat; uma alteração arquitetural recebe a spec escrita e os handoffs de planejamento. |
+| "Vou chamar de bounded e pular a spec" | Buscar um rótulo para pular etapas É a própria dúvida — escolha o caminho mais pesado. |
+| "É bounded e o design é óbvio — vou começar enquanto eles leem" | O gate é a aprovação, não o tamanho do design. Apresente e depois pare até ouvir um sim. |
+| "Eu entendo esse tipo de app, então é bounded" | Bounded mede o repo, não a sua familiaridade. Um novo projeto não tem fluxo existente — ele é arquitetural. |
+| "O spike funcionou, então vou manter o código" | O resultado de um spike é uma resposta. Manter o código é uma nova solicitação — classifique-a. |
+| "Cresceu, mas já estou quase terminando — não precisa reclassificar" | Complexidade oculta eleva o caminho no meio da tarefa. Pare e avise. |
+| "Eles aprovaram o spike, então a alteração seguinte também está aprovada" | Cada tarefa recebe sua própria classificação e sua própria aprovação. |
 
 ## Checklist
 
-Classify first, announce the path, then create a task for each item on
-your path and complete them in order.
+Classifique primeiro, anuncie o caminho, depois crie uma tarefa para cada item em seu caminho e conclua-os em ordem.
 
 **Spike:**
-1. **Explore project context** — enough to frame the probe
-2. **Present question + probe plan** — 2-3 sentences
-3. **Get approval** — a nod is enough
-4. **Investigate** — as cheaply as correctness allows
-5. **Report findings** — a recommendation; label anything built as throwaway
+1. **Explorar o contexto do projeto** — o suficiente para estruturar o probe
+2. **Apresentar a pergunta + plano de probe** — 2-3 frases
+3. **Obter aprovação** — uma confirmação simples é suficiente
+4. **Investigar** — com o menor custo que a correção permitir
+5. **Relatar descobertas** — uma recomendação; rotule qualquer coisa construída como descartável
 
 **Bounded:**
-1. **Explore project context** — check files, docs, recent commits
-2. **Ask clarifying questions** — one at a time, the ones that matter
-3. **Present short design in chat** — approach, files touched, testing
-4. **Get approval** — STOP and wait for an explicit yes; presenting the design and starting in the same breath is skipping the gate
-5. **Implement** — proceed with the normal development workflow (TDD applies); no plan document
+1. **Explorar o contexto do projeto** — verificar arquivos, documentação, commits recentes
+2. **Fazer perguntas de esclarecimento** — uma de cada vez, apenas as que importam
+3. **Apresentar design curto no chat** — abordagem, arquivos afetados, testes
+4. **Obter aprovação** — PARE e espere por um sim explícito; apresentar o design e começar no mesmo instante é pular o gate
+5. **Implementar** — prosseguir com o workflow normal de desenvolvimento (TDD se aplica); sem documento de plano
 
 **Architectural:**
-1. **Explore project context** — check files, docs, recent commits
-2. **Offer the visual companion just-in-time** — NOT upfront. The first time a question would genuinely be clearer shown than described, offer it then (its own message); on approval its browser tab opens for you. If no visual question ever arises, never offer it. See the Visual Companion section below.
-3. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
-4. **Propose 2-3 approaches** — with trade-offs and your recommendation
-5. **Present design** — in sections scaled to their complexity, get user approval after each section
-6. **Write design doc** — save to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md` and commit
-7. **Spec self-review** — quick inline check for placeholders, contradictions, ambiguity, scope (see below)
-8. **User reviews written spec** — ask user to review the spec file before proceeding
-9. **Transition to implementation** — invoke writing-plans skill to create implementation plan
+1. **Explorar o contexto do projeto** — verificar arquivos, documentação, commits recentes
+2. **Oferecer o visual companion just-in-time** — NÃO antecipadamente. Na primeira vez em que uma pergunta for genuinamente mais clara sendo exibida do que descrita, ofereça-o naquele momento (em uma mensagem própria); com a aprovação, a aba do navegador dele se abre para você. Se nenhuma questão visual surgir, nunca o ofereça. Veja a seção Visual Companion abaixo.
+3. **Fazer perguntas de esclarecimento** — uma de cada vez, compreenda o propósito/restrições/critérios de sucesso
+4. **Propor 2-3 abordagens** — com trade-offs e sua recomendação
+5. **Apresentar o design** — em seções dimensionadas de acordo com sua complexidade, obtenha a aprovação do usuário após cada seção
+6. **Escrever o doc de design** — salvar em `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md` e fazer o commit
+7. **Auto-revisão da spec** — checagem rápida inline de placeholders, contradições, ambiguidade e escopo (veja abaixo)
+8. **Usuário revisa a spec escrita** — pedir ao usuário para revisar o arquivo de spec antes de prosseguir
+9. **Transição para a implementação** — invocar a skill writing-plans para criar o plano de implementação
 
-## Process Flow
+## Fluxo do Processo
 
 ```dot
 digraph brainstorming {
-    "Classify: spike / bounded / architectural" [shape=diamond];
-    "Present question + probe (2-3 sentences)" [shape=box];
-    "Ask clarifying questions (bounded)" [shape=box];
-    "Present short design in chat" [shape=box];
-    "Human approves?" [shape=diamond];
-    "Investigate; report recommendation" [shape=doublecircle];
-    "Implement via normal workflow (no plan doc)" [shape=doublecircle];
-    "Explore project context" [shape=box];
-    "Ask clarifying questions" [shape=box];
-    "Propose 2-3 approaches" [shape=box];
-    "Present design sections" [shape=box];
-    "User approves design?" [shape=diamond];
-    "Write design doc" [shape=box];
-    "Spec self-review\n(fix inline)" [shape=box];
-    "User reviews spec?" [shape=diamond];
-    "Invoke writing-plans skill" [shape=doublecircle];
-    "Hidden complexity? Upgrade path" [shape=box];
+    "Classificar: spike / bounded / architectural" [shape=diamond];
+    "Apresentar pergunta + probe (2-3 frases)" [shape=box];
+    "Fazer perguntas de esclarecimento (bounded)" [shape=box];
+    "Apresentar design curto no chat" [shape=box];
+    "Humano aprova?" [shape=diamond];
+    "Investigar; relatar recomendação" [shape=doublecircle];
+    "Implementar via workflow normal (sem doc de plano)" [shape=doublecircle];
+    "Explorar contexto do projeto" [shape=box];
+    "Fazer perguntas de esclarecimento" [shape=box];
+    "Propor 2-3 abordagens" [shape=box];
+    "Apresentar seções de design" [shape=box];
+    "Usuário aprova o design?" [shape=diamond];
+    "Escrever doc de design" [shape=box];
+    "Auto-revisão da spec\n(corrigir inline)" [shape=box];
+    "Usuário revisa a spec?" [shape=diamond];
+    "Invocar skill writing-plans" [shape=doublecircle];
+    "Complexidade oculta? Elevar caminho" [shape=box];
 
-    "Classify: spike / bounded / architectural" -> "Present question + probe (2-3 sentences)" [label="spike"];
-    "Classify: spike / bounded / architectural" -> "Ask clarifying questions (bounded)" [label="bounded"];
-    "Classify: spike / bounded / architectural" -> "Explore project context" [label="architectural"];
-    "Present question + probe (2-3 sentences)" -> "Human approves?";
-    "Ask clarifying questions (bounded)" -> "Present short design in chat";
-    "Present short design in chat" -> "Human approves?";
-    "Human approves?" -> "Investigate; report recommendation" [label="spike: yes"];
-    "Human approves?" -> "Implement via normal workflow (no plan doc)" [label="bounded: yes"];
-    "Hidden complexity? Upgrade path" -> "Classify: spike / bounded / architectural";
-    "Explore project context" -> "Ask clarifying questions";
-    "Ask clarifying questions" -> "Propose 2-3 approaches";
-    "Propose 2-3 approaches" -> "Present design sections";
-    "Present design sections" -> "User approves design?";
-    "User approves design?" -> "Present design sections" [label="no, revise"];
-    "User approves design?" -> "Write design doc" [label="yes"];
-    "Write design doc" -> "Spec self-review\n(fix inline)";
-    "Spec self-review\n(fix inline)" -> "User reviews spec?";
-    "User reviews spec?" -> "Write design doc" [label="changes requested"];
-    "User reviews spec?" -> "Invoke writing-plans skill" [label="approved"];
+    "Classificar: spike / bounded / architectural" -> "Apresentar pergunta + probe (2-3 frases)" [label="spike"];
+    "Classificar: spike / bounded / architectural" -> "Fazer perguntas de esclarecimento (bounded)" [label="bounded"];
+    "Classificar: spike / bounded / architectural" -> "Explorar contexto do projeto" [label="architectural"];
+    "Apresentar pergunta + probe (2-3 frases)" -> "Humano aprova?";
+    "Fazer perguntas de esclarecimento (bounded)" -> "Apresentar design curto no chat";
+    "Apresentar design curto no chat" -> "Humano aprova?";
+    "Humano aprova?" -> "Investigar; relatar recomendação" [label="spike: sim"];
+    "Humano aprova?" -> "Implementar via workflow normal (sem doc de plano)" [label="bounded: sim"];
+    "Complexidade oculta? Elevar caminho" -> "Classificar: spike / bounded / architectural";
+    "Explorar contexto do projeto" -> "Fazer perguntas de esclarecimento";
+    "Fazer perguntas de esclarecimento" -> "Propor 2-3 abordagens";
+    "Propor 2-3 abordagens" -> "Apresentar seções de design";
+    "Apresentar seções de design" -> "Usuário aprova o design?";
+    "Usuário aprova o design?" -> "Apresentar seções de design" [label="não, revisar"];
+    "Usuário aprova o design?" -> "Escrever doc de design" [label="sim"];
+    "Escrever doc de design" -> "Auto-revisão da spec\n(corrigir inline)";
+    "Auto-revisão da spec\n(corrigir inline)" -> "Usuário revisa a spec?";
+    "Usuário revisa a spec?" -> "Escrever doc de design" [label="alterações solicitadas"];
+    "Usuário revisa a spec?" -> "Invocar skill writing-plans" [label="aprovado"];
 }
 ```
 
-**Terminal states are path-bound.** Architectural: the ONLY skill you
-invoke after brainstorming is writing-plans — never frontend-design,
-mcp-builder, or any other implementation skill. Bounded: after
-approval, implementation proceeds directly through the normal
-development workflow; no plan document. Spike: the terminal state is a
-reported recommendation.
+**Os estados terminais são vinculados ao caminho.** Architectural: a ÚNICA skill que você invoca após o brainstorming é writing-plans — nunca frontend-design, mcp-builder ou qualquer outra skill de implementação. Bounded: após a aprovação, a implementação prossegue diretamente através do workflow normal de desenvolvimento; sem documento de plano. Spike: o estado terminal é uma recomendação relatada.
 
-## The Process
+## O Processo
 
-The subsections below serve the bounded and architectural paths (a
-spike stops at "present the probe, get a nod"). Sections from
-**Exploring approaches** onward are architectural-path depth — for
-bounded work, context plus a few questions plus a short in-chat design
-is the whole process.
+As subseções abaixo atendem aos caminhos bounded e architectural (um spike termina em "apresentar o probe, obter uma confirmação"). As seções a partir de **Explorando abordagens** em diante são aprofundamentos do caminho architectural — para trabalho bounded, o contexto mais algumas perguntas e um design curto no chat constituem todo o processo.
 
-**Understanding the idea:**
+**Entendendo a ideia:**
 
-- Check out the current project state first (files, docs, recent commits)
-- Before asking detailed questions, assess scope: if the request describes multiple independent subsystems (e.g., "build a platform with chat, file storage, billing, and analytics"), flag this immediately. Don't spend questions refining details of a project that needs to be decomposed first.
-- If the project is too large for a single spec, help the user decompose into sub-projects: what are the independent pieces, how do they relate, what order should they be built? Then brainstorm the first sub-project through the normal design flow. Each sub-project gets its own spec → plan → implementation cycle.
-- For appropriately-scoped projects, ask questions one at a time to refine the idea
-- Prefer multiple choice questions when possible, but open-ended is fine too
-- Only one question per message - if a topic needs more exploration, break it into multiple questions
-- Focus on understanding: purpose, constraints, success criteria
+- Verifique primeiro o estado atual do projeto (arquivos, documentação, commits recentes)
+- Antes de fazer perguntas detalhadas, avalie o escopo: se a solicitação descrever múltiplos subsistemas independentes (por exemplo, "construir uma plataforma com chat, armazenamento de arquivos, faturamento e analytics"), aponte isso imediatamente. Não gaste perguntas refinando detalhes de um projeto que precisa ser decomposto primeiro.
+- Se o projeto for grande demais para uma única spec, ajude o usuário a decompô-lo em subprojetos: quais são as partes independentes, como elas se relacionam, em que ordem devem ser construídas? Em seguida, faça o brainstorming do primeiro subprojeto através do fluxo normal de design. Cada subprojeto recebe seu próprio ciclo de spec → plan → implementation.
+- Para projetos com escopo adequado, faça perguntas uma de cada vez para refinar a ideia
+- Dê preferência a perguntas de múltipla escolha quando possível, mas perguntas abertas também são aceitáveis
+- Apenas uma pergunta por mensagem - se um tópico precisar de mais exploração, divida-o em várias perguntas
+- Foque em compreender: propósito, restrições, critérios de sucesso
 
-**Exploring approaches:**
+**Explorando abordagens:**
 
-- Propose 2-3 different approaches with trade-offs
-- Present options conversationally with your recommendation and reasoning
-- Lead with your recommended option and explain why
-- YAGNI ruthlessly - remove unnecessary features from every approach and design
+- Proponha 2-3 abordagens diferentes com trade-offs
+- Apresente opções de forma conversacional com sua recomendação e justificativa
+- Comece com a opção recomendada e explique o porquê
+- Aplique YAGNI impiedosamente - remova features desnecessárias de todas as abordagens e designs
 
-**Presenting the design:**
+**Apresentando o design:**
 
-- Once you believe you understand what you're building, present the design
-- Scale each section to its complexity: a few sentences if straightforward, up to 200-300 words if nuanced
-- Ask after each section whether it looks right so far
-- Cover: architecture, components, data flow, error handling, testing
-- Be ready to go back and clarify if something doesn't make sense
+- Assim que você acreditar que entendeu o que está construindo, apresente o design
+- Dimensione cada seção de acordo com a sua complexidade: algumas frases se for simples e direta, até 200-300 palavras se tiver nuances
+- Pergunte após cada seção se parece correto até o momento
+- Cubra: arquitetura, componentes, fluxo de dados, tratamento de erros, testes
+- Esteja pronto para voltar e esclarecer se algo não fizer sentido
 
-**Design for isolation and clarity:**
+**Design para isolamento e clareza:**
 
-- Break the system into smaller units that each have one clear purpose, communicate through well-defined interfaces, and can be understood and tested independently
-- For each unit, you should be able to answer: what does it do, how do you use it, and what does it depend on?
-- Can someone understand what a unit does without reading its internals? Can you change the internals without breaking consumers? If not, the boundaries need work.
-- Smaller, well-bounded units are also easier for you to work with - you reason better about code you can hold in context at once, and your edits are more reliable when files are focused. When a file grows large, that's often a signal that it's doing too much.
+- Divida o sistema em unidades menores que tenham, cada uma, um propósito claro, comuniquem-se por meio de interfaces bem definidas e possam ser compreendidas e testadas de forma independente
+- Para cada unidade, você deve ser capaz de responder: o que ela faz, como você a utiliza e do que ela depende?
+- Alguém consegue entender o que uma unidade faz sem ler seus detalhes internos? Você consegue alterar os detalhes internos sem quebrar os consumidores? Se não, os limites (boundaries) precisam de ajustes.
+- Unidades menores e bem delimitadas também são mais fáceis para você trabalhar - você raciocina melhor sobre códigos que consegue manter no contexto de uma só vez, e suas edições são mais confiáveis quando os arquivos são focados. Quando um arquivo fica grande, isso costuma ser um sinal de que ele está fazendo coisas demais.
 
-**Working in existing codebases:**
+**Trabalhando em codebases existentes:**
 
-- Explore the current structure before proposing changes. Follow existing patterns.
-- Where existing code has problems that affect the work (e.g., a file that's grown too large, unclear boundaries, tangled responsibilities), include targeted improvements as part of the design - the way a good developer improves code they're working in.
-- Don't propose unrelated refactoring. Stay focused on what serves the current goal.
+- Explore a estrutura atual antes de propor alterações. Siga os padrões existentes.
+- Onde o código existente apresentar problemas que afetem o trabalho (por exemplo, um arquivo que cresceu demais, limites pouco claros, responsabilidades confusas), inclua melhorias pontuais como parte do design - da mesma forma que um bom desenvolvedor melhora o código no qual está trabalhando.
+- Não proponha refatorações não relacionadas. Mantenha o foco no que atende ao objetivo atual.
 
-## After the Design (architectural path)
+## Após o Design (caminho architectural)
 
-**Documentation:**
+**Documentação:**
 
-- Write the validated design (spec) to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`
-  - (User preferences for spec location override this default)
-- Use elements-of-style:writing-clearly-and-concisely skill if available
-- Commit the design document to git
+- Escreva o design validado (spec) em `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`
+  - (Preferências do usuário quanto à localização da spec sobrescrevem este padrão)
+- Use a skill elements-of-style:writing-clearly-and-concisely se disponível
+- Faça commit do documento de design no git
 
-**Spec Self-Review:**
-After writing the spec document, look at it with fresh eyes:
+**Auto-Revisão da Spec:**
+Após escrever o documento de spec, olhe para ele com um olhar renovado:
 
-1. **Placeholder scan:** Any "TBD", "TODO", incomplete sections, or vague requirements? Fix them.
-2. **Internal consistency:** Do any sections contradict each other? Does the architecture match the feature descriptions?
-3. **Scope check:** Is this focused enough for a single implementation plan, or does it need decomposition?
-4. **Ambiguity check:** Could any requirement be interpreted two different ways? If so, pick one and make it explicit.
+1. **Varredura de placeholders:** Algum "TBD", "TODO", seções incompletas ou requisitos vagos? Corrija-os.
+2. **Consistência interna:** Alguma seção contradiz outra? A arquitetura corresponde às descrições das features?
+3. **Verificação de escopo:** Isso está focado o suficiente para um único plano de implementação, ou precisa de decomposição?
+4. **Verificação de ambiguidade:** Algum requisito poderia ser interpretado de duas maneiras diferentes? Se sim, escolha uma e torne-a explícita.
 
-Fix any issues inline. No need to re-review — just fix and move on.
+Corrija qualquer problema inline. Não há necessidade de revisar novamente — apenas corrija e siga em frente.
 
-**User Review Gate:**
-After the spec review loop passes, ask the user to review the written spec before proceeding:
+**Gate de Revisão do Usuário:**
+Depois que o loop de revisão da spec passar, peça ao usuário para revisar a spec escrita antes de prosseguir:
 
 > "Spec written and committed to `<path>`. Please review it and let me know if you want to make any changes before we start writing out the implementation plan."
 
-Wait for the user's response. If they request changes, make them and re-run the spec review loop. Only proceed once the user approves.
+Aguarde a resposta do usuário. Se ele solicitar alterações, faça-as e execute novamente o loop de revisão da spec. Prossiga somente depois que o usuário aprovar.
 
-**Implementation:**
+**Implementação:**
 
-- Invoke the writing-plans skill to create a detailed implementation plan
-- Do NOT invoke any other skill. writing-plans is the next step.
+- Invoque a skill writing-plans para criar um plano de implementação detalhado
+- NÃO invoque nenhuma outra skill. writing-plans é a próxima etapa.
 
 ## Visual Companion
 
-A browser-based companion for showing mockups, diagrams, and visual options during brainstorming. Available as a tool — not a mode. Accepting the companion means it's available for questions that benefit from visual treatment; it does NOT mean every question goes through the browser.
+Um companheiro baseado em navegador para exibir mockups, diagramas e opções visuais durante o brainstorming. Disponível como uma ferramenta — não como um modo. Aceitar o companion significa que ele está disponível para perguntas que se beneficiam de um tratamento visual; NÃO significa que todas as perguntas passarão pelo navegador.
 
-**Offering the companion (just-in-time):** Do NOT offer it upfront. Wait until a question would genuinely be clearer shown than told — a real mockup / layout / diagram question, not merely a UI *topic*. The first time that happens, offer it then, as its own message:
+**Oferecendo o companion (just-in-time):** NÃO o ofereça logo de início. Espere até que uma pergunta seja genuinamente mais clara sendo mostrada do que dita — uma pergunta real de mockup / layout / diagrama, não apenas um *tópico* de UI. Na primeira vez em que isso acontecer, ofereça-o naquele momento, em uma mensagem própria:
 > "This next part might be easier if I show you — I can put together mockups, diagrams, and comparisons in a browser tab as we go. It's still new and can be token-intensive. Want me to? I'll open it for you."
 
-**This offer MUST be its own message.** Only the offer — no clarifying question, summary, or other content. Wait for the user's response. If they accept, start the server with `--open` so their browser opens to the first screen automatically. If they decline, continue text-only and don't offer again unless they raise it.
+**Esta oferta DEVE ser uma mensagem própria.** Apenas a oferta — sem pergunta de esclarecimento, resumo ou outro conteúdo. Aguarde a resposta do usuário. Se ele aceitar, inicie o servidor com `--open` para que o navegador dele abra na primeira tela automaticamente. Se recusar, continue apenas com texto e não ofereça novamente, a menos que ele mencione o assunto.
 
-**Per-question decision:** Even after the user accepts, decide FOR EACH QUESTION whether to use the browser or the terminal. The test: **would the user understand this better by seeing it than reading it?**
+**Decisão por pergunta:** Mesmo após o usuário aceitar, decida PARA CADA PERGUNTA se usará o navegador ou o terminal. O teste é: **o usuário entenderia isso melhor vendo do que lendo?**
 
-- **Use the browser** for content that IS visual — mockups, wireframes, layout comparisons, architecture diagrams, side-by-side visual designs
-- **Use the terminal** for content that is text — requirements questions, conceptual choices, tradeoff lists, A/B/C/D text options, scope decisions
+- **Use o navegador** para conteúdo que É visual — mockups, wireframes, comparações de layout, diagramas de arquitetura, designs visuais lado a lado
+- **Use o terminal** para conteúdo que é texto — perguntas de requisitos, escolhas conceituais, listas de trade-offs, opções de texto A/B/C/D, decisões de escopo
 
-A question about a UI topic is not automatically a visual question. "What does personality mean in this context?" is a conceptual question — use the terminal. "Which wizard layout works better?" is a visual question — use the browser.
+Uma pergunta sobre um tópico de UI não é automaticamente uma pergunta visual. "O que personalidade significa neste contexto?" é uma pergunta conceitual — use o terminal. "Qual layout de assistente (wizard) funciona melhor?" é uma pergunta visual — use o navegador.
 
-If they agree to the companion, read the detailed guide before proceeding:
+Se ele concordar com o companion, leia o guia detalhado antes de prosseguir:
 `skills/brainstorming/visual-companion.md`

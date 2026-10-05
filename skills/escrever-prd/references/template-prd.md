@@ -226,4 +226,3 @@ designs, ou qualquer recurso externo relevante para o negócio da feature.]
 [Registra decisões **de produto** e premissas de negócio significativas. Decisão
 técnica/arquitetural vai para ADR, não aqui. Seção viva durante `rascunho`, `pronto`
 e `em-progresso`; congela junto com o PRD quando o status vira `concluido`.]
-```

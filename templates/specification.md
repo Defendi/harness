@@ -6,7 +6,7 @@ jira: "{{JIRA_KEY}}"
 prd_ref: "docs/prds/PRD-NNN.md"
 trd_ref: "docs/trd.md"
 status: draft # draft | in_review | approved
-author: "Architect Agent"
+author: "Agente Arquiteto"
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
 tags:
@@ -24,7 +24,7 @@ tags:
 
 ## 1. Rastreabilidade & Fontes de Verdade
 
-- **Jira Issue:** [{{JIRA_KEY}}](https://{{JIRA_DOMAIN}}/browse/{{JIRA_KEY}})
+- **Issue do Jira:** [{{JIRA_KEY}}](https://{{JIRA_DOMAIN}}/browse/{{JIRA_KEY}})
 - **PRD de Origem (Regras de Negócio):** [`docs/prds/PRD-NNN.md`](../prds/PRD-NNN.md)
 - **TRD Global (Diretrizes e Stack):** [`docs/trd.md`](../trd.md)
 - **ADRs Vinculadas:** [`docs/decisions/`](../decisions/)
@@ -57,14 +57,14 @@ Detalhe as interfaces, endpoints e estruturas de dados conforme padrões do TRD:
 ### 4.1 Interface / API Endpoint
 - **Método / Protocolo:** `POST /api/v1/resource`
 - **Autenticação:** Bearer Token / Zero Trust
-- **Request Payload Schema:**
+- **Schema do Payload de Requisição:**
 ```json
 {
   "campo_obrigatorio": "string",
   "quantidade": 10
 }
 ```
-- **Response Payload Schema (200/201):**
+- **Schema do Payload de Resposta (200/201):**
 ```json
 {
   "id": "uuid",
@@ -83,7 +83,7 @@ Detalhe as interfaces, endpoints e estruturas de dados conforme padrões do TRD:
 | Cenário de Exceção | Código / Status | Comportamento Esperado |
 |:---|:---|:---|
 | Entrada inválida / schema mismatch | HTTP 400 | Retorna JSON com campo e motivo sem expor stacktrace |
-| Credenciais inválidas ou ausentes | HTTP 401 | Retorna unauthorized |
+| Credenciais inválidas ou ausentes | HTTP 401 | Retorna não autorizado |
 | Recurso não encontrado | HTTP 404 | Retorna recurso inexistente |
 | Timeout / Falha em dependência | HTTP 503 | Circuit breaker / Retry com exponential backoff |
 
@@ -109,4 +109,4 @@ Detalhe as interfaces, endpoints e estruturas de dados conforme padrões do TRD:
 - [ ] **Conformidade Técnica:** Arquitetura aderente ao TRD e ADRs vigentes.
 - [ ] **Segurança & Secrets:** Zero Trust aplicado; nenhum segredo exposto em contratos ou logs.
 - [ ] **Hermetismo:** Testes unitários herméticos planejados com cobertura mínima de 80%.
-- [ ] **Aprovação:** Revisado pelo Architect e aprovado pelo P.O.
+- [ ] **Aprovação:** Revisado pelo Arquiteto e aprovado pelo P.O.

@@ -1,39 +1,39 @@
-# Testing Skill
+# Skill de Testes
 
-## Purpose
-Execute hermetic quality verification, static analysis, coverage checks, and regression testing.
+## Objetivo
+Executar verificação hermética de qualidade, análise estática, verificações de cobertura e testes de regressão.
 
-## Inputs
-- Implemented code and tests
-- Test plan (`docs/execution/<jira>-test-plan.md`)
+## Entradas
+- Código e testes implementados
+- Plano de testes (`docs/execution/<jira>-test-plan.md`)
 
-## Preconditions
-- Implementation completed.
-- Jira card moved to `Testando` (status ID `10102`).
+## Pré-condições
+- Implementação concluída.
+- Card do Jira movido para `Testando` (status ID `10102`).
 
-## Procedure
-1. Execute static analysis:
+## Procedimento
+1. Executar análise estática:
    ```bash
    .venv/bin/ruff check .
    .venv/bin/ruff format --check .
    .venv/bin/mypy src/
    ```
-2. Execute automated test suites hermetically:
+2. Executar suítes de testes automatizados hermeticamente:
    ```bash
    .venv/bin/pytest tests/ -v --cov=src
    ```
-3. Verify test coverage meets defined threshold (>80%).
-4. Verify mock isolation: confirm no live network calls were initiated.
-5. Generate test execution report.
+3. Verificar se a cobertura de testes atinge o threshold definido (>80%).
+4. Verificar o isolamento de mocks: confirmar que nenhuma chamada de rede real foi iniciada.
+5. Gerar relatório de execução de testes.
 
-## Outputs
-- Test execution report (`docs/execution/<jira>-test-report.md`)
-- Verified green status across the hermetic triad.
+## Saídas
+- Relatório de execução de testes (`docs/execution/<jira>-test-report.md`)
+- Status verde verificado em toda a tríade hermética.
 
-## Validation
-- All checks pass with exit code 0.
-- No network leaks during test execution.
+## Validação
+- Todas as verificações passam com exit code 0.
+- Nenhum vazamento de rede durante a execução dos testes.
 
-## Failure Conditions
-- Any lint, formatting, or test failure.
-- Flaky tests or uncontrolled dependencies.
+## Condições de Falha
+- Qualquer falha de lint, formatação ou teste.
+- Testes flaky ou dependências não controladas.

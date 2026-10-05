@@ -1,20 +1,20 @@
-# Coding Standards Rules
+# Regras de Padrões de Código
 
-## 1. Code Quality & Formatting
-- Strict compliance with language-specific formatters and linters (e.g. `ruff check` and `ruff format` for Python).
-- No dead code, unused imports, or lingering debug print statements.
-- Explicit type annotations on all public functions, methods, and class signatures.
+## 1. Qualidade de Código e Formatação
+- Conformidade estrita com formatadores e linters específicos da linguagem (ex.: `ruff check` e `ruff format` para Python).
+- Sem código morto, imports não utilizados ou prints de debug remanescentes.
+- Anotações explícitas de tipo em todas as funções públicas, métodos e assinaturas de classe.
 
-## 2. Error Handling & Logging
-- Use structured exception handling. Catch specific exceptions; never use bare `except:`.
-- Log with appropriate levels (`DEBUG`, `INFO`, `WARNING`, `ERROR`).
-- **Never log sensitive data**: redact tokens, passwords, private keys, authorization headers.
+## 2. Tratamento de Erros e Logging
+- Use tratamento de exceções estruturado. Capture exceções específicas; nunca use um `except:` genérico.
+- Faça log com os níveis apropriados (`DEBUG`, `INFO`, `WARNING`, `ERROR`).
+- **Nunca registre dados sensíveis no log**: mascare tokens, senhas, chaves privadas, headers de autorização.
 
-## 3. Immutability & Predictability
-- Prefer immutable data structures and explicit schemas (e.g. Pydantic models / Dataclasses).
-- Avoid side effects in property getters or query methods.
-- Validate inputs rigorously at the boundaries (MCP tool parameters).
+## 3. Imutabilidade e Previsibilidade
+- Prefira estruturas de dados imutáveis e schemas explícitos (ex.: modelos Pydantic / Dataclasses).
+- Evite efeitos colaterais em getters de propriedades ou métodos de query.
+- Valide entradas rigorosamente nos limites (parâmetros de ferramentas MCP).
 
-## 4. Code Simplicity
-- Keep functions concise and focused on a single responsibility.
-- Do not over-engineer abstractions before a second use case exists.
+## 4. Simplicidade de Código
+- Mantenha funções concisas e focadas em uma única responsabilidade.
+- Não faça over-engineering em abstrações antes que exista um segundo caso de uso.

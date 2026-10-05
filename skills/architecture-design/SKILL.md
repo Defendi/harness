@@ -1,30 +1,30 @@
-# Architecture Design Skill
+# Skill de Design de Arquitetura
 
-## Purpose
-Design system architecture, component diagrams, interfaces, and Architectural Decision Records (ADRs) ensuring security, credential isolation, and modularity.
+## Propósito
+Projetar a arquitetura do sistema, diagramas de componentes, interfaces e Architectural Decision Records (ADRs), garantindo segurança, isolamento de credenciais e modularidade.
 
-## Inputs
-- Validated specification (`docs/specs/<jira>-<slug>.md`)
-- Existing architecture context in `docs/architecture/`
+## Entradas
+- Especificação validada (`docs/specs/<jira>-<slug>.md`)
+- Contexto de arquitetura existente em `docs/architecture/`
 
-## Preconditions
-- Specification Gate satisfied.
+## Pré-condições
+- Specification Gate satisfeito.
 
-## Procedure
-1. Model system components and communication paths.
-2. Ensure strict credential boundary: credentials never leave the server or pass into tool responses.
-3. Design interfaces/abstract classes for external providers.
-4. Record major design choices as ADRs in `docs/decisions/` using the template.
-5. Create or update architecture documentation in `docs/architecture/`.
+## Procedimento
+1. Modelar os componentes do sistema e os caminhos de comunicação.
+2. Garantir limite estrito de credenciais: as credenciais nunca saem do servidor nem passam para respostas de ferramentas.
+3. Projetar interfaces/classes abstratas para provedores externos.
+4. Registrar as principais decisões de design como ADRs em `docs/decisions/` usando o template.
+5. Criar ou atualizar a documentação de arquitetura em `docs/architecture/`.
 
-## Outputs
+## Saídas
 - `docs/architecture/<jira>-<slug>.md`
-- `docs/decisions/<number>-<title>.md` (if decisions warrant an ADR)
+- `docs/decisions/<number>-<title>.md` (se as decisões justificarem uma ADR)
 
-## Validation
-- Architecture conforms to Zero Trust secret management.
-- Modularity and decoupling principles respected.
+## Validação
+- A arquitetura está em conformidade com o gerenciamento de segredos Zero Trust.
+- Princípios de modularidade e desacoplamento respeitados.
 
-## Failure Conditions
-- Security compromise in secret handling.
-- Tightly coupled components violating separation of concerns.
+## Condições de Falha
+- Comprometimento de segurança na manipulação de segredos.
+- Componentes fortemente acoplados violando a separação de responsabilidades.

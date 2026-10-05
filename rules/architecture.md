@@ -1,16 +1,16 @@
-# Architecture Rules
+# Regras de Arquitetura
 
-## 1. Principles
-- **Separation of Concerns:** Clearly isolate transport/protocol layer (MCP), domain logic, and provider integrations (AWS, GitLab, Azure, SSH).
-- **Hermetic Isolation of Secrets:** Credential storage and resolution must never leak tokens, keys or passphrases to MCP tool outputs, logs, or LLM agent responses.
-- **Defensive Design:** Fail-closed by default. If a credential cannot be validated or an operation is unpermitted, reject immediately with structured errors.
-- **Architectural Decision Records (ADRs):** Significant changes to structure, library choices, or security posture must be recorded in `docs/decisions/` following the ADR template.
+## 1. Princípios
+- **Separação de Preocupações:** Isolar claramente a camada de transporte/protocolo (MCP), a lógica de domínio e as integrações de provedores (AWS, GitLab, Azure, SSH).
+- **Isolamento Hermético de Segredos:** O armazenamento e a resolução de credenciais nunca devem vazar tokens, chaves ou passphrases para saídas de ferramentas MCP, logs ou respostas de agentes LLM.
+- **Design Defensivo:** Fail-closed por padrão. Se uma credencial não puder ser validada ou uma operação não for permitida, rejeite imediatamente com erros estruturados.
+- **Architectural Decision Records (ADRs):** Mudanças significativas na estrutura, escolhas de bibliotecas ou postura de segurança devem ser registradas em `docs/decisions/` seguindo o template de ADR.
 
-## 2. Modularity & Interfaces
-- Define explicit abstract interfaces for external service providers.
-- Avoid tight coupling between the FastMCP server setup and the provider clients.
-- Provide dependency injection or factory patterns to facilitate hermetic unit testing without network dependencies.
+## 2. Modularidade & Interfaces
+- Definir interfaces abstratas explícitas para provedores de serviços externos.
+- Evitar acoplamento forte entre a configuração do servidor FastMCP e os clientes de provedores.
+- Fornecer injeção de dependência ou factory patterns para facilitar testes unitários herméticos sem dependências de rede.
 
-## 3. Evolutionary Architecture
-- New providers (e.g. additional VCS or cloud providers) should be added as plugins/adapters without modifying existing working implementations.
-- Maintain backward compatibility for MCP tools and resources exposed to AI clients.
+## 3. Arquitetura Evolutiva
+- Novos provedores (ex.: provedores adicionais de VCS ou nuvem) devem ser adicionados como plugins/adapters sem modificar implementações funcionais existentes.
+- Manter a compatibilidade retroativa para ferramentas MCP e recursos expostos a clientes de IA.

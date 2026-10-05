@@ -3,7 +3,7 @@
 ## 1. Toolchain Padrão
 - **Gerenciador de Dependências:** `go mod` com `go.mod` e `go.sum` versionados.
 - **Linter:** `golangci-lint` habilitando linters essenciais (`errcheck`, `govet`, `staticcheck`, `unused`, `gosec`).
-- **Formatter:** `gofmt` com flags padrão (`-s -w`).
+- **Formatador:** `gofmt` com flags padrão (`-s -w`).
 - **Testes & Concorrência:** `go test -race` em todos os testes para prevenção de data races.
 - **Auditoria de Vulnerabilidades:** `govulncheck`.
 
@@ -24,4 +24,3 @@ internal/
 └── handler/            # Handlers HTTP ou gRPC
 pkg/                    # Pacotes utilitários públicos reutilizáveis (se houver)
 tests/                  # Testes de integração de ponta a ponta
-```

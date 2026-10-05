@@ -1,7 +1,7 @@
 ---
 name: escrever-prd
 description: |
-  Escrever PRD (Product Requirements Document) a partir de um problema ou ideia. Use quando o usuario pedir PRD, documento de requisitos de produto ou especificacao de produto.
+  Escrever PRD (Product Requirements Document) a partir de um problema ou ideia. Use quando o usuário pedir PRD, documento de requisitos de produto ou especificação de produto.
 ---
 
 # Escrever PRD
@@ -63,7 +63,7 @@ Antes de gerar, fazer duas verificações rápidas:
 
 **2a. Detecção de múltiplas features**
 
-O teste da unidade não é desconexão — é auto-suficiência. Um PRD cobre **uma** feature quando
+O teste da unidade não é desconexão — é autossuficiência. Um PRD cobre **uma** feature quando
 **cada parte se explica sozinha e entrega algo observável ao usuário**. Se o input tem partes
 que passam nesse teste separadamente, são features distintas — **ainda que dependentes entre
 si**. Dependência é normal e vive no `depends_on` (uma feature encadeada não deixa de ser uma
@@ -121,7 +121,7 @@ Regras de geração:
 - Edge cases seguem o formato: "[situação anômala] → [comportamento esperado]"
 - Critérios de aceite (§5a) cobrem funcionais e não-funcionais **específicos da feature** — tempo de resposta, disponibilidade e capacidade entram quando têm razão de negócio (registrar o limiar **e o porquê**). NFR global do projeto (p95 geral, uptime, criptografia) mora no TRD, não no PRD. Métricas de sucesso (baseline→meta) vão em §5b
 - Critérios vagos como "deve funcionar bem" ou "boa performance" não são aceitáveis — reformular até que sejam objetivamente verificáveis; se não houver dados suficientes, marcar como premissa
-- Um **milestone é um marco de produto**: um conjunto coeso de funcionalidades que entrega algo ao usuário — algo que se anunciaria como conquista, não uma fatia de execução. Cada milestone é definido por **quais USs cobre** (por ID), por uma **justificativa de por que é um marco** (auto-avaliação: se a justificativa sai forçada, provavelmente é tarefa disfarçada ou dois marcos espremidos) e por um **checklist de aceite** (critérios de §5a filtrados pelas USs do marco, marcáveis pelo Aprovador após a implementação). **Sem número mínimo** de milestones; o teto de ~6 é o sinal de sanidade do 2a. Não detalhar tarefas técnicas nem ordem de execução no milestone — a decomposição (fatias, tasks, ordem) é do `sdd-especificar`
+- Um **milestone é um marco de produto**: um conjunto coeso de funcionalidades que entrega algo ao usuário — algo que se anunciaria como conquista, não uma fatia de execução. Cada milestone é definido por **quais USs cobre** (por ID), por uma **justificativa de por que é um marco** (autoavaliação: se a justificativa sai forçada, provavelmente é tarefa disfarçada ou dois marcos espremidos) e por um **checklist de aceite** (critérios de §5a filtrados pelas USs do marco, marcáveis pelo Aprovador após a implementação). **Sem número mínimo** de milestones; o teto de ~6 é o sinal de sanidade do 2a. Não detalhar tarefas técnicas nem ordem de execução no milestone — a decomposição (fatias, tasks, ordem) é do `sdd-especificar`
 - Incluir o **Fluxo de Negócio** (§4, diagrama de jornada/processo onde os pontos de decisão são regras) apenas quando a ramificação de regra não ficar clara no texto. Topologia técnica (componentes/serviços, modelo de dados) não entra no PRD — fica no TRD, nos ADRs ou, quando é decisão local difícil de reverter, no PLAN da fatia
 - A seção "Fora do escopo" é obrigatória — inferir itens óbvios de exclusão quando não fornecidos, marcando como premissa
 - O "Registro de Decisões" registra decisões **de produto** e premissas de negócio significativas. Decisão arquitetural/técnica não entra — vira ADR

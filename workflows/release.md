@@ -1,30 +1,30 @@
-# Release Workflow
+# Workflow de Release
 
-## Trigger
-Milestone completion, batch of completed cards in `Concluído`, or explicit release trigger.
+## Gatilho
+Conclusão de milestone, lote de cards finalizados em `Concluído` ou gatilho explícito de release.
 
-## Preconditions
-- All associated Jira cards in `Concluído`.
-- All quality gates satisfied on `main`.
+## Pré-condições
+- Todos os cards associados do Jira em `Concluído`.
+- Todos os quality gates satisfeitos na `main`.
 
-## Steps
-1. Verify `main` branch status and CI/CD results.
-2. Determine new semantic version (SemVer: Major.Minor.Patch).
-3. Generate release notes from completed Jira cards and commit log using `.agents/templates/release-notes.md`.
-4. Create release tag: `git tag -a vX.Y.Z -m "Release vX.Y.Z"`.
-5. Push commit and tag to GitHub remote (`git push origin main --tags`).
-6. Notify stakeholders and close Jira release version.
+## Passos
+1. Verifique o status da branch `main` e os resultados de CI/CD.
+2. Determine a nova versão semântica (SemVer: Major.Minor.Patch).
+3. Gere as release notes a partir dos cards concluídos do Jira e do commit log utilizando `.agents/templates/release-notes.md`.
+4. Crie a release tag: `git tag -a vX.Y.Z -m "Release vX.Y.Z"`.
+5. Faça push do commit e da tag para o remoto do GitHub (`git push origin main --tags`).
+6. Notifique os stakeholders e feche a versão de release no Jira.
 
-## Artifacts
+## Artefatos
 - `docs/execution/release-vX.Y.Z.md`
-- Git release tag `vX.Y.Z`
-- GitHub Release entry
+- Release tag do Git `vX.Y.Z`
+- Registro de GitHub Release
 
 ## Quality Gates
-- Release Gate: all predecessor gates satisfied, clean working tree, verified build.
+- Release Gate: todos os gates predecessores satisfeitos, working tree limpa, build verificado.
 
-## Exit Conditions
-- Release published, version tagged, Jira milestone closed.
+## Condições de Saída
+- Release publicada, versão com tag criada, milestone do Jira fechado.
 
-## Failure Handling
-- If release build fails, do not publish tag. Revert or patch on a new release branch.
+## Tratamento de Falhas
+- Se o build de release falhar, não publique a tag. Reverta ou aplique patch em uma nova branch de release.

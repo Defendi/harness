@@ -1,17 +1,17 @@
-# Testing Rules
+# Regras de Teste
 
-## 1. Hermetic Testing Triad
-All automated test executions must pass the complete quality triad:
-1. **Linter Check:** Strict linting passes without warnings.
-2. **Format Check:** Code formatting complies 100% with the standard.
-3. **Automated Tests:** Unit and integration test suites run with 100% success.
+## 1. Tríade de Testes Herméticos
+Todas as execuções de testes automatizados devem passar pela tríade completa de qualidade:
+1. **Verificação de Linter:** O linting rigoroso passa sem avisos.
+2. **Verificação de Formatação:** A formatação do código cumpre 100% o padrão.
+3. **Testes Automatizados:** Suítes de testes unitários e de integração são executadas com 100% de sucesso.
 
-## 2. Test Isolation & Determinism
-- Unit tests must never make actual outbound network requests to live AWS, GitLab, Azure, or SSH hosts.
-- Use mocks, stubs, and synthetic fixtures to isolate external systems.
-- Tests must be deterministic: no reliance on global mutable state or execution order.
+## 2. Isolamento & Determinismo de Testes
+- Testes unitários nunca devem fazer requisições de rede de saída reais para hosts ativos da AWS, GitLab, Azure ou SSH.
+- Use mocks, stubs e fixtures sintéticas para isolar sistemas externos.
+- Os testes devem ser determinísticos: sem dependência de estado mutável global ou ordem de execução.
 
-## 3. Test Coverage & Edge Cases
-- Test both the happy path and error paths (credential failure, timeout, invalid parameters, permission denied).
-- Fast execution: unit tests must execute in seconds.
-- Every bug fix must include a reproducing regression test.
+## 3. Cobertura de Testes & Edge Cases
+- Teste tanto o happy path quanto os caminhos de erro (falha de credencial, timeout, parâmetros inválidos, permissão negada).
+- Execução rápida: testes unitários devem ser executados em segundos.
+- Todo bug fix deve incluir um teste de regressão que reproduza o problema.

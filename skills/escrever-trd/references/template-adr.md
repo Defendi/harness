@@ -65,4 +65,3 @@ decidir isso agora? O que está em tensão?]
 - **Positivas:** [o que melhora com esta decisão]
 - **Negativas:** [o custo aceito, o que fica pior ou mais restrito]
 - **Neutras / trade-offs aceitos:** [implicações que não são bônus nem ônus]
-```

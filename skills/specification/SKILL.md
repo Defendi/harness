@@ -1,30 +1,30 @@
-# Specification Skill
+# Skill de Especificação
 
-## Purpose
-Formalize analyzed requirements into complete, version-controlled specifications under `docs/specs/`.
+## Propósito
+Formalizar os requisitos analisados em especificações completas e versionadas sob `docs/specs/`.
 
-## Inputs
-- Requirements analysis outputs
-- Jira issue key (`MCPS-xxx`)
+## Entradas
+- Saídas da análise de requisitos
+- Chave da issue do Jira (`MCPS-xxx`)
 
-## Preconditions
-- Requirements analysis completed and validated.
+## Pré-condições
+- Análise de requisitos concluída e validada.
 
-## Procedure
-1. Create `docs/specs/<jira>-<slug>.md` using `.agents/templates/specification.md`.
-2. Define metadata header (jira key, status, version, date).
-3. Specify user stories, functional behavior, error conditions, and API contracts.
-4. Define testable Acceptance Criteria using Given/When/Then format where applicable.
-5. Review the specification against architecture and security guardrails.
+## Procedimento
+1. Criar `docs/specs/<jira>-<slug>.md` utilizando `.agents/templates/specification.md`.
+2. Definir o cabeçalho de metadados (jira key, status, versão, data).
+3. Especificar user stories, comportamento funcional, condições de erro e contratos de API.
+4. Definir Critérios de Aceitação testáveis utilizando o formato Given/When/Then onde aplicável.
+5. Revisar a especificação em relação aos guardrails de arquitetura e segurança.
 
-## Outputs
-- Persisted specification file: `docs/specs/<jira>-<slug>.md`.
+## Saídas
+- Arquivo de especificação persistido: `docs/specs/<jira>-<slug>.md`.
 
-## Validation
-- Specification follows standard template.
-- All acceptance criteria are testable.
-- Linked to the corresponding Jira card.
+## Validação
+- A especificação segue o template padrão.
+- Todos os critérios de aceitação são testáveis.
+- Vinculada ao card correspondente do Jira.
 
-## Failure Conditions
-- Incomplete specifications missing error paths.
-- Unspecified data models or interfaces.
+## Condições de Falha
+- Especificações incompletas sem caminhos de erro.
+- Modelos de dados ou interfaces não especificados.

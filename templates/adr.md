@@ -1,10 +1,10 @@
 # ADR-[XXXX] — [Título Decisivo e Curto]
 
 ## Metadados
-- **Status:** PROPOSED | ACCEPTED | DEPRECATED | SUPERSEDED
+- **Status:** PROPOSTO | ACEITO | DEPRECIADO | SUBSTITUÍDO
 - **Data:** AAAA-MM-DD
-- **Autores / Decisores:** Architect, Tech Lead
-- **Jira Issue:** [PROJ-XXX](https://seu-dominio.atlassian.net/browse/PROJ-XXX)
+- **Autores / Decisores:** Arquiteto, Tech Lead
+- **Issue do Jira:** [PROJ-XXX](https://seu-dominio.atlassian.net/browse/PROJ-XXX)
 - **Substitui:** [ADR-YYYY (opcional)]
 
 ---

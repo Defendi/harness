@@ -1,40 +1,40 @@
-# Jira Management Skill
+# Skill de Gerenciamento do Jira
 
-## Purpose
-Manage Jira issue lifecycle, status transitions, itemized comments, and traceability links across project `MCPS`.
+## Objetivo
+Gerenciar o ciclo de vida de issues do Jira, transições de status, comentários detalhados e links de rastreabilidade em todo o projeto `MCPS`.
 
-## Inputs
-- Jira Issue Key (`MCPS-xxx`)
-- Desired transition / status ID
-- Phase update comments and artifacts
+## Entradas
+- Chave da Issue do Jira (`MCPS-xxx`)
+- ID de transição / status desejado
+- Comentários de atualização de fase e artefatos
 
-## Preconditions
-- Active Atlassian MCP connection or valid REST API credentials.
-- Compliance with `.agents/rules/jira-card-lifecycle.md`.
+## Pré-condições
+- Conexão ativa com o Atlassian MCP ou credenciais válidas da REST API.
+- Conformidade com `.agents/rules/jira-card-lifecycle.md`.
 
-## Procedure
-1. Verify current status of the card.
-2. Determine required transition ID according to the official state machine:
-   - `Backlog` (`10012`, transition `20`)
-   - `A Fazer` (`10057`, transition `30`)
-   - `Em Andamento` (`3`, transition `40`)
-   - `Pronto para Review` (`10099`, transition `50`)
-   - `Review` (`10100`, transition `60`)
-   - `Pronto Para Testar` (`10101`, transition `70`)
-   - `Testando` (`10102`, transition `80`)
-   - `Concluído` (`10011`, transition `90`)
-3. Execute transition using Atlassian MCP tool (`transitionJiraIssue`) or REST API.
-4. Add formatted comment describing the phase outcome, attached artifacts, and links.
-5. If non-blocking suggestions are recorded, create new Jira tasks in `Backlog`.
+## Procedimento
+1. Verificar o status atual do card.
+2. Determinar o ID de transição necessário de acordo com a state machine oficial:
+   - `Backlog` (`10012`, transição `20`)
+   - `A Fazer` (`10057`, transição `30`)
+   - `Em Andamento` (`3`, transição `40`)
+   - `Pronto para Review` (`10099`, transição `50`)
+   - `Review` (`10100`, transição `60`)
+   - `Pronto Para Testar` (`10101`, transição `70`)
+   - `Testando` (`10102`, transição `80`)
+   - `Concluído` (`10011`, transição `90`)
+3. Executar a transição utilizando a ferramenta Atlassian MCP (`transitionJiraIssue`) ou REST API.
+4. Adicionar comentário formatado descrevendo o resultado da fase, artefatos anexados e links.
+5. Se sugestões não bloqueantes forem registradas, criar novas tasks no Jira em `Backlog`.
 
-## Outputs
-- Updated card status in Jira.
-- Documented comments and audit trail on the card.
+## Saídas
+- Status do card atualizado no Jira.
+- Comentários documentados e trilha de auditoria no card.
 
-## Validation
-- Transition succeeded with no API errors.
-- Status reflected accurately on Jira board.
+## Validação
+- Transição bem-sucedida sem erros de API.
+- Status refletido com precisão no board do Jira.
 
-## Failure Conditions
-- Unauthorized status jump violating the lifecycle state machine.
-- Failed authentication or unreachable Jira API.
+## Condições de Falha
+- Salto de status não autorizado violando a state machine do ciclo de vida.
+- Falha de autenticação ou API do Jira inacessível.

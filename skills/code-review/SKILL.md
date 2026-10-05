@@ -1,33 +1,33 @@
-# Code Review Skill
+# Skill de Code Review
 
-## Purpose
-Perform thorough, objective peer code review validating code quality, specification adherence, architecture compliance, and security posture.
+## Objetivo
+Realizar code review por pares minucioso e objetivo, validando a qualidade do código, a aderência à especificação, a conformidade arquitetural e a postura de segurança.
 
-## Inputs
-- Git diff between working branch and `main`
-- Approved specification and architecture documents
-- Coding standards (`.agents/rules/coding-standards.md`)
+## Entradas
+- Git diff entre a branch de trabalho e a `main`
+- Documentos aprovados de especificação e arquitetura
+- Padrões de código (`.agents/rules/coding-standards.md`)
 
-## Preconditions
-- Jira card transitioned to `Review` (status ID `10100`).
+## Pré-condições
+- Card do Jira transicionado para `Review` (status ID `10100`).
 
-## Procedure
-1. Inspect the diff against specification requirements.
-2. Verify absence of leaked tokens, hardcoded credentials, or insecure patterns.
-3. Check code style, error handling, defensive typing, and test coverage.
-4. Prepare review feedback using `.agents/templates/review.md`.
-5. Determine review outcome:
-   - **If any blocking findings exist**: add specific, itemized comments to Jira and return card to `A Fazer` (status ID `10057`).
-   - **If 100% approved with minor non-blocking suggestions**: approve review, transition card to `Pronto Para Testar` (status ID `10101`), and create separate Backlog cards for the suggestions.
+## Procedimento
+1. Inspecionar o diff em relação aos requisitos da especificação.
+2. Verificar a ausência de vazamento de tokens, credenciais hardcoded ou padrões inseguros.
+3. Checar estilo de código, tratamento de erros, tipagem defensiva e cobertura de testes.
+4. Preparar o feedback da revisão utilizando `.agents/templates/review.md`.
+5. Determinar o resultado da revisão:
+   - **Se houver algum apontamento bloqueante**: adicionar comentários específicos e itemizados no Jira e retornar o card para `A Fazer` (status ID `10057`).
+   - **Se estiver 100% aprovado com sugestões menores não bloqueantes**: aprovar a revisão, transicionar o card para `Pronto Para Testar` (status ID `10101`) e criar cards separados no Backlog para as sugestões.
 
-## Outputs
-- Review report: `docs/execution/<jira>-review.md`
-- Itemized feedback comments on Jira card.
+## Saídas
+- Relatório de revisão: `docs/execution/<jira>-review.md`
+- Comentários de feedback itemizados no card do Jira.
 
-## Validation
-- Every finding includes file, line number, root cause, and concrete recommendation.
-- Clear verdict: Approved or Returned to Dev.
+## Validação
+- Cada apontamento inclui arquivo, número da linha, causa raiz e recomendação concreta.
+- Veredito claro: Aprovado ou Retornado para Dev.
 
-## Failure Conditions
-- Superficial review missing security flaws or specification gaps.
-- Unactionable or ambiguous feedback comments.
+## Condições de Falha
+- Revisão superficial que não identifique falhas de segurança ou lacunas de especificação.
+- Comentários de feedback ambíguos ou não acionáveis.

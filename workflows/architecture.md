@@ -1,28 +1,28 @@
-# Architecture Workflow
+# Workflow de Arquitetura
 
-## Trigger
-Approval of functional specification (`docs/specs/<jira>-<slug>.md`).
+## Gatilho
+Aprovação da especificação funcional (`docs/specs/<jira>-<slug>.md`).
 
-## Preconditions
-- Specification Gate satisfied.
-- Card remains in `Backlog`.
+## Pré-condições
+- Specification Gate satisfeito.
+- Card permanece no `Backlog`.
 
-## Steps
-1. Model structural components, provider adapters, and MCP server endpoints.
-2. Verify zero-trust credential encapsulation (credentials reside solely in secure storage, never passed to agent tools).
-3. If new technological decisions or structural shifts occur, author an ADR in `docs/decisions/`.
-4. Document component architecture in `docs/architecture/<jira>-<slug>.md`.
-5. Define interfaces, exception types, and dependency injection patterns.
+## Passos
+1. Modelar componentes estruturais, provider adapters e endpoints do MCP server.
+2. Verificar o encapsulamento de credenciais zero-trust (as credenciais residem unicamente em armazenamento seguro, nunca passadas para agent tools).
+3. Se novas decisões tecnológicas ou mudanças estruturais ocorrerem, redigir um ADR em `docs/decisions/`.
+4. Documentar a arquitetura de componentes em `docs/architecture/<jira>-<slug>.md`.
+5. Definir interfaces, tipos de exceção e padrões de dependency injection.
 
-## Artifacts
+## Artefatos
 - `docs/architecture/<jira>-<slug>.md`
-- `docs/decisions/<number>-<title>.md` (optional ADR)
+- `docs/decisions/<number>-<title>.md` (ADR opcional)
 
 ## Quality Gates
-- Architecture Gate: adheres to modularity rules and credential security standards.
+- Architecture Gate: adere às regras de modularidade e aos padrões de segurança de credenciais.
 
-## Exit Conditions
-- Architecture approved and committed; ready for Planning.
+## Condições de Saída
+- Arquitetura aprovada e commitada; pronta para Planning.
 
-## Failure Handling
-- If security risks are detected in the architecture, pause and redesign credential boundaries.
+## Tratamento de Falhas
+- Se riscos de segurança forem detectados na arquitetura, pause e reprojete as fronteiras de credenciais.

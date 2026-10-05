@@ -1,26 +1,26 @@
-# Documentation Workflow
+# Workflow de Documentação
 
-## Trigger
-Completion of Testing or significant behavioral changes requiring knowledge synchronization.
+## Gatilho
+Conclusão dos testes ou mudanças comportamentais significativas que exijam sincronização de conhecimento.
 
-## Preconditions
-- Tests passing; card approaching completion or newly completed.
+## Pré-condições
+- Testes passando; card próximo da conclusão ou recém-concluído.
 
-## Steps
-1. Scan changes across specifications, architecture docs, and source code.
-2. Synchronize API contracts, README usage sections, and quickstarts.
-3. Validate all internal file links, headings, and diagrams.
-4. Record implementation retrospective or execution summaries in `docs/execution/`.
-5. Commit documentation updates following Conventional Commits (`docs(scope): ...`).
+## Passos
+1. Escanear alterações em especificações, documentos de arquitetura e código-fonte.
+2. Sincronizar contratos de API, seções de uso do README e quickstarts.
+3. Validar todos os links internos de arquivos, títulos e diagramas.
+4. Registrar retrospectiva de implementação ou resumos de execução em `docs/execution/`.
+5. Fazer commit das atualizações de documentação seguindo o Conventional Commits (`docs(scope): ...`).
 
-## Artifacts
-- Synchronized documentation in `docs/` and `README.md`.
+## Artefatos
+- Documentação sincronizada em `docs/` e `README.md`.
 
 ## Quality Gates
-- Documentation Gate: zero broken links, code examples match real behavior.
+- Documentation Gate: zero links quebrados, exemplos de código correspondem ao comportamento real.
 
-## Exit Conditions
-- Documentation up to date and committed to Git.
+## Condições de Saída
+- Documentação atualizada e commitada no Git.
 
-## Failure Handling
-- If discrepancy between docs and implementation is found, open a documentation issue or fix immediately.
+## Tratamento de Falhas
+- Se for encontrada discrepância entre a documentação e a implementação, abra uma issue de documentação ou corrija imediatamente.
