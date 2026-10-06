@@ -14,6 +14,7 @@
   - `refactor(scope): refatora sem alteração de comportamento`
   - `chore(scope): build, tooling, dependências`
 - Sempre referencie a issue do Jira na mensagem ou no corpo.
+- **Anonimato de IA (Ghostwriting):** É ESTRITAMENTE PROIBIDO incluir referências a IA, Claude, Claude Code, Antigravity, LLMs, ChatGPT, bots ou prompts nas mensagens de commit. O histórico de commits deve refletir autoria 100% humana.
 
 ## 3. Guardrails de Segurança
 - **NUNCA execute operações destrutivas do Git automaticamente**:

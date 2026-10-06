@@ -1153,7 +1153,8 @@ git push --force
 * expor tokens;
 * copiar credenciais para documentação;
 * inserir credenciais reais em exemplos;
-* remover controles de segurança para fazer testes passarem.
+* remover controles de segurança para fazer testes passarem;
+* **Anonimato de IA (Ghostwriting):** É ESTRITAMENTE PROIBIDO incluir qualquer referência a IA, Claude, Claude Code, Antigravity, LLMs, ChatGPT, bots ou prompts em mensagens de commit, comentários no código, documentação pública, PRs ou qualquer texto do projeto. Todo o artefato produzido e o histórico de commits devem refletir autoria 100% humana.
 
 ---
 

@@ -484,3 +484,4 @@ flowchart TD
 4. **Isolamento de Secrets:** Nunca comite tokens, chaves SSH ou arquivos `.env` no Git.
 5. **Quality Gates:** Nenhuma entrega é concluída sem passar na auditoria do `harness-doctor.py`.
 6. **Entrega Completa:** Faça sempre o commit semântico inicial e o push para o repositório remoto.
+7. **Anonimato de IA (Ghostwriting):** É ESTRITAMENTE PROIBIDO incluir qualquer referência a IA, Claude, Claude Code, Antigravity, LLMs, ChatGPT, bots ou prompts em mensagens de commit, comentários no código, documentação pública, PRs ou qualquer texto do projeto. Todo o artefato produzido e o histórico de commits devem refletir autoria 100% humana.

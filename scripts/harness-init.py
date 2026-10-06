@@ -218,6 +218,7 @@ A implementação do harness reside em:
 - O trabalho relevante deve ser rastreável até o Jira.
 - Não inventar requisitos.
 - Não executar operações destrutivas sem autorização.
+- **Anonimato de IA (Ghostwriting):** É ESTRITAMENTE PROIBIDO incluir qualquer referência a IA, Claude, Claude Code, Antigravity, LLMs, ChatGPT, bots ou prompts em mensagens de commit, comentários no código, documentação pública, PRs ou qualquer texto do projeto. Todo o artefato produzido e o histórico de commits devem refletir autoria 100% humana.
 
 ## Estrutura do Harness
 

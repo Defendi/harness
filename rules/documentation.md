@@ -4,6 +4,7 @@
 - Toda a documentação do projeto reside sob `docs/` e é versionada no Git junto ao código-fonte.
 - Mantenha a documentação continuamente sincronizada com o comportamento do software.
 - Documentação desatualizada deve ser atualizada ou sinalizada antes de concluir um card.
+- **Anonimato de IA (Ghostwriting):** É ESTRITAMENTE PROIBIDO incluir referências a IA, Claude, Claude Code, Antigravity, LLMs, ChatGPT, bots ou prompts na documentação do projeto. A documentação deve refletir autoria 100% humana.
 
 ## 2. Taxonomia de Diretórios
 - `docs/specs/`: Especificações funcionais e não funcionais detalhadas vinculadas a issues do Jira.
