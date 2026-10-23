@@ -1,3 +1,8 @@
+---
+name: code-review
+description: Perform thorough peer code review validating code quality, specification adherence, architecture compliance, and security posture. Use when reviewing code changes, pull requests, or verifying implementation quality.
+---
+
 # Skill de Code Review
 
 ## Objetivo

@@ -1,3 +1,8 @@
+---
+name: testing
+description: Execute hermetic quality verification, static analysis, coverage checks, and regression testing. Use when validating code changes, running linters/type checks, verifying test suites, or validating test coverage.
+---
+
 # Skill de Testes
 
 ## Objetivo

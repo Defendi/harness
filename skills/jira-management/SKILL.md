@@ -1,3 +1,8 @@
+---
+name: jira-management
+description: Manage Jira issue lifecycle, status transitions, itemized comments, and traceability links across project workflows. Use when updating Jira issue status, logging progress, adding comments, or managing work item transitions.
+---
+
 # Skill de Gerenciamento do Jira
 
 ## Objetivo
@@ -10,7 +15,13 @@ Gerenciar o ciclo de vida de issues do Jira, transições de status, comentário
 
 ## Pré-condições
 - Conexão ativa com o Atlassian MCP ou credenciais válidas da REST API.
-- Conformidade com `.agents/rules/jira-card-lifecycle.md`.
+- Conformidade com `.agents/rules/jira-card-lifecycle.md` e `.agents/rules/jira.md`.
+
+## Regras para Abertura de Cards
+- **Cards de História (Story)**: Destinados a contar a história do usuário. Somente podem ser abertos para agrupar épicos.
+- **Cards de Épicos (Epic)**: Servem para agrupar as tarefas subdividindo por ação dentro da história.
+- **Cards de Tarefas (Task)**: São os cards nos quais os agentes de execução vão se basear, podendo ser para Features ou Bugs.
+
 
 ## Procedimento
 1. Verificar o status atual do card.
@@ -25,6 +36,7 @@ Gerenciar o ciclo de vida de issues do Jira, transições de status, comentário
    - `Concluído` (`10011`, transição `90`)
 3. Executar a transição utilizando a ferramenta Atlassian MCP (`transitionJiraIssue`) ou REST API.
 4. Adicionar comentário formatado descrevendo o resultado da fase, artefatos anexados e links.
+   - **Ao transicionar para `Concluído` (Fechamento de Task de Feature ou Bug):** Incluir obrigatoriamente o **Resumo para Humanos Leigos** formatado conforme `.agents/templates/layperson-summary-comment.md`, detalhando o que foi feito, o benefício e as ações realizadas de forma acessível a stakeholders.
 5. Se sugestões não bloqueantes forem registradas, criar novas tasks no Jira em `Backlog`.
 
 ## Saídas

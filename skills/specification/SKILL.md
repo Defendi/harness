@@ -1,3 +1,8 @@
+---
+name: specification
+description: Formalize analyzed requirements into complete, version-controlled specifications under docs/specs/. Use when drafting or updating formal functional and technical specifications before implementation.
+---
+
 # Skill de Especificação
 
 ## Propósito

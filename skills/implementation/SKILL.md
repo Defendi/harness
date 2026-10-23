@@ -1,3 +1,8 @@
+---
+name: implementation
+description: Translate approved specifications and architectural models into clean, maintainable, type-annotated code and unit tests. Use when implementing new features, components, or fixing bugs according to specifications.
+---
+
 # Skill de Implementação
 
 ## Propósito
@@ -14,10 +19,13 @@ Traduzir especificações e modelos arquiteturais aprovados em código limpo, ma
 
 ## Procedimento
 1. Criar ou fazer checkout da feature branch da tarefa (`feature/MCPS-xxx-...`).
-2. Escrever testes unitários definindo o comportamento esperado (preferência por TDD).
-3. Implementar a lógica de negócio e adapters de provedor em estrita conformidade com as especificações.
-4. Executar ferramentas de formatação e linting localmente (`ruff check --fix`, `ruff format`).
-5. Executar a suíte de testes local usando o ambiente virtual para garantir que todos os testes passem.
+2. **Verificar Contratos Prévios:** Confirmar que interfaces, classes, métodos e schemas estão explicitamente descritos no plano de implementação. Pausar caso haja contratos ausentes ou ambíguos (proibido inventar contratos).
+3. **Ciclo TDD Mandatório (Testes Unitários):**
+   - **Fase RED:** Escrever testes unitários herméticos em `tests/unit/` com base nos contratos pré-definidos e critérios Given-When-Then. Executar e comprovar a falha inicial.
+   - **Fase GREEN:** Implementar o código mínimo estritamente necessário em `src/` para fazer os testes passarem.
+   - **Fase REFACTOR:** Refatorar código, aplicar tipagem estrita (`mypy`) e formatação/lint (`ruff check --fix`, `ruff format`) mantendo os testes 100% verdes.
+4. **Testes de Integração de Adaptadores (se aplicável):** Implementar testes em `tests/integration/` para validar adaptadores contra fixtures herméticas.
+5. Executar a suíte completa de testes para garantir 100% de sucesso local.
 6. Verificar se não há segredos ou dados sensíveis hardcoded ou registrados em logs.
 
 ## Saídas

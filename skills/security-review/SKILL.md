@@ -1,3 +1,8 @@
+---
+name: security-review
+description: Examine codebase, configurations, and dependencies for security vulnerabilities, credential exposure risks, and injection attack vectors. Use when conducting security audits or validating credential isolation.
+---
+
 # Security Review Skill
 
 ## Objetivo

@@ -1,3 +1,8 @@
+---
+name: requirements-analysis
+description: Analyze problem statements, user requests, or high-level goals and extract clear, unambiguous functional and non-functional requirements. Use when analyzing incoming feature requests, user stories, or problem spaces.
+---
+
 # Skill de Análise de Requisitos
 
 ## Propósito

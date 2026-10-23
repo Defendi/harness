@@ -1,3 +1,8 @@
+---
+name: documentation
+description: Maintain, organize, and synchronize technical documentation under docs/ with ongoing code changes and architectural evolutions. Use when updating manuals, system documentation, or synchronizing technical references.
+---
+
 # Skill de Documentação
 
 ## Propósito

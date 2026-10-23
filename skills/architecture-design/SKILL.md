@@ -1,3 +1,8 @@
+---
+name: architecture-design
+description: Design system architecture, component diagrams, interfaces, and Architectural Decision Records (ADRs). Use when designing technical architecture, modeling system components, or making architectural decisions.
+---
+
 # Skill de Design de Arquitetura
 
 ## Propósito
