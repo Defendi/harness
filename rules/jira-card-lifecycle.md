@@ -1,83 +1,132 @@
 # Regras de Movimentação e Ciclo de Vida dos Cards no Jira
 
-Este documento define as regras estritas e automáticas de movimentação de status dos cards no Jira, orientando todos os agentes, subagentes e desenvolvedores do projeto.
+Este documento define as regras estritas de abertura, tipagem e movimentação de status dos cards no Jira, garantindo que **cada etapa do processo seja de responsabilidade de um agente especializado** com critérios de entrada e saída (Definition of Done) bem delimitados.
 
 ---
 
-## 1. Mapeamento de Status e Transições
+## 1. Regras para Abertura de Cards
+- **Cards de História (Story)**: Destinados a contar a história do usuário. Somente podem ser abertos para agrupar épicos.
+- **Cards de Épicos (Epic)**: Servem para agrupar as tarefas subdividindo por ação dentro da história.
+- **Cards de Tarefas (Task)**: São os cards nos quais os agentes de execução vão se basear, podendo ser para Features ou Bugs.
 
-O ciclo de vida de qualquer card obedece rigorosamente à seguinte sequência:
+---
+
+## 2. Mapeamento de Status, Agentes e Transições
+
+O ciclo de vida padrão de qualquer card obedece rigorosamente ao modelo **1 Etapa = 1 Agente Responsável**:
 
 ```mermaid
 flowchart TD
-    Backlog["Backlog\n(Brainstorming -> PRD -> TRD -> OpenSPEC)"] -->|Planejamento Finalizado| AFazer["A Fazer\n(Aguardando Dev)"]
-    AFazer -->|Início do Dev| EmAndamento["Em Andamento\n(Desenvolvimento e Testes Unitários)"]
-    EmAndamento -->|Fim do Dev| ProntoParaReview["Pronto para Review"]
-    ProntoParaReview -->|Início do Review| Review["Review\n(Code Reviewer)"]
-    Review -->|Com Apontamentos\n(Diversos Comentários)| AFazer
-    Review -->|Aprovado 100%\n(Sugestões -> Backlog)| ProntoParaTestar["Pronto Para Testar"]
-    ProntoParaTestar -->|Início do QA| Testando["Testando\n(QA Tester)"]
-    Testando -->|Com Apontamentos\n(Diversos Comentários)| AFazer
-    Testando -->|Aprovado 100%\n(Sugestões -> Backlog)| Concluido["Concluído\n(Commit e Fechamento)"]
+    Backlog["1. Backlog\n(Triagem / Humano)"] -->|Card Selecionado| Refinamento["2. Em Refinamento\n(PO Agent)"]
+    Refinamento -->|PRD Aprovado| Arquitetura["3. Em Arquitetura\n(Architect Agent)"]
+    Arquitetura -->|TRD & ADRs Aprovados| Planejamento["4. Em Planejamento\n(Planner Agent)"]
+    Planejamento -->|OpenSPEC & Tasks Prontas| AFazer["5. A Fazer\n(Fila de Execução)"]
+    AFazer -->|Início da Implementação| Desenvolvimento["6. Em Desenvolvimento\n(Developer Agent)"]
+    Desenvolvimento -->|Código & Testes Unitários OK| Review["7. Em Review\n(Reviewer Agent)"]
+    
+    Review -->|Com Apontamentos| Desenvolvimento
+    Review -->|Aprovado 100%| Seguranca["8. Em Segurança\n(Security Agent)"]
+    
+    Seguranca -->|Vulnerabilidades Encontradas| Desenvolvimento
+    Seguranca -->|Aprovado 100%| Testando["9. Em Testes\n(Tester Agent / QA)"]
+    
+    Testando -->|Falha em Testes / Bugs| Desenvolvimento
+    Testando -->|100% Verde| Documentacao["10. Em Documentação\n(Documentation Agent)"]
+    
+    Documentacao -->|Docs Sincronizados| ProntoRelease["11. Pronto para Release\n(Release Agent)"]
+    ProntoRelease -->|Tag & Changelog Concluídos| Concluido["12. Concluído\n(Fechamento do Card)"]
 ```
 
-| Status Canônico no Jira | Responsável            | Condição e Ação                                                                 |
-|:------------------------ |:---------------------- |:------------------------------------------------------------------------------- |
-| **Backlog**              | Agente / Humano        | Card criado; mantido aqui durante todo o **ciclo Brainstorming, PRD, TRD e OpenSPEC**. |
-| **A Fazer**              | Agente / Humano        | Finalização do planejamento sinalizada. Aguarda início do desenvolvimento.      |
-| **Em Andamento**         | `developer-agent`      | Início do desenvolvimento sinalizado.                                           |
-| **Pronto para Review**   | `developer-agent`      | Toda a implementação e testes unitários concluídos.                             |
-| **Review**               | `reviewer-agent`       | Início da revisão de código sinalizado.                                         |
-| **Pronto Para Testar**   | `reviewer-agent`       | Review aprovado 100%. Sugestões viram novos cards em Backlog.                   |
-| **Testando**             | `tester-agent`         | Início das atividades de QA sinalizado.                                         |
-| **Concluído**            | QA / Revisor           | Suíte de testes herméticos 100% aprovada. Commit semântico realizado.           |
+| Ordem | Status Canônico no Jira | Agente Responsável | Artefato de Entrada | Trabalho Executado | Critério de Saída (DoD da Etapa) |
+|:---:|:------------------------ |:------------------ |:------------------- |:------------------ |:-------------------------------- |
+| **1** | **Backlog** | *Humano / Triage* | Ideia ou Demanda Bruta | Triagem inicial e priorização da demanda | Card aceito para especificação formal |
+| **2** | **Em Refinamento** | `po` | Card Bruto | Brainstorming com stakeholder + Regras de negócio | PRD aprovado em `docs/prds/PRD-NNN.md` |
+| **3** | **Em Arquitetura** | `architect` | PRD aprovado | Modelagem de dados, limites de sistema e ADRs | TRD atualizado em `docs/trd.md` + ADRs |
+| **4** | **Em Planejamento** | `planner` | PRD + TRD | Quebra técnica detalhada e cenários executáveis | OpenSPEC em `docs/specs/` + Tasks no Jira |
+| **5** | **A Fazer** | *(Fila de Espera)* | OpenSPEC validado | Aguardando capacidade de desenvolvimento | Alocação do card para o desenvolvedor |
+| **6** | **Em Desenvolvimento** | `developer` | OpenSPEC | Implementação do código + testes unitários | Build passando e testes unitários 100% |
+| **7** | **Em Review** | `reviewer` | PR / Git Diff | Revisão de padrões, clean code e arquitetura | Aprovação do Review Gate sem ressalvas |
+| **8** | **Em Segurança** | `security` | Código em Review | Auditoria SAST, segredos e dependências | Aprovação do Security Gate sem vulnerabilidades |
+| **9** | **Em Testes** | `tester` | Branch com build | Suíte hermética completa, lint, tipos e testes | 100% testes verdes (Testing Gate) |
+| **10** | **Em Documentação** | `documentation` | Código validado | Atualização de docs, README e referências | Docs sincronizados com a codebase real |
+| **11** | **Pronto para Release** | `release` | Docs sincronizados | Versionamento semântico (SemVer), tags e release notes | Tag criada e release notes publicadas |
+| **12** | **Concluído** | *Sistema / Release* | Release finalizada | Encerramento do ciclo de vida | Card fechado |
 
 > **Nota de Resolução de IDs de Transição:** Cada espaço e projeto no Jira possui IDs numéricos próprios de status e transições. O agente deve inspecionar as transições disponíveis dinamicamente via MCP Atlassian (`getTransitionsForJiraIssue`) ou REST API (`/rest/api/3/issue/{key}/transitions`) para resolver o ID correspondente ao status canônico desejado.
 
 ---
 
-## 2. Regras Operacionais de Movimentação
+## 3. Regras Operacionais Detalhadas por Etapa
 
-### 2.1 Criação, Especificação e Planejamento (`Backlog`)
+### 2.0 Criação e Preenchimento Obrigatório dos Cards (Nunca Deixar Vazio)
+- **Proibição de Cards Vazios**: Nenhum card no Jira pode ser criado ou mantido com a descrição em branco (`description: null` ou apenas com o título/summary).
+- **Conteúdo Estruturado Mandatório na Descrição**:
+  1. **Contexto & Problema**: Detalhamento da motivação, cenário real, dores do usuário ou bug observado.
+  2. **Escopo e Requisitos**: Lista clara de requisitos funcionais e técnicos a serem atendidos.
+  3. **Critérios de Aceite**: Itens mensuráveis e objetivos para validar a conclusão da demanda.
+  4. **Links de Rastreabilidade**: Caminhos relativos para os documentos gerados pelo harness (`PRD`, `TRD`, `OpenSPEC`).
+- **Sincronização Contínua**: O orquestrador e subagentes devem manter a descrição do card refinada e atualizada conforme o escopo e as decisões de arquitetura evoluem.
 
-- Enquanto os agentes criam um card e esse card estiver sendo planejado, **deve-se manter o card em `Backlog`**.
-- **Sequência Obrigatória em `Backlog`:**
-  1. **Brainstorming:** Utilizar a skill `brainstorming` antes de qualquer ação técnica ou implementação, alinhando a intenção e aplicando Hard-Gates com o usuário.
-  2. **PRD (Product Requirements Document):** O **agente de P.O.** elabora o PRD da feature em `docs/prds/PRD-NNN.md` utilizando a skill `escrever-prd`.
-  3. **TRD (Technical Requirements Document):** Após a criação e aprovação do PRD, os agentes técnicos utilizam a skill `escrever-trd` para sincronizar `docs/trd.md` e registrar decisões de arquitetura (ADRs).
-  4. **OpenSPEC:** **Somente após o TRD e o PRD estarem devidamente escritos e aprovados**, os agentes criam o documento de especificação executável em `docs/specs/` utilizando a metodologia **OpenSPEC**.
-- Nenhum agente pode mudar o estado para "A Fazer" nessa fase sem a conclusão e aprovação desta esteira completa.
+### 2.1 Refinamento de Negócio (`Em Refinamento` - Responsável: `po`)
+- **Entrada:** Card em `Backlog` é movido para `Em Refinamento`.
+- O agente `po` executa a skill `brainstorming` com o stakeholder e consolida o problema em `docs/prds/PRD-NNN-<slug>.md`.
+- **Transição:** Quando o PRD estiver com status `pronto`, o `po` transiciona o card para `Em Arquitetura`.
 
-### 2.2 Conclusão do Planejamento (`A Fazer`)
+### 2.2 Modelagem Técnica (`Em Arquitetura` - Responsável: `architect`)
+- **Entrada:** PRD aprovado.
+- O agente `architect` sincroniza as diretrizes técnicas em `docs/trd.md`, registra decisões em `docs/decisions/` (ADRs) e avalia limites de segurança.
+- **Transição:** Finalizada a modelagem, transiciona o card para `Em Planejamento`.
 
-- Assim que for sinalizada a **finalização do planejamento** (por definição de um agente ou pelo humano), **deve-se mover o card para `A Fazer`**.
-- O card aguarda em `A Fazer` até o momento efetivo de início do desenvolvimento.
+### 2.3 Especificação e Planejamento (`Em Planejamento` - Responsável: `planner`)
+- **Entrada:** PRD e TRD aprovados.
+- O agente `planner` cria a especificação executável OpenSPEC em `docs/specs/<jira>-<slug>.md`, decompõe a história em tarefas atômicas e critérios de aceite Given-When-Then.
+- **Transição:** Com o OpenSPEC concluído e validado, o card é movido para `A Fazer`.
 
-### 2.3 Desenvolvimento e Testes Unitários (`Em Andamento` → `Pronto para Review`)
+### 2.4 Fila de Espera (`A Fazer`)
+- O card aguarda disponibilidade de alocação técnica. Nenhum agente edita o card neste status.
 
-- Assim que for sinalizado o **início do desenvolvimento**, **deve-se mudar o card para `Em Andamento`**.
-- O desenvolvedor executa toda a implementação técnica, incluindo preparação de ambiente, código, tipagem defensiva e testes unitários herméticos.
-- Assim que finalizada toda a implementação, **deve-se mudar o card para `Pronto para Review`**.
+### 2.5 Implementação Técnica (`Em Desenvolvimento` - Responsável: `developer`)
+- **Entrada:** Ao assumir a tarefa, o `developer` move o card para `Em Desenvolvimento`.
+- Cria a branch de trabalho, implementa a lógica em `src/`, escreve testes unitários em `tests/` e garante que linter e tipagem passem localmente.
+- **Transição:** Com os testes unitários passando, move o card para `Em Review`.
 
-### 2.4 Code Review (`Review` → `A Fazer` ou `Pronto Para Testar`)
+### 2.6 Revisão de Código (`Em Review` - Responsável: `reviewer`)
+- **Entrada:** O card chega em `Em Review`.
+- O agente `reviewer` inspeciona o diff em relação à `main` e valida aderência aos padrões de código (`coding-standards.md`) e ao OpenSPEC.
+- **Desfecho:**
+  - **Com apontamentos impeditivos:** Registra comentários pontuais no card e devolve para **`Em Desenvolvimento`**.
+  - **Aprovado 100%:** Transiciona o card para **`Em Segurança`**. Sugestões não bloqueantes geram novos cards em `Backlog`.
 
-- Assim que sinalizado o **início do Review** pelo agente revisor, **deve-se mudar o card para `Review`** (status `Revisar`).
-- O agente executa a inspeção detalhada conforme `.agents/rules/coding-standards.md` e `.agents/skills/code-review/SKILL.md`.
-- **Tratamento de Resultados do Review:**
-  - **Se houver qualquer tipo de apontamento:** deve-se anotar ponto a ponto em **diversos comentários** separados no card e mover o card para **`A Fazer`** para recomeçar o processo de desenvolvimento.
-  - **Se passar 100% com apenas algumas sugestões:** deve-se mover o card para **`Pronto Para Testar`**. As sugestões apontadas no review **devem ser criadas como novos cards em `Backlog`**.
+### 2.7 Auditoria de Segurança (`Em Segurança` - Responsável: `security`)
+- **Entrada:** Código aprovado no Code Review.
+- O agente `security` valida isolamento de credenciais, dependências vulneráveis e riscos de injeção.
+- **Desfecho:**
+  - **Com vulnerabilidades:** Registra comentários técnicos de correção e devolve para **`Em Desenvolvimento`**.
+  - **Aprovado:** Transiciona o card para **`Em Testes`**.
 
-### 2.5 Testes de QA (`Testando` → `A Fazer` ou `Concluído`)
+### 2.8 Suíte de Testes e QA (`Em Testes` - Responsável: `tester`)
+- **Entrada:** Código seguro e revisado.
+- O agente `tester` executa a tríade hermética de qualidade da linguagem (lint, formatação, checagem estática de tipos e suíte completa de testes).
+- **Desfecho:**
+  - **Com falhas ou bugs:** Registra os erros com logs detalhados e devolve para **`Em Desenvolvimento`**.
+  - **100% Verde:** Transiciona o card para **`Em Documentação`**.
 
-- Assim que for sinalizado pelo testador QA o **início da atividade**, **mova o card para `Testando`**.
-- O testador executa a suíte hermética completa definida para a linguagem do projeto em `.agents/config/language.yaml` (comandos de `quality_gates.testing` e `quality_gates.implementation`).
-- **Tratamento de Resultados do QA:**
-  - **Se houver qualquer tipo de apontamento / falha:** deve-se anotar ponto a ponto em **diversos comentários** separados no card e mover o card para **`A Fazer`** para recomeçar o processo.
-  - **Se passar 100% com apenas algumas sugestões:** move-se o card para **`Concluído`** (com commit semântico realizado). As sugestões apontadas no teste **devem ser criadas como novos cards em `Backlog`**.
+### 2.9 Sincronização de Documentação (`Em Documentação` - Responsável: `documentation`)
+- **Entrada:** Funcionalidade testada e validada.
+- O agente `documentation` atualiza guias de uso, contratos de API, documentação técnica em `docs/` e o `README.md`.
+- **Transição:** Documentação validada e sem links quebrados, move o card para **`Pronto para Release`**.
+
+### 2.10 Empacotamento e Fechamento (`Pronto para Release` - Responsável: `release`)
+- **Entrada:** Código, testes e documentação finalizados.
+- O agente `release` compila o changelog, gera as release notes, cria a tag de versão SemVer (`git tag -a vX.Y.Z`) e faz o merge final na branch principal.
+- **Comentário para Humanos Leigos (Obrigatório):** Antes de mover para `Concluído`, o agente deve gerar e publicar no card do Jira um resumo em linguagem não técnica voltado a humanos leigos (conforme `.agents/templates/layperson-summary-comment.md`), explicando o que mudou, os benefícios e as ações tomadas.
+- **Transição:** Move o card para **`Concluído`**.
 
 ---
 
-## 3. Diretrizes de Comentários e Novos Cards
+## 4. Diretrizes de Comentários, Rejeições e Sugestões
 
-1. **Comentários Pontuais e Diversos:** Em caso de rejeição (seja no Review ou no QA), cada inconsistência ou apontamento deve ser registrado em um comentário individual no card, com contexto exato (arquivo, linha, causa raiz e recomendação).
-2. **Desdobramento de Sugestões:** Sugestões e melhorias não bloqueantes nunca atrasam o card em andamento; são convertidas imediatamente em novos cards em `Backlog` com referência ao card de origem.
+1. **Comentários Pontuais por Falha:** Em caso de retorno para `Em Desenvolvimento` (seja por Review, Segurança ou Testes), cada problema deve ser registrado em comentário individual no Jira com arquivo, linha, motivo e ação recomendada.
+2. **Retorno Direto:** Se houver rejeição no Review, Segurança ou Testes, o card **retorna diretamente para `Em Desenvolvimento`**, sem precisar reabrir todo o ciclo de planejamento a menos que haja mudança explícita de escopo.
+3. **Desdobramento de Sugestões:** Melhorias que não sejam impeditivas para a entrega atual nunca devem bloquear o card; o agente deve registrá-las como novos cards no `Backlog` com link para o card original.
+4. **Resumo Executivo para Humanos Leigos ao Fechar Cards:** Todo encerramento de card de tarefa (Feature ou Bug) exige obrigatoriamente um comentário final com resumo em linguagem leiga, acessível a stakeholders, diretores e usuários de negócio, detalhando o que foi feito, o ganho prático e os testes realizados.
