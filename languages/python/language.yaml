@@ -15,8 +15,8 @@ tooling:
 
 commands:
   install: "uv sync --all-extras --dev"
-  test: "uv run pytest -v"
-  test_coverage: "uv run pytest --cov=src --cov-report=term-missing --cov-fail-under=80"
+  test: "SENTINEL_CONF_FILE=/mnt/home/alexandre/.config/mcpsentinel/mcpsentinel_backup.conf SENTINEL_SECURITY_CONFIG=/mnt/home/alexandre/.config/mcpsentinel/security_teste.yaml uv run pytest -v"
+  test_coverage: "SENTINEL_CONF_FILE=/mnt/home/alexandre/.config/mcpsentinel/mcpsentinel_backup.conf SENTINEL_SECURITY_CONFIG=/mnt/home/alexandre/.config/mcpsentinel/security_teste.yaml uv run pytest --cov=src --cov-report=term-missing --cov-fail-under=80"
   lint: "uv run ruff check ."
   lint_fix: "uv run ruff check --fix ."
   format: "uv run ruff format ."
@@ -38,6 +38,6 @@ quality_gates:
     - "uv run ruff format --check ."
     - "uv run mypy src/"
   testing:
-    - "uv run pytest -v --cov=src --cov-fail-under=80"
+    - "SENTINEL_CONF_FILE=/mnt/home/alexandre/.config/mcpsentinel/mcpsentinel_backup.conf SENTINEL_SECURITY_CONFIG=/mnt/home/alexandre/.config/mcpsentinel/security_teste.yaml uv run pytest -v --cov=src --cov-fail-under=80"
   security:
     - "uv run pip-audit"

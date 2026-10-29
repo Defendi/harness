@@ -30,11 +30,21 @@ python3.12 -m venv .venv
 ```
 
 ## 3. Execução de Testes
+Todas as execuções de teste devem utilizar os arquivos dedicados de teste:
+- `SENTINEL_CONF_FILE=/mnt/home/alexandre/.config/mcpsentinel/mcpsentinel_backup.conf`
+- `SENTINEL_SECURITY_CONFIG=/mnt/home/alexandre/.config/mcpsentinel/security_teste.yaml`
+
+> **Regra de Ouro:** Nunca sobrescrever arquivos de configuração ou segurança. Se qualquer modificação for necessária para testes, gerar backup prévio obrigatório antes da alteração e restaurar o original ao término.
+
 ```bash
-# Executar suíte completa de testes unitários
+# Executar suíte completa de testes unitários com arquivos dedicados
+SENTINEL_CONF_FILE=/mnt/home/alexandre/.config/mcpsentinel/mcpsentinel_backup.conf \
+SENTINEL_SECURITY_CONFIG=/mnt/home/alexandre/.config/mcpsentinel/security_teste.yaml \
 .venv/bin/pytest tests/ -v
 
 # Executar com relatório de cobertura de testes
+SENTINEL_CONF_FILE=/mnt/home/alexandre/.config/mcpsentinel/mcpsentinel_backup.conf \
+SENTINEL_SECURITY_CONFIG=/mnt/home/alexandre/.config/mcpsentinel/security_teste.yaml \
 .venv/bin/pytest tests/ -v --cov=src --cov-report=term-missing
 ```
 
