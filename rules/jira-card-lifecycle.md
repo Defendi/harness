@@ -118,7 +118,13 @@ flowchart TD
 
 ### 2.10 Empacotamento e Fechamento (`Pronto para Release` - Responsável: `release`)
 - **Entrada:** Código, testes e documentação finalizados.
-- O agente `release` compila o changelog, gera as release notes, cria a tag de versão SemVer (`git tag -a vX.Y.Z`) e faz o merge final na branch principal.
+- O agente `release` compila o changelog, gera as release notes em `docs/execution/release-vX.Y.Z.md`, cria a tag de versão SemVer (`git tag -a vX.Y.Z`), efetua push de tags e cria a GitHub Release.
+- **Descritivo Rico e Estruturado no GitHub (Obrigatório):** Ao publicar a release no GitHub (`gh release create`), o corpo deve conter obrigatoriamente:
+  * **Visão Geral da Versão:** Propósito e impacto da release.
+  * **Melhorias e Novas Funcionalidades:** Lista de novas capacidades com cards Jira.
+  * **Correções Aplicadas (Bug Fixes):** Diagnóstico das falhas, causas corrigidas e impacto operacional.
+  * **Segurança e Governança:** Blindagem de dados, isolamento Zero-Trust e compliance.
+  * **Guia de Atualização:** Passos práticos para instalação/upgrade.
 - **Comentário para Humanos Leigos (Obrigatório):** Antes de mover para `Concluído`, o agente deve gerar e publicar no card do Jira um resumo em linguagem não técnica voltado a humanos leigos (conforme `.agents/templates/layperson-summary-comment.md`), explicando o que mudou, os benefícios e as ações tomadas.
 - **Transição:** Move o card para **`Concluído`**.
 

@@ -10,10 +10,12 @@ Conclusão de milestone, lote de cards finalizados em `Concluído` ou gatilho ex
 ## Passos
 1. Verifique o status da branch `main` e os resultados de CI/CD.
 2. Determine a nova versão semântica (SemVer: Major.Minor.Patch).
-3. Gere as release notes a partir dos cards concluídos do Jira e do commit log utilizando `.agents/templates/release-notes.md`.
-4. Crie a release tag: `git tag -a vX.Y.Z -m "Release vX.Y.Z"`.
-5. Faça push do commit e da tag para o remoto do GitHub (`git push origin main --tags`).
-6. Notifique os stakeholders e feche a versão de release no Jira.
+3. Para cada card de tarefa (Feature ou Bug) no lote de fechamento, gerar e publicar no Jira o comentário com o **Resumo para Humanos Leigos** utilizando `.agents/templates/layperson-summary-comment.md`, e em seguida mover o card para `Concluído`.
+4. Gere as release notes a partir dos cards concluídos do Jira e do commit log utilizando `.agents/templates/release-notes.md`.
+5. Crie a release tag: `git tag -a vX.Y.Z -m "Release vX.Y.Z"`.
+6. Faça push do commit e da tag para o remoto do GitHub (`git push origin main --tags`).
+7. Publique a Release no GitHub com descritivo estruturado contendo Visão Geral, Melhorias, Correções (Bug Fixes), Segurança e Guia de Atualização: `gh release create vX.Y.Z -F docs/execution/release-vX.Y.Z.md -t "vX.Y.Z"`.
+8. Notifique os stakeholders e feche a versão de release no Jira.
 
 ## Artefatos
 - `docs/execution/release-vX.Y.Z.md`
